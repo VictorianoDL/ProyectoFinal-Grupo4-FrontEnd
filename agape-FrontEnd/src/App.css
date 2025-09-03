@@ -1,13 +1,8 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-}
+
 
 /* ---------------------Header-------------------- */
 
-img {
+Header img {
     height: 20px;
     background-color: white;
 }
@@ -26,11 +21,57 @@ Header {
 
     position: fixed;
     top: 0;
-    left: 0;
+    z-index: 100;
+    
     width: 100%;
 
     color: white;
-    padding: 1rem 0;
+    
+}
+
+/* ---------------------Main-------------------- */
+
+
+.home{
+    width: 100%;
+}
+
+
+.Carrucel {
+    width: 100%;
+    height: 500px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin: 40px 0;
+    background-color: rgb(17, 1, 121);
+}
+.Carrucel img {
+    height: 200px;
+    background-color: white;
+}
+
+.CasillaInfo {
+    display: flex;
+}
+
+.CasillaInfo img {
+    height: 100px;
+    background-color: white;
+}
+
+.CasillaInfo p {
+    width: 400px;
+    text-align: justify;
+    margin-left: 20px;
+    font-size: 14px;
+    color: #fffdfd;
+}
+
+.main{
+    padding: 0 40px;
 }
 
 
@@ -38,13 +79,16 @@ Header {
 /* ---------------------Footer-------------------- */
 
 Footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 200px;  
     width: 100%;
     background-color: #e8b068;
     color: white;
-    padding: 1rem 0;
+    
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
 }

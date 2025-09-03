@@ -4,20 +4,22 @@ import Campanias from "./Campanias/Campanias";
 
 const Main = () => {
   return (
-    <Routes>
-      <Route path="/" element= {<Home />} />
-      <Route path="/campanias" element= {<Campanias />} />
-      
-      {/* 
-      <Route path="/perfil" element= {<Skills />} />
-      <Route path="/login" element= {<login />} />
-      <Route path="/register" element= {<register />} />
-      <Route path="/contacto" element= {<Contacto />} />
-      */}
+    <div className="main">
+      <Routes>
+        <Route path="/" element= {<Home />} />
+        <Route path="/campanias" element= {<Campanias />} />
+        
+        {/* 
+        <Route path="/perfil" element= {<Skills />} />
+        <Route path="/login" element= {<login />} />
+        <Route path="/register" element= {<register />} />
+        <Route path="/contacto" element= {<Contacto />} />
+        */}
 
-      <Route path="*" element= {<h1>404 ERROR - No existe pagina</h1>} /> 
-      
-    </Routes>
+        <Route path="*" element= {<h1>404 ERROR - No existe pagina</h1>} /> 
+        
+      </Routes>
+    </div>
   );
 };
 
