@@ -14,9 +14,10 @@ const Campanias = () => {
     <div className="campanias">
       <h1>Recientes</h1>
       <div className="campanias-grid">
-        {campanias.map(campania => (
-          <CampaniaCard key={campania.id} {...campania} />
-        ))}
+        <CampaniaCard className="cuadrado" {...campanias[0]} />
+        <CampaniaCard className="rectangulo" {...campanias[1]} />
+        <CampaniaCard className="rectangulo" {...campanias[2]} />
+        <CampaniaCard className="cuadrado" {...campanias[3]} />
       </div>
     </div>
   );
