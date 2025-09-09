@@ -1,0 +1,51 @@
+.segundoContainer {
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.barraContainer {
+  margin-bottom: 15px;
+}
+
+.barraFondo {         
+  background-color: #FDD6A4;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.barraRelleno {
+  background-color: #FF9915;
+  border-end-end-radius: 30px;
+  height: 100%;
+  transition: flex-grow 0.5s ease;
+}
+
+.barraNombre {
+  position: absolute;
+  top: 0; 
+  left: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: black;
+}
+
+.barraPorcentaje {
+  position: absolute;
+  width: 100%;       
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: black;
+  pointer-events: none;
+}
+
+.segundoContainer h2{
+    font-size: 35px;
+}

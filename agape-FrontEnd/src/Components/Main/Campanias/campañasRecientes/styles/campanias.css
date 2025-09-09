@@ -1,39 +1,40 @@
-.campanias h1 {
-    font-size: 40px;
-    margin-bottom: 20px;
+.campanias {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 35px;
+  margin-top: 100px;
+}
+
+.fila {
+  display: flex;
+  gap: 10px;
+  height: 280px;
+  margin-bottom: 10px;
+}
+
+.cuadrado {
+  aspect-ratio: 1 / 1;
+  width: 400px;
+}
+
+.rectangulo {
+  flex-grow: 1;
+  height: 100%;
 }
 
 .CampaniaCard {
-    background-image: url('/imagenesTemporales/pexels-123.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    border: 1px solid black;
-    padding: 10px;
-    height: 100%;
-    box-sizing: border-box;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  background-image: url('/imagenesTemporales/pexels-123.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border: 1px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
-
-.campanias-grid {
-    display: grid;
-    grid-template-columns: 3fr 3fr; /* columna angosta para cuadrados, columna ancha para rectángulos */
-    grid-template-rows: 280px 280px; 
-    gap: 10px;
-    width: 80%;
-    margin: 0 auto;
-
-    grid-template-areas:
-      "cuadrado1 rectangulo1"
-      "rectangulo2 cuadrado2";
-}
-
-/* Asignar áreas */
-.campanias-grid .cuadrado:first-child { grid-area: cuadrado1; aspect-ratio: 1 / 1; }
-.campanias-grid .rectangulo:first-of-type { grid-area: rectangulo1; }
-.campanias-grid .rectangulo:last-of-type { grid-area: rectangulo2; }
-.campanias-grid .cuadrado:last-child { grid-area: cuadrado2; aspect-ratio: 1 / 1; }
-
