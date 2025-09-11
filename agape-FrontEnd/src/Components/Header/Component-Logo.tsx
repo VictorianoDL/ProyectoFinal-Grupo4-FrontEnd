@@ -1,8 +1,14 @@
+import { Route, Routes } from "react-router-dom";
+
 const ComponentLogo = () => {
     return (
         <div className="ComponentLogo">
-            <img src="https://i.postimg.cc/3x3QzSGq/logo.png" alt="Logo" />
-            <h3>Pagina Actual</h3>        
+            <img src="../public/Logos/Agape - Logo AZUL Min.png" alt="Logo" />
+            <Routes>    
+                <Route path="/" element= {<h3>Home</h3>} />
+                <Route path="/campanias" element= {<h3>Campañas</h3>} />
+                {/* agregar mas rutas */}
+            </Routes>             
         </div>
     );
 }

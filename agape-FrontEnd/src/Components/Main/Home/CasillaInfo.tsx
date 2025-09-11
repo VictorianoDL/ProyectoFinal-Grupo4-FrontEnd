@@ -1,10 +1,27 @@
-const CasillaInfo = () => {
-  return (
-    <div className="CasillaInfo">     
-        <img src="https://st4.depositphotos.com/1010673/22791/i/450/depositphotos_227919242-stock-photo-golden-star-isolated-white-background.jpg" alt="" />
-        <p>aca va informancon de algo o sobre la aplicacions de doom y quierby para ciando que claor eso eheheheeeehh eso lo decia diego maradona y tambien tu puta madre jajajaj te amo noa manentaira </p>    
-    </div>
-    );
+
+type CasillaInfoProps = {
+        imageUrl: string;
+        description: string;
+        row: boolean;
+    };
+
+const CasillaInfo = ({imageUrl,description,row}:CasillaInfoProps) => {
+    if(row){
+        return (
+            <div className="CasillaInfo" style={{flexDirection: 'row'}}>
+                <img src={imageUrl} alt="imagen" />
+                <div id="bloque"></div>
+                <p> {description} </p>
+            </div>
+        );
+    }else{
+        return (
+            <div className="CasillaInfo" style={{flexDirection: 'row-reverse'}}>
+                <img src={imageUrl} alt="imagen" />
+                <p> {description} </p>
+            </div>
+        );
+    }
 };
 
 export default CasillaInfo;

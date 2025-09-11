@@ -1,0 +1,102 @@
+Header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    color: var(colorAmarilloClaro);  
+}
+
+
+/*--------- Nav Centro - logo grande */
+.Logo-Agape-Grande{
+    display: flex;
+    justify-content: center;
+}
+.Logo-Agape-Grande img{
+    height: 110px;
+    transition: 0.5s;
+}
+.Logo-Agape-Grande img:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+#conteinerLogo{
+    display: flex;
+    justify-content: center;
+}
+
+/*--------- Nav izquierda - logo min */
+.ComponentLogo{
+    justify-content:baseline;
+    flex-direction: row;    
+}
+.ComponentLogo h3{
+    background: linear-gradient(to right, var(--colorCeleste), #15151500);
+    text-align: center;
+}
+
+/* Conjuntos de Nav Izquierda y Derecha */
+.ComponentLogo-Perfil,.ComponentLogo{
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin: 10px 20px 10px 20px;
+}
+.ComponentLogo-Perfil img, .ComponentLogo img{
+    position: absolute;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--colorCeleste);
+    transition: 0.5s;
+}
+.ComponentLogo-Perfil a, .ComponentLogo h3{  
+    width: 100%;
+    border-radius: 50px;
+    transition: 0.5s; 
+}
+
+/*---- HOVER ----*/
+.ComponentLogo-Perfil img:hover, .ComponentLogo img:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.ComponentLogo-Perfil img:hover + a, .ComponentLogo img:hover + h3{
+    padding: 8px;
+    font-size: larger;
+}
+
+/*--------- Nav Derecha - logo perfil usuario */
+.ComponentLogo-Perfil{
+    justify-content: end;
+    flex-direction: row-reverse;   
+}
+.ComponentLogo-Perfil img {
+    padding: 4px;
+}
+.ComponentLogo-Perfil a{
+    color: var(--colorAmarilloClaro);
+    margin-right: 20px;
+    background: linear-gradient(to left, var(--colorCeleste), #15151500); 
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
