@@ -1,19 +1,19 @@
 import React from "react";
-import "./styles/campaniasPorFinalizar.css";
+import "./campaniasPorFinalizar.css";
 
 const CampaniasPorFinalizar: React.FC = () => {
   const campanias = [
     { nombre: "Campaña 1", porcentaje: 75 },
-    { nombre: "Campaña 2", porcentaje: 50 },
+    { nombre: "Campaña 2", porcentaje: 55 },
     { nombre: "Campaña 3", porcentaje: 90 },
-    { nombre: "Campaña 4", porcentaje: 30 },
+    { nombre: "Campaña 4", porcentaje: 65 },
   ];
 
   return (
     <div className="segundoContainer">
       <h2>A nada de llegar al objetivo!</h2>
       {campanias.map((campania, index) => (
-        <div key={index} className="barraContainer">
+        <div key={index} className="barraContainer" onClick={() => {}}>
           <div className="barraFondo">
             <div
               className="barraRelleno"

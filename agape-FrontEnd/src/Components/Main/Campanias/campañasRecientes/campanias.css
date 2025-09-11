@@ -3,6 +3,10 @@
   margin: 0 auto;
 }
 
+.campanias h2{
+  cursor: pointer;
+}
+
 h2 {
   font-size: 35px;
   margin-top: 100px;
@@ -10,9 +14,9 @@ h2 {
 
 .fila {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   height: 280px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .cuadrado {
@@ -37,4 +41,15 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  transition: transform 0.15s;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.CampaniaCard:hover {
+    transform: scale(1.01); 
+}
+
+.CampaniaCard:active {
+    transform: scale(0.99); 
 }

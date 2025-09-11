@@ -1,7 +1,8 @@
 import  CampaniasPorFinalizar  from "./campañasPorFinalizar/campaniaPorFinalizar";
 import CampaniaCard from "./campañasRecientes/campaniaCard";
-import "./campañasRecientes/styles/campanias.css";
-import "./campañasPorFinalizar/styles/campaniasPorFinalizar.css";
+import "./campañasRecientes/campanias.css";
+import "./campañasPorFinalizar/campaniasPorFinalizar.css";
+import BuscarCampañas from "./buscarCampaña/buscarCampañas";
 
 const Campanias = () => {
   const campanias = [ 
@@ -16,7 +17,7 @@ const Campanias = () => {
     <>
     <h2>Recientes</h2>
     <div className="campanias">
-      <div className="campanias-grid">
+      <div className="campanias-grid" onClick={() => {}}>
         <div className="fila">
           <CampaniaCard className="cuadrado" {...campanias[0]} />
           <CampaniaCard className="rectangulo" {...campanias[1]} />
@@ -29,10 +30,10 @@ const Campanias = () => {
       </div>
     </div>
 
-    <div className="containerPorFinalizar">
-      <CampaniasPorFinalizar />
-    </div>
+      <CampaniasPorFinalizar/>
 
+      <BuscarCampañas/>
+    
     </>
   );
 };

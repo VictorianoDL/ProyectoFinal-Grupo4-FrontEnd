@@ -18,19 +18,22 @@ Header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     position: fixed;
     top: 0;
     z-index: 100;
-    
     width: 100%;
-
     color: white;
+    background: transparent;
     
 }
 
 /* ---------------------Main-------------------- */
 
+
+body{
+  background: linear-gradient(to bottom, #00686C, #17294F);
+  
+}
 
 .home{
     width: 100%;

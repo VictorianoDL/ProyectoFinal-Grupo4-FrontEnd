@@ -1,3 +1,5 @@
+import "./campanias.css"
+
 const CampaniaCard = ({ nombre, descripcion, className }: { nombre: string; descripcion: string; className?:string }) => {
     return (
         <div className={`CampaniaCard${className ? ` ${className}` : ''}`}>
