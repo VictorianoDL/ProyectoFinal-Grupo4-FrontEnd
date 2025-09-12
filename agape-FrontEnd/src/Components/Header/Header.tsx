@@ -1,14 +1,18 @@
 import ComponentLogo from "./Component-Logo";
 import ComponentLogoPerfil from "./Component-LogoPerfil";
-
+import "./Header.css";
 
 const Header = () => {
+
     return (
         <header>
             <ComponentLogo></ComponentLogo>
-
-            <h1>AGAPE</h1>
-
+            <div id="conteinerLogo">
+                <a href="  " className="Logo-Agape-Grande">
+                    <img src="../public/Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
+                </a>
+            </div>
+            
             <ComponentLogoPerfil></ComponentLogoPerfil>
         </header>
     );
