@@ -18,56 +18,115 @@ Header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     position: fixed;
     top: 0;
     z-index: 100;
-    
     width: 100%;
-
     color: white;
+    background: transparent;
     
 }
 
 /* ---------------------Main-------------------- */
 
 
+body{
+  background: linear-gradient(to bottom, #00686C, #17294F);
+  
+}
+
 .home{
     width: 100%;
 }
 
-
 .Carrucel {
     width: 100%;
+
     height: 500px;
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
     gap: 20px;
-    margin: 40px 0;
-    background-color: rgb(17, 1, 121);
+    margin: 20px 0;
+    background-color: rgba(1, 39, 121, 0.274);
 }
 .Carrucel img {
-    height: 200px;
-    background-color: white;
+    height: 100%;
+    width: 100%;
+}
+.Carrucel button{
+    height: 100%;
+
+    position: absolute;
+    width: 30%;
+    transition: 0.5s;
+}
+.Carrucel, .Carrucel > img, .Carrucel > button{
+    border-radius: 10px;
 }
 
+#Izquierda{
+    background: linear-gradient( to left,#2590c900, #000000ca);
+    left: 0px;
+}
+#Derecha{
+    background: linear-gradient( to right,#2590c900, #000000ca);
+    right: 0px; 
+}
+.Carrucel button:hover{
+    width: 50%;
+}
+.Carrucel button:active {
+    width: 40%;     
+}
+
+/* no funca */
+/* .fade {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.Carrucel img {
+    opacity: 1;
+    transition: opacity 0.3s;
+} */
+
+
+
+
+
+/* ------------Conteiner de todas las casillas---------- */
+.Casillas-Informacion {
+    margin: 20px 0;
+    display:grid;  
+}
+
+
+/* ------------Cada Casilla---------- */
 .CasillaInfo {
-    display: flex;
+    position: relative;
+    display: flex; 
+    justify-content: flex-start;
+    margin: 10px 0;
+    background-color: #e8b068;
 }
-
 .CasillaInfo img {
-    height: 100px;
-    background-color: white;
+    height: 250px;
+}
+.CasillaInfo p {
+    width: 100%;
+    text-align: justify;
+    margin:30px;
+    font-size: 20px;
+    color: #fffdfd;
 }
 
-.CasillaInfo p {
-    width: 400px;
-    text-align: justify;
-    margin-left: 20px;
-    font-size: 14px;
-    color: #fffdfd;
+
+#bloque{
+    position: absolute;
+    right: 0px;
+    width: 80%;
+    height: 100%;
+    background-color: rgb(125, 0, 0);
+    border-radius: 250px 0px 0px 0px;
+
 }
 
 .main{

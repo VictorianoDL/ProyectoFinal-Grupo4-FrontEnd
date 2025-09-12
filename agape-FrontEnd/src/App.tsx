@@ -6,17 +6,16 @@ import Main from './Components/Main/Main'
 
 function App() {
 
-  return (
-    <>
-      <Header></Header>
- 
-      <BrowserRouter>
-        <Main></Main>
-      </BrowserRouter>
-      
-      <Footer></Footer>    
-    </>
-  )
+    return (
+        <>
+            <BrowserRouter>
+                <Header></Header>
+                <Main></Main>
+            </BrowserRouter>
+
+            <Footer></Footer>
+        </>
+    )
 }
 
 export default App
