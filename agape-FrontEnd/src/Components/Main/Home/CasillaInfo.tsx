@@ -6,21 +6,29 @@ type CasillaInfoProps = {
     };
 
 const CasillaInfo = ({imageUrl,description,row}:CasillaInfoProps) => {
+
     if(row){
         return (
             <div className="CasillaInfo" style={{flexDirection: 'row'}}>
-                <img src={imageUrl} alt="imagen" />
-                <div id="bloque"></div>
                 <p> {description} </p>
+                <img id="cas-Row" className="img-casilla-info shadow2" src="public\img-casilla-Info.png" alt="" />
+                <img id="cas-Row" className="img-casilla-info shadow1" src="public\img-casilla-Info.png" alt="" />
+                <img id="cas-Row" className="img-casilla-info shadow0" src="public\img-casilla-Info.png" alt="" />
+                <img src={imageUrl} alt="imagen" />
             </div>
         );
+
     }else{
         return (
             <div className="CasillaInfo" style={{flexDirection: 'row-reverse'}}>
-                <img src={imageUrl} alt="imagen" />
                 <p> {description} </p>
+                <img id="cas-RowRev" className="img-casilla-info shadow2" src="public\img-casilla-Info.png" alt="" />
+                <img id="cas-RowRev" className="img-casilla-info shadow1" src="public\img-casilla-Info.png" alt="" />
+                <img id="cas-RowRev" className="img-casilla-info shadow0" src="public\img-casilla-Info.png" alt="" />
+                <img src={imageUrl} alt="imagen" />
             </div>
         );
+
     }
 };
 

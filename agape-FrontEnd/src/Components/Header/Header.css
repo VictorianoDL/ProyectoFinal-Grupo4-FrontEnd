@@ -6,7 +6,8 @@ Header {
     top: 0;
     z-index: 100;
     width: 100%;
-    color: var(colorAmarilloClaro);  
+    color: var(colorAmarilloClaro); 
+    background: linear-gradient( #0000007c, #ff000000); 
 }
 
 
@@ -17,7 +18,7 @@ Header {
 }
 .Logo-Agape-Grande img{
     height: 110px;
-    transition: 0.5s;
+    transition: 0.5s;   
 }
 .Logo-Agape-Grande img:hover{
     cursor: pointer;

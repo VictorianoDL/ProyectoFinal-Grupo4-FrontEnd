@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(#258fc9, #151515);
+  background: linear-gradient(to bottom, #00686C, #12244d);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,7 +30,7 @@ a {
 }
 
 body{
-    margin: 0;
+  margin: 0 auto;
 }
 
 button{
