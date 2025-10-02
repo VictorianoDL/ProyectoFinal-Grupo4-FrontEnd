@@ -8,8 +8,8 @@ const Header = () => {
         <header>
             <ComponentLogo></ComponentLogo>
             <div id="conteinerLogo">
-                <a href="  " className="Logo-Agape-Grande">
-                    <img src="../public/Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
+                <a href="/" className="Logo-Agape-Grande">
+                    <img src="../Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
                 </a>
             </div>
             

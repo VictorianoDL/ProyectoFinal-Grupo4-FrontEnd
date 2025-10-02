@@ -1,0 +1,69 @@
+.fotoUsuario {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: solid 4px var(--colorCeleste);
+    z-index: 2;
+}
+
+.container1Usuario {
+    display: flex;
+    align-items: center;
+    margin-top: 100px;
+    position: relative;
+}
+
+.container2Usuario {
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;  
+}
+
+.container2Usuario h2, p {
+    margin: 0;
+}
+
+.container2Usuario p {
+    color: black;
+    background-color: var(--colorNaranjaClaro);
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-top-right-radius: 50px;
+    margin-left: -50px;
+    padding-left: 55px;  
+}
+
+
+
+
+
+.navPerfil {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navPerfil h2 {
+    font-size: 20px;
+    text-align: center;
+    width: 90%;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0;
+    height: 35px;
+}
+
+.navPerfil h2.active {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+.linea {
+    height: 3px;            
+    background-color: var(--colorAmarillo); 
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+

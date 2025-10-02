@@ -5,18 +5,19 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(#258fc9, #151515);
+  background: linear-gradient(to bottom, #00686C, #12244d);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --colorCelsteOscuro: #00686C; 
+  --colorCelesteOscuro: #00686C; 
   --colorCeleste: #32C2B9; 
   --colorAmarilloClaro: #EDECB3; 
   --colorAmarillo: #FAD928; 
   --colorNaranja: #FF9915; 
+  --colorNaranjaClaro: #FDD6A4;
 }
 
 h1, h2, h3{
