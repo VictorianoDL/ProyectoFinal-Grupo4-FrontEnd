@@ -1,23 +1,37 @@
+import "./Footer.css"
+
 const Footer = () => {
   return (
 
     <footer>
       <div className="footer-container">
 
-        <div className="marca">
-          <h3>Agape</h3>
-          <p>Descripcion</p>
+        <div className="footer-brand">
+          <h2>Agape</h2>
+          <p>Donaciones Economicas ❤️</p>
         </div>
 
-        <div className="footer-contacto">
-          <h4>Contacto</h4>
-          <p> . . . </p>
+        <div className="footer-links">
+          <h3>Enlaces</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/campanias">Campañas</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+          </ul>
         </div>
-        
+
+        <div className="footer-social">
+          <h3>Síguenos</h3>
+          <a href="#">🌐</a>
+          <a href="#">🐦</a>
+          <a href="#">📘</a>
+        </div>
+
       </div>
 
-      <p className="copy">&copy; 2025 Agape. Todos los derechos reservados.</p>
-
+      <div className="footer-bottom">
+        <p>© 2025 Agape: Donaciones Economicas. Todos los derechos reservados.</p>
+      </div>
     </footer>
     
   );

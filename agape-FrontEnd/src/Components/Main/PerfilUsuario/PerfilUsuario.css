@@ -61,8 +61,6 @@
 .linea {
     height: 3px;            
     background-color: var(--colorAmarillo); 
-    width: 100%;
-    margin: 0 auto;
 }
 
 

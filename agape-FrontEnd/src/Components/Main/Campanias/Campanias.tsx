@@ -14,27 +14,27 @@ const Campanias = () => {
   ]; 
 
   return (
-    <>
-    <h2>Recientes</h2>
-    <div className="campanias">
-      <div className="campanias-grid" onClick={() => {}}>
-        <div className="fila">
-          <CampaniaCard className="cuadrado" {...campanias[0]} />
-          <CampaniaCard className="rectangulo" {...campanias[1]} />
-        </div>
+    <div>
+      <h2>Recientes</h2>
+      <div className="campanias">
+        <div className="campanias-grid" onClick={() => {}}>
+          <div className="fila">
+            <CampaniaCard className="cuadrado" {...campanias[0]} />
+            <CampaniaCard className="rectangulo" {...campanias[1]} />
+          </div>
 
-        <div className="fila">
-          <CampaniaCard className="rectangulo" {...campanias[2]} />
-          <CampaniaCard className="cuadrado" {...campanias[3]} />
+          <div className="fila">
+            <CampaniaCard className="rectangulo" {...campanias[2]} />
+            <CampaniaCard className="cuadrado" {...campanias[3]} />
+          </div>
         </div>
       </div>
-    </div>
 
-      <CampaniasPorFinalizar/>
+        <CampaniasPorFinalizar/>
 
-      <BuscarCampañas/>
+        <BuscarCampañas/>
     
-    </>
+    </div>
   );
 };
 

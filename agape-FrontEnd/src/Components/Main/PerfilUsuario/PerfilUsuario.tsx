@@ -5,7 +5,7 @@ const PerfilUsuario = () => {
     const [activeTab, setActiveTab] = useState("usuario");
 
     return (
-        <>
+        <div>
             <div className="container1Usuario">
                 <img 
                     src="https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"
@@ -52,7 +52,7 @@ const PerfilUsuario = () => {
 
             
             
-        </>
+        </div>
     );
 }
 
