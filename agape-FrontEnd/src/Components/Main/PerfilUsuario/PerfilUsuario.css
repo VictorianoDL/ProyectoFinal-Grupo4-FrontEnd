@@ -11,12 +11,13 @@
     align-items: center;
     margin-top: 100px;
     position: relative;
+    
 }
 
 .container2Usuario {
     margin-left: 30px;
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
 }
 
 .container2Usuario h2, p {
@@ -46,22 +47,150 @@
 
 .navPerfil h2 {
     font-size: 20px;
+    border-radius: 10px;
     text-align: center;
     width: 90%;
     cursor: pointer;
     position: relative;
     margin-bottom: 0;
     height: 35px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .navPerfil h2.active {
     background-color: rgba(200, 200, 200, 0.3);
+    border-radius: 10px;
 }
+
 
 .linea {
     height: 3px;            
     background-color: var(--colorAmarillo); 
+    border-radius: 10px;
 }
+
+
+
+.usuarioContent, .campaniaContent {
+    height: 100%;
+    margin-top: 20px;
+    border: solid 2px var(--colorCeleste);
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.3);
+    position: relative;
+}
+
+.datosUsuario, .datosCampania {
+    font-size: 18px;
+    padding: 20px;
+}
+
+.datosUsuario dt {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.datosCampania dt {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.botonEditar {
+    background-color: var(--colorNaranja);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.botonEditar:hover {
+    background-color: var(--colorCeleste);
+    transition: 0.3s;
+}
+
+
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.modal {
+    background: var(--colorNaranjaClaro);
+    color: black;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1.5rem;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.modal div {
+    margin-bottom: 12px;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.modal input, .modal textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.modal textarea {
+    resize: vertical;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: var(--colorNaranja);
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.modal-buttons button:hover {
+    background: var(--colorCelesteOscuro);
+}
+
+
+
 
 
 
