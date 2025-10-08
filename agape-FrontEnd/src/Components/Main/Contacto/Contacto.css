@@ -1,0 +1,73 @@
+.Contacto{
+    padding: 20px;
+    background-color: var(--colorNaranja);
+    border-radius: 10px 10px 0px 0px;
+    color: var(--colorAmarilloClaro);
+}
+
+.Contacto form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form div{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+form div button{
+    background-color: var(--colorCeleste);
+    font-weight: bold;
+    padding: 10px;
+}
+form div button:hover{
+    background-color: #289a92;  
+}
+
+#label-nombre, #label-email{
+    display: flex;
+    flex-direction: row;
+}
+#label-nombre span, #label-email span{
+    padding: 10px;
+    background-color: #feb049;
+    border-radius: 10px 0px 0px 10px;
+
+}
+#label-nombre input, #label-email input{
+    padding: 10px;
+    color: orangered;
+    background-color: #ffd6a1;
+    border-radius: 0px 10px 10px 0px;
+    margin: 0px;
+    transition: outline 0.3s;
+}
+
+
+#label-mensaje{
+    display: flex;
+    flex-direction: column;
+}
+
+#label-mensaje p{
+    padding: 10px;
+    background-color: #feb049;
+    border-radius: 10px 10px 0px 0px;
+    margin: 0px;
+}
+
+#label-mensaje textarea{
+    padding: 10px;
+    color: orangered;
+    background-color: #ffd6a1;
+    border-radius: 0px 0px 10px 10px;
+    margin: 0px;
+    min-height: 100px;
+    resize: vertical;
+    transition: outline 0.3s;
+}
+
+input:focus, textarea:focus{
+    outline: 3px solid var(--colorCeleste);
+}

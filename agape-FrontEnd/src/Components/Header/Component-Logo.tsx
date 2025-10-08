@@ -8,6 +8,8 @@ const ComponentLogo = () => {
                 <Route path="/" element= {<h3>Home</h3>} />
                 <Route path="/campanias" element= {<h3>Campañas</h3>} />
                 {/* agregar mas rutas */}
+                <Route path="/perfil-campaña" element= {<h3>Perfil de Campania</h3>} />
+                <Route path="/Contacto" element= {<h3>Contacto</h3>} />
             </Routes>             
         </div>
     );
