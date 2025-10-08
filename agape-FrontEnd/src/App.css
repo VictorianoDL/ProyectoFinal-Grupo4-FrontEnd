@@ -6,9 +6,9 @@
 
 .main > div{
     width: 100%;
-    max-width: 1024px;
+    min-height: 100vh;
+    max-width: 1500px;  
     margin: 0 auto;
     margin-top: 150px;
 }
-
 

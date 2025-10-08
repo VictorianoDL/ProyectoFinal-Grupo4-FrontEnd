@@ -11,9 +11,9 @@ const CasillaInfo = ({imageUrl,description,row}:CasillaInfoProps) => {
         return (
             <div className="CasillaInfo" style={{flexDirection: 'row'}}>
                 <p> {description} </p>
-                <img id="cas-Row" className="img-casilla-info shadow2" src="public\img-casilla-Info.png" alt="" />
-                <img id="cas-Row" className="img-casilla-info shadow1" src="public\img-casilla-Info.png" alt="" />
-                <img id="cas-Row" className="img-casilla-info shadow0" src="public\img-casilla-Info.png" alt="" />
+                <img id="cas-Row" className="img-casilla-info shadow2" src="./imagenes/img-casilla-Info.png" alt="" />
+                <img id="cas-Row" className="img-casilla-info shadow1" src="./imagenes/img-casilla-Info.png" alt="" />
+                <img id="cas-Row" className="img-casilla-info shadow0" src="./imagenes/img-casilla-Info.png" alt="" />
                 <img src={imageUrl} alt="imagen" />
             </div>
         );
@@ -22,9 +22,9 @@ const CasillaInfo = ({imageUrl,description,row}:CasillaInfoProps) => {
         return (
             <div className="CasillaInfo" style={{flexDirection: 'row-reverse'}}>
                 <p> {description} </p>
-                <img id="cas-RowRev" className="img-casilla-info shadow2" src="public\img-casilla-Info.png" alt="" />
-                <img id="cas-RowRev" className="img-casilla-info shadow1" src="public\img-casilla-Info.png" alt="" />
-                <img id="cas-RowRev" className="img-casilla-info shadow0" src="public\img-casilla-Info.png" alt="" />
+                <img id="cas-RowRev" className="img-casilla-info shadow2" src="./imagenes/img-casilla-Info.png" alt="" />
+                <img id="cas-RowRev" className="img-casilla-info shadow1" src="./imagenes/img-casilla-Info.png" alt="" />
+                <img id="cas-RowRev" className="img-casilla-info shadow0" src="./imagenes/img-casilla-Info.png" alt="" />
                 <img src={imageUrl} alt="imagen" />
             </div>
         );
