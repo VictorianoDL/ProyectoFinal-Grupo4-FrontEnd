@@ -1,125 +1,13 @@
-
-
-/* ---------------------Header-------------------- */
-
-Header img {
-    height: 20px;
-    background-color: white;
-}
-
-.ComponentLogo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px;
-}
-
-Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    position: fixed;
-    top: 0;
-    z-index: 100;
-    
-    width: 100%;
-
-    color: white;
-    
-}
-
 /* ---------------------Main-------------------- */
-
-
-.home{
-    width: 100%;
-}
-
-
-.Carrucel {
-    width: 100%;
-    height: 500px;
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin: 40px 0;
-    background-color: rgb(17, 1, 121);
-}
-.Carrucel img {
-    height: 200px;
-    background-color: white;
-}
-
-.CasillaInfo {
-    display: flex;
-}
-
-.CasillaInfo img {
-    height: 100px;
-    background-color: white;
-}
-
-.CasillaInfo p {
-    width: 400px;
-    text-align: justify;
-    margin-left: 20px;
-    font-size: 14px;
-    color: #fffdfd;
-}
-
 .main{
     padding: 0 40px;
 }
 
-
-
-/* ---------------------Footer-------------------- */
-
-Footer {
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: 200px;  
+.main > div{
     width: 100%;
-    background-color: #e8b068;
-    color: white;
-    
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    min-height: 100vh;
+    max-width: 1024px;  
+    margin: 0 auto;
+    margin-top: 150px;
 }
 
-
-
-
-
-
-
-
-
-/* @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-/* @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-} */
-
-/* .card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-} */

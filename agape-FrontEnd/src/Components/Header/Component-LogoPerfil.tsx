@@ -1,8 +1,8 @@
 const ComponentLogoPerfil = () => {
     return (
-        <div className="ComponentLogo">
-            <h3>Login/register</h3> 
-            <img src="https://i.postimg.cc/3x3QzSGq/logo.png" alt="Logo" />     
+        <div className="ComponentLogo-Perfil">
+            <img src="https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg" alt="Logo" /> 
+            <a>Login/register</a>     
         </div>
     );
 }

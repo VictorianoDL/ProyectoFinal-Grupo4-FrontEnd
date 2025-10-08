@@ -1,0 +1,42 @@
+input{
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    width: 300px;
+    background-color: #D9D9D9;
+    color: black;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.buscarCampañas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 20px;
+    
+}
+
+.resultadoCard{
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    background-color: #FDD6A4;
+    color: black;
+    transition: transform 0.2s; 
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resultadoCard:hover{
+    transform: scale(1.01);
+}
+
+.resultadoCard:active {
+    transform: scale(0.99); 
+}

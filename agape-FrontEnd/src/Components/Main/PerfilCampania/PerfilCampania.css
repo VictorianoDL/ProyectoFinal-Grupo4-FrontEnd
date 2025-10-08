@@ -1,0 +1,56 @@
+.perfil-campania {
+    display: grid;
+    grid-template-columns: 4fr 5fr;
+    color: var(--colorAmarilloClaro)
+}
+
+.conteiner-donaciones {
+    padding: 20px 20px 0px 20px;
+
+    border-radius: 10px 10px 0px 0px;
+    background-color: var(--colorNaranja);
+    display: flex;
+    flex-direction: column;
+}
+
+.porcentaje {
+    border-radius: 10px;
+    background-color: var(--colorAmarillo);
+    margin: 0px;
+    width: 100%;
+    text-align: center;
+}
+.porcentaje h2{
+    margin: 0px;
+}
+
+.lista-boton{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+}
+.lista-boton button{
+    background-color: var(--colorAmarilloClaro);
+    color: var(--colorNaranja);
+    font-weight: 600;
+    padding: 10px;
+}
+.lista-boton button:hover{
+    background-color: var(--colorAmarillo);
+}
+
+.lista-donadores{
+    margin: 0px;
+    padding: 10px;
+    background-color: brown; 
+    height: 100%;   
+}
+
+
+.conteiner-informacion {
+    padding: 20px;
+}
+
+.conteiner-informacion h1, .conteiner-informacion h3{
+    margin: 0px;
+}
