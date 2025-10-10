@@ -123,7 +123,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    z-index: 101;
 }
 
 .modal {
@@ -137,33 +137,33 @@
     flex-direction: column;
     justify-content: space-around;
     gap: 1.5rem;
-}
-
-.modalHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.modal div {
     margin-bottom: 12px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+
 
 .modal label {
     display: block;
-    margin-bottom: 4px;
-    font-size: 14px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .modal input, .modal textarea {
     width: 100%;
-    padding: 10px;
+    font-size: 17px;
     border-radius: 5px;
+    background-color: white;
 }
 
-.modal textarea {
-    resize: vertical;
+.inputDesc {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 150px;
+    padding: 10px;
+    color: black;
+    resize: none;
+    border: none;
 }
 
 .modal-buttons {
@@ -190,6 +190,22 @@
 }
 
 
+
+.donacionesUsuario {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    justify-content: space-around;
+    border: solid 2px var(--colorCeleste);
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.3);
+    margin-bottom: 10px;
+}
+
+.donacionesUsuario p{
+    margin: 10px;
+}
 
 
 

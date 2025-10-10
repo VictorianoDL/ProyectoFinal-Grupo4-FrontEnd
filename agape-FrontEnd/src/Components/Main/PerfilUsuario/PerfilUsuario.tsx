@@ -2,10 +2,18 @@ import { useState } from 'react';
 import './PerfilUsuario.css'
 
 const PerfilUsuario = () => {
+    const [query, setQuery] = useState('');
     const [activeTab, setActiveTab] = useState("usuario");
     const [modalOpen, setModalOpen] = useState(false);
     const [formState, setFormState] = useState<Partial<Usuario & Campania>>({});
 
+    const donaciones = [
+        { campaña: "Campaña1", monto: 100, fecha: "2023-10-01" },
+        { campaña: "Campaña Solidaria", monto: 250, fecha: "2023-11-10" },
+        { campaña: "Ayuda Animal", monto: 150, fecha: "2023-12-05" }
+    ];
+
+    const donacionesFiltradas = donaciones.filter(donacion =>donacion.campaña.toLowerCase().includes(query.toLowerCase()));
 
     interface Usuario {
         nombre: string;
@@ -141,16 +149,44 @@ const PerfilUsuario = () => {
 
                         <dt>Total a Recaudar:</dt>
                         <dd>12345</dd>
+
+                        <dt>Fecha de Creacion:</dt>
+                        <dd>12-34-56</dd>
                     </dl> 
                 </div>
                 )}
+            </div>
+
+            <div>
+                <h2>Donaciones Hechas</h2>
+
+                <input
+                    type="text"
+                    placeholder="Buscar donación..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+
+                <div className='donacionesRecibidas'>
+                    {donacionesFiltradas.length > 0 ? (
+                        donacionesFiltradas.map((donacion, index) => (
+                            <div key={index} className='donacionesUsuario'>
+                                <p><strong>Campaña:</strong> {donacion.campaña}</p>
+                                <p><strong>Monto:</strong> ${donacion.monto}</p>
+                                <p><strong>Fecha:</strong> {donacion.fecha}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No se encontraron resultados.</p>
+                    )}
+                </div>
             </div>
 
             {modalOpen && (
                 <div className="modalOverlay">
                     <div className="modal">
                     <div className="modalHeader">
-                        <h3>{activeTab === 'usuario' ? 'Editar Usuario' : 'Editar Campaña'}</h3>
+                        <h1>{activeTab === 'usuario' ? 'Editar Usuario' : 'Editar Campaña'}</h1>
                     </div>
 
                     {activeTab === 'usuario' ? (
@@ -184,7 +220,7 @@ const PerfilUsuario = () => {
                         </div>
                         <div>
                             <label>Descripción</label>
-                            <textarea name="descripcion" value={formState.descripcion || ''} onChange={handleChange} />
+                            <textarea className='inputDesc' name="descripcion" value={formState.descripcion || ''} onChange={handleChange} />
                         </div>
                         <div>
                             <label>Tipo</label>
