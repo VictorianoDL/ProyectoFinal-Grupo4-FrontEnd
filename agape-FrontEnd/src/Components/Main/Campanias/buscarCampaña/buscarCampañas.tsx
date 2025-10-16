@@ -1,20 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./buscarCampañas.css";
+import { useNavigate } from "react-router-dom";
+
+type Campania = {
+    id_campania: number;
+    nombre: string;
+    descripcion?: string;
+};
 
 const BuscarCampañas: React.FC = () => {
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState<string>("");
+    const [campanias, setCampanias] = useState<Campania[]>([]);
+    const navigate = useNavigate();
 
-    const campanias = [
-        { nombre: 'Campaña 1', descripcion: 'Descripción de la campaña 1' },
-        { nombre: 'Campaña 2', descripcion: 'Descripción de la campaña 2' },
-        { nombre: 'Campaña 3', descripcion: 'Descripción de la campaña 3' },
-        { nombre: 'Campaña 4', descripcion: 'Descripción de la campaña 4' },
-        { nombre: 'Campaña 5', descripcion: 'Descripción de la campaña 5' },
-        { nombre: 'Campaña 6', descripcion: 'Descripción de la campaña 6' },
-        { nombre: 'Campaña 7', descripcion: 'Descripción de la campaña 7' }
-    ];
+    useEffect(() => {
+        const fetchCampanias = async () => {
+            try {
+                const res = await fetch("http://localhost:3000/campanias");
+                if (!res.ok) {
+                    console.error("Error en la respuesta:", res.status, res.statusText);
+                    return;
+                }
+                const data: Campania[] = await res.json();
+                setCampanias(data);
+            } catch (err) {
+                console.error("Error al cargar campañas", err);
+            }
+        };
+        fetchCampanias();
+    }, []);
 
-    const resultadosFiltrados = campanias.filter(campania => campania.nombre.toLowerCase().includes(query.toLowerCase()));
+    const resultadosFiltrados = campanias.filter(c => c.nombre.toLowerCase().includes(query.toLowerCase()));
 
     return (
         <div>
@@ -28,15 +44,19 @@ const BuscarCampañas: React.FC = () => {
 
             <div className="buscarCampañas">
                 {resultadosFiltrados.length > 0 ? (
-                    resultadosFiltrados.map((campania, index) => (
-                        <div key={index} className="resultadoCard" onClick={() => {}}>
-                            <p className="nombre">{campania.nombre}</p>
-                            <p className="descripcion">{campania.descripcion}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No se encontraron campañas.</p>
-                )}
+                    resultadosFiltrados.map(campania => (
+                <div
+                    key={campania.id_campania}
+                    className="resultadoCard"
+                    onClick={() => navigate(`/campanias/${campania.id_campania}`)}
+                >
+                    <p className="nombre">{campania.nombre}</p>
+                    <p className="descripcion">{campania.descripcion}</p>
+                </div>
+                ))
+            ) : (
+                <p>No se encontraron campañas.</p>
+            )}
             </div>
         </div>
     );
