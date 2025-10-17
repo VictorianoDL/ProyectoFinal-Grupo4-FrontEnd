@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import './PerfilCampania.css'
+import { useNavigate } from "react-router-dom";
 
 const PerfilCampania = () => {
+    const navigate = useNavigate();
+    
     return (
         <div className="perfil-campania">
             <div className='conteiner-donaciones'>
@@ -9,7 +13,7 @@ const PerfilCampania = () => {
                 </div>
                 <div className='lista-boton'>
                     <h3>lista donaciones</h3>
-                    <button>Donar</button>
+                    <button onClick={()=>navigate("/donar")}>Donar</button>
                 </div>
                 <div className='lista-donadores'>
                     <p>nombreUsuario | fecha | monto</p>

@@ -1,11 +1,16 @@
 .Contacto{
-    padding: 20px;
     background-color: var(--colorNaranja);
     border-radius: 10px 10px 0px 0px;
     color: var(--colorAmarilloClaro);
 }
 
+.Contacto h1{
+    padding: 20px;
+    margin: 0px;
+}
+
 .Contacto form{
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -13,7 +18,7 @@
 
 form div{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr;
     gap: 10px;
 }
 form div button{
@@ -68,6 +73,3 @@ form div button:hover{
     transition: outline 0.3s;
 }
 
-input:focus, textarea:focus{
-    outline: 3px solid var(--colorCeleste);
-}

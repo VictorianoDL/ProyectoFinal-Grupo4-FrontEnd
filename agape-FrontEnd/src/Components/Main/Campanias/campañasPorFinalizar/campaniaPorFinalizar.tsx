@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./campaniasPorFinalizar.css";
 
 const CampaniasPorFinalizar: React.FC = () => {
+  const navigate = useNavigate();
+
   const campanias = [
     { nombre: "Campaña 1", porcentaje: 75 },
     { nombre: "Campaña 2", porcentaje: 55 },
@@ -13,7 +16,7 @@ const CampaniasPorFinalizar: React.FC = () => {
     <div className="segundoContainer">
       <h2>A nada de llegar al objetivo!</h2>
       {campanias.map((campania, index) => (
-        <div key={index} className="barraContainer" onClick={() => {}}>
+        <div key={index} className="barraContainer" onClick={() => navigate("/perfil-campania")}>
           <div className="barraFondo">
             <div
               className="barraRelleno"

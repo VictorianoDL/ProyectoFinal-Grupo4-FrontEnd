@@ -6,12 +6,10 @@
     z-index: 2;
 }
 
-.container1Usuario {
+.container1Usuario{
     display: flex;
     align-items: center;
-    margin-top: 100px;
     position: relative;
-    
 }
 
 .container2Usuario {
@@ -111,8 +109,6 @@
     transition: 0.3s;
 }
 
-
-
 .modalOverlay {
     position: fixed;
     top: 0;
@@ -132,6 +128,7 @@
     padding: 30px;
     border-radius: 10px;
     width: 400px;
+    height: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;

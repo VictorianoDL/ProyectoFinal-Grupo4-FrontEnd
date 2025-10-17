@@ -48,7 +48,7 @@ const BuscarCampañas: React.FC = () => {
                 <div
                     key={campania.id_campania}
                     className="resultadoCard"
-                    onClick={() => navigate(`/campanias/${campania.id_campania}`)}
+                    onClick={() => navigate("/perfil-campania")}
                 >
                     <p className="nombre">{campania.nombre}</p>
                     <p className="descripcion">{campania.descripcion}</p>

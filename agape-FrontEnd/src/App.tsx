@@ -11,9 +11,8 @@ function App() {
             <BrowserRouter>
                 <Header></Header>
                 <Main></Main>
-            </BrowserRouter>
-
-            <Footer></Footer>
+                <Footer></Footer>
+            </BrowserRouter>  
         </>
     )
 }

@@ -1,5 +1,5 @@
 footer {
-  background: linear-gradient(var(--colorNaranja) , rgb(219, 144, 4));
+  background: linear-gradient( rgb(253, 142, 15),var(--colorNaranja));
   color: var(--colorAmarilloClaro);
   padding: 40px 20px 20px;
   font-family: Arial, sans-serif;
@@ -30,14 +30,15 @@ footer h3{
   margin: 8px 0;
 }
 
-.footer-links a {
+.footer-links p {
   color: var(--colorAmarilloClaro);
   text-decoration: none;
   transition: color 0.3s;
 }
 
-.footer-links a:hover {
+.footer-links p:hover {
   color: #f5c518;
+  cursor: pointer;
 }
 
 .footer-social a {

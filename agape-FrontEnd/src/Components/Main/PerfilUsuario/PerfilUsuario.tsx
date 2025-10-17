@@ -45,8 +45,6 @@ const PerfilUsuario = () => {
         total: '12345'
     });
 
-
-
     function closeModal() {
         setModalOpen(false);
     }
@@ -62,13 +60,8 @@ const PerfilUsuario = () => {
         setModalOpen(false);
     }
 
-
-
-
-
-
     return (
-        <div>
+        <div className="perfilUsuario">
             <div className="container1Usuario">
                 <img 
                     src="https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"
@@ -90,7 +83,6 @@ const PerfilUsuario = () => {
                     }}
                 >Editar
                 </button>
-
             </div>
 
             

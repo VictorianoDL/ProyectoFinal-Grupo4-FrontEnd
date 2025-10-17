@@ -15,7 +15,7 @@ const Campanias = () => {
 
   return (
     <div>
-      <h2>Recientes</h2>
+      <h2 id="h2">Recientes</h2>
       <div className="campanias">
         <div className="campanias-grid" onClick={() => {}}>
           <div className="fila">
