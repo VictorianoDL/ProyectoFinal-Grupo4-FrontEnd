@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useUser } from "../../../Context/UserContext";
 import './PerfilUsuario.css'
 
 const PerfilUsuario = () => {
@@ -6,6 +7,19 @@ const PerfilUsuario = () => {
     const [activeTab, setActiveTab] = useState("usuario");
     const [modalOpen, setModalOpen] = useState(false);
     const [formState, setFormState] = useState<Partial<Usuario & Campania>>({});
+
+    const { userName, setUserName } = useUser();
+    const { name, setName } = useUser();
+    const { lastName, setLastName } = useUser();
+    const { email, setEmail } = useUser();
+    
+    // fetch para traer donaciones de un usuario
+    // fetch para traer datos su de una campaña
+    // fetch y post para actualizar datos de usuario
+    // fetch y post para actualizar datos de campaña
+    // tal vez un usueContext para los datos de la campaña
+    // acomodar los estilos del boton editar para que este encima de los div de informacion de campaña y usuario
+    // achicar las dimensiones del modal de edicion
 
     const donaciones = [
         { campaña: "Campaña1", monto: 100, fecha: "2023-10-01" },
@@ -70,19 +84,9 @@ const PerfilUsuario = () => {
                 />
 
                 <div className='container2Usuario'>
-                    <h2>Usuario1234</h2>
-                    <p>example@gmail.com</p>
+                    <h2>{userName}</h2>
+                    <p>{email}</p>
                 </div>
-                
-                <button
-                    className='botonEditar'
-                    onClick={() => {
-                        if (activeTab === 'usuario') setFormState({ ...datosUsuario });
-                        else setFormState({ ...datosCampania });
-                        setModalOpen(true);
-                    }}
-                >Editar
-                </button>
             </div>
 
             
@@ -101,51 +105,52 @@ const PerfilUsuario = () => {
             <div className='linea'></div>
             
             <div className="tabContent">
+                <button
+                    className='botonEditar'
+                    onClick={() => {
+                        if (activeTab === 'usuario') setFormState({ ...datosUsuario });
+                        else setFormState({ ...datosCampania });
+                        setModalOpen(true);
+                    }}
+                >Editar
+                </button>
                 {activeTab === "usuario" && (
+                    <div className='usuarioContent'>
+                        <dl className='datosUsuario'>
+                            <dt>Nombre:</dt>
+                            <dd>{name}</dd>
 
-                <div className='usuarioContent'>
-                    <dl className='datosUsuario'>
-                        <dt>Nombre:</dt>
-                        <dd>Nombre1234</dd>
+                            <dt>Apellido:</dt>
+                            <dd>{lastName}</dd>
 
-                        <dt>Apellido:</dt>
-                        <dd>Apellido1234</dd>
+                            <dt>Nombre de Usuario:</dt>
+                            <dd>{userName}</dd>
 
-                        <dt>Nombre de Usuario</dt>
-                        <dd>Usuario1234</dd>
-
-                        <dt>Email:</dt>
-                        <dd>Email1234@gmail.com</dd>
-
-                        <dt>Contraseña:</dt>
-                        <dd>********</dd>
-                    </dl>
-                
-                    
-                </div>
+                            <dt>Email:</dt>
+                            <dd>{email}</dd>
+                        </dl>
+                    </div>
                 )}
 
-            
                 {activeTab === "campania" && (
+                    <div className='campaniaContent'>
+                        <dl className='datosCampania'>
+                            <dt>Nombre:</dt>
+                            <dd>Campania1234</dd>
 
-                <div className='campaniaContent'>
-                    <dl className='datosCampania'>
-                        <dt>Nombre:</dt>
-                        <dd>Campania1234</dd>
+                            <dt>Descripcion:</dt>
+                            <dd>Descripcion1234</dd>
 
-                        <dt>Descripcion:</dt>
-                        <dd>Descripcion1234</dd>
+                            <dt>Tipo</dt>
+                            <dd>Tipo1234</dd>
 
-                        <dt>Tipo</dt>
-                        <dd>Tipo1234</dd>
+                            <dt>Total a Recaudar:</dt>
+                            <dd>12345</dd>
 
-                        <dt>Total a Recaudar:</dt>
-                        <dd>12345</dd>
-
-                        <dt>Fecha de Creacion:</dt>
-                        <dd>12-34-56</dd>
-                    </dl> 
-                </div>
+                            <dt>Fecha de Creacion:</dt>
+                            <dd>12-34-56</dd>
+                        </dl> 
+                    </div>
                 )}
             </div>
 
