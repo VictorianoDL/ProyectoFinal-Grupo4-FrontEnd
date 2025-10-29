@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 const ComponentLogoPerfil = () => {
     const navigate = useNavigate();
@@ -39,25 +40,27 @@ const ComponentLogoPerfil = () => {
                 const res = await fetch("http://localhost:3000/auth/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: userEmail.value, password: contraseniaName.value }),
+                    credentials: 'include',
+                    body: JSON.stringify({ email: userEmail.value, contraseña: contraseniaName.value }),
                 });
 
                 
                 if (res.ok){
                     const data = await res.json();
 
-                    setId(data.id);
-                    setUserName(data.nombreUsuario);
-                    setName(data.nombre);
-                    setLastName(data.apellido);
-                    setEmail(data.email);
+                    setId(data.user.id);
+                    setUserName(data.user.nombreUsuario);
+                    setName(data.user.nombre);
+                    setLastName(data.user.apellido);
+                    setEmail(data.user.email);
 
                     setIsLogged(true);
                     setIsOpen(false);
 
-                    console.log("Usuario logeado:", data);
-
-                } throw new Error("Credenciales inválidas");
+                
+                } else {
+                  throw new Error("Credenciales inválidas");
+                } 
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 p.innerText = "Error al iniciar sesión  " + err;
@@ -71,6 +74,7 @@ const ComponentLogoPerfil = () => {
             try {
 
                 let body = {
+                    nombreUsuario: userNameTag.value,
                     nombre: userName.value,
                     apellido: userLastName.value,
                     email:userEmail.value,
@@ -94,8 +98,10 @@ const ComponentLogoPerfil = () => {
                     setIsLogged(true);
                     setIsRegister(false);
                     setIsOpen(false);
-                    // acomodar esto
-                } throw new Error("???");
+                
+                } else {
+                  throw new Error("???");
+                } 
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 // acomodar esto
@@ -104,6 +110,38 @@ const ComponentLogoPerfil = () => {
             } 
         }  
     };
+
+    const handleGoogleLogin = async (credentialResponse: any) => {
+        try {
+            const token = credentialResponse.credential;
+            const res = await fetch("http://localhost:3000/auth/google/callback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token }),
+                credentials: "include"
+            });
+
+            if(res.ok){
+                const data = await res.json();
+                setId(data.user.id);
+                setUserName(data.user.nombreUsuario);
+                setName(data.user.nombre);
+                setLastName(data.user.apellido);
+                setEmail(data.user.email);
+                setIsLogged(true);
+                setIsOpen(false);
+            } else {
+                console.error("Error al iniciar sesión con Google");
+            }
+        } catch (err) {
+            console.error("Error en Google Login:", err);
+        }
+    }
+
+    const loginWithGoogle = useGoogleLogin({
+        onSuccess: handleGoogleLogin,
+        onError: () => console.error("Error de Google Login"),
+    });
 
     return (
         <div className="ComponentLogo-Perfil">
@@ -142,6 +180,42 @@ const ComponentLogoPerfil = () => {
                                     </div>
 
                                     <a onClick={() => setIsRegister(true)}>Registrarse</a>
+
+                                    <GoogleLogin
+                                        onSuccess={async (credentialResponse) => {
+                                            console.log('Google credentialResponse:', credentialResponse);
+                                            // credentialResponse.credential contiene el ID token (JWT) en el flujo "credential"
+                                            const idToken = (credentialResponse as any)?.credential;
+                                            if (!idToken) {
+                                            console.error('No id_token recibido desde Google');
+                                            return;
+                                            }
+                                            try {
+                                            const res = await fetch("http://localhost:3000/auth/google/callback", {
+                                                method: "POST",
+                                                headers: { "Content-Type": "application/json" },
+                                                body: JSON.stringify({ token: idToken }),
+                                                credentials: "include",
+                                            });
+                                            if (!res.ok) {
+                                                console.error('Error en backend Google callback:', await res.text());
+                                                return;
+                                            }
+                                            const data = await res.json();
+                                            // actualizar UserContext igual que haces en login normal
+                                            setId(data.user.id_Usuario ?? data.user.id ?? 0);
+                                            setUserName(data.user.nombreUsuario);
+                                            setName(data.user.nombre);
+                                            setLastName(data.user.apellido);
+                                            setEmail(data.user.email);
+                                            setIsLogged(true);
+                                            setIsOpen(false);
+                                            } catch (err) {
+                                            console.error('Error al enviar token a backend:', err);
+                                            }
+                                        }}
+                                        onError={() => console.error('Error en GoogleLogin componente')}
+                                        />
                                 </>
                             :
                                 <>                                      
