@@ -8,11 +8,11 @@ const ComponentLogoPerfil = () => {
     const [isLogged, setIsLogged] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
 
-    const { id, setId } = useUser();
-    const { userName, setUserName } = useUser();
-    const { name, setName } = useUser();
-    const { lastName, setLastName } = useUser();
-    const { email, setEmail } = useUser();
+    const { setId , userName, setUserName, setName, setLastName, setEmail, setAccessToken, accessToken } = useUser();
+
+    if(accessToken == null && isLogged == false){
+        setIsLogged(true)
+    }
     
     const imagenClick = () => {
         if (isLogged) {
@@ -32,32 +32,37 @@ const ComponentLogoPerfil = () => {
         if(!isRegister){
             // logearse
             try {
-                // Fetch de prueba
-                // const res = await fetch("http://localhost:3000/usuarios/1");
-
-                // Este deberia ir
                 const res = await fetch("http://localhost:3000/auth/login", {
                     method: "POST",
+                    credentials: 'include',
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: userEmail.value, password: contraseniaName.value }),
+                    body: JSON.stringify({ email: userEmail.value, contraseña: contraseniaName.value }),
                 });
 
                 
                 if (res.ok){
                     const data = await res.json();
 
-                    setId(data.id);
-                    setUserName(data.nombreUsuario);
-                    setName(data.nombre);
-                    setLastName(data.apellido);
-                    setEmail(data.email);
+                    // guardar access_token en contexto para usar en futuras peticiones
+                    if (data.access_token) {
+                        setAccessToken(data.access_token);
+                    }
+
+                    setId(data.user.id);
+                    setUserName(data.user.nombreUsuario);
+                    setName(data.user.nombre);
+                    setLastName(data.user.apellido);
+                    setEmail(data.user.email);
 
                     setIsLogged(true);
                     setIsOpen(false);
 
                     console.log("Usuario logeado:", data);
 
-                } throw new Error("Credenciales inválidas");
+                }else{
+                    throw new Error("Credenciales inválidas");
+                } 
+
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 p.innerText = "Error al iniciar sesión  " + err;
@@ -71,6 +76,7 @@ const ComponentLogoPerfil = () => {
             try {
 
                 let body = {
+                    nombreUsuario:userNameTag.value,
                     nombre: userName.value,
                     apellido: userLastName.value,
                     email:userEmail.value,
@@ -78,14 +84,13 @@ const ComponentLogoPerfil = () => {
                 }
 
                 const res = await fetch("http://localhost:3000/auth/register", {
-                    // Acomodar esto
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                 });
 
                 if (res.ok){
-                    
+
                     setUserName(userNameTag.value);
                     setName(userName.value);
                     setLastName(userLastName.value);
@@ -94,13 +99,15 @@ const ComponentLogoPerfil = () => {
                     setIsLogged(true);
                     setIsRegister(false);
                     setIsOpen(false);
-                    // acomodar esto
-                } throw new Error("???");
+
+                }else{
+                    throw new Error("???");
+                } 
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 // acomodar esto
-                p.innerText = "Error al iniciar sesión  " + err;
-                console.error("Error al iniciar sesión  " + err );
+                p.innerText = "Error al registrarse  " + err;
+                console.error("Error al registrarse  " + err );
             } 
         }  
     };

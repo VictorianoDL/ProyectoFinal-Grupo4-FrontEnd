@@ -89,7 +89,6 @@ const PerfilUsuario = () => {
                 </div>
             </div>
 
-            
             <div className="navPerfil">
                 <h2
                     className={activeTab === "usuario" ? "active" : ""}

@@ -11,6 +11,8 @@ interface UserContextType {
     setLastName: (lastName: string) => void;
     email: string;
     setEmail: (email: string) => void;
+    accessToken?: string | null;
+    setAccessToken: (t: string | null) => void;
 }
 
 // Creamos el contexto con un valor por defecto
@@ -23,10 +25,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [name, setName] = useState("Name");
     const [lastName, setLastName] = useState("Last Name");
     const [email, setEmail] = useState("ejemplo@email.com");
-
+    const [accessToken, setAccessToken] = useState<string | null>(null);
 
     return (
-        <UserContext.Provider value={{ id, setId, userName, setUserName, name, setName, lastName, setLastName, email, setEmail }}>
+        <UserContext.Provider value={{ 
+                    id, setId, userName, setUserName,
+                    name, setName, lastName, setLastName, 
+                    email, setEmail, accessToken, setAccessToken}}>
             {children}
         </UserContext.Provider>
     );
