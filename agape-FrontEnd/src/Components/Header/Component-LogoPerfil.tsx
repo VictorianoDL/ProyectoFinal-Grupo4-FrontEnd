@@ -10,7 +10,7 @@ const ComponentLogoPerfil = () => {
 
     const { setId , userName, setUserName, setName, setLastName, setEmail, setAccessToken, accessToken } = useUser();
 
-    if(accessToken == null && isLogged == false){
+    if(accessToken != null && isLogged == false){
         setIsLogged(true)
     }
     
@@ -112,12 +112,34 @@ const ComponentLogoPerfil = () => {
         }  
     };
 
+    const DesLoguearse = async () => {
+        try{
+            const res = await fetch("http://localhost:3000/auth/logout", {
+                method: "POST",
+                credentials: "include", // importante: incluye la cookie httpOnly
+            });
+            if(res.ok){
+                setIsLogged(false);
+            }
+        }catch{
+            throw new Error("hubo un error al desloguearse");
+        }   
+    }
+
     return (
         <div className="ComponentLogo-Perfil">
             <div className="conteinerImg">
-                {isLogged ? <h2>{userName}</h2> : <h2>Iniciar Sesión</h2>}
+                <div>
+                    {isLogged ?
+                    <>
+                        <h1>{userName}</h1>
+                        <a href="/" onClick={DesLoguearse}>Cerrar sesion</a>
+                    </> 
+                    : 
+                    <h2>Iniciar Sesión</h2>}                   
+                </div>
                 <img
-                    src="https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"
+                    src={isLogged ? "https://upload.wikimedia.org/wikipedia/commons/b/bf/Foto_Perfil_.jpg" : "https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"}
                     alt="Logo"
                     onClick={imagenClick}
                     style={{ cursor: "pointer" }}
