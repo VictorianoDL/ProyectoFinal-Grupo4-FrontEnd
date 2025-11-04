@@ -1,14 +1,22 @@
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useUser } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-const ComponentLogoPerfil = () => {
+// interface GooglePayload {
+//   email: string;
+//   name: string;
+//   picture: string;
+// }
+
+const ComponentLogoPerfil = () => {  
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
 
-    const { setId , userName, setUserName, setName, setLastName, setEmail, setAccessToken, accessToken } = useUser();
+    const { setId , userName, setUserName, name, setName, setLastName, setEmail, setAccessToken, accessToken } = useUser();
 
     if(accessToken != null && isLogged == false){
         setIsLogged(true)
@@ -112,6 +120,16 @@ const ComponentLogoPerfil = () => {
         }  
     };
 
+    // const handleLoginSuccess = (credentialResponse: any) => {
+    //     console.log('Google Credential:', credentialResponse);
+    //         // Aquí puedes enviar el token a tu backend o guardar el usuario
+
+    //     const decoded: GooglePayload = jwtDecode(credentialResponse.credential);
+    //     console.log("Usuario logeado:", decoded);
+
+
+    // };
+
     const DesLoguearse = async () => {
         try{
             const res = await fetch("http://localhost:3000/auth/logout", {
@@ -120,6 +138,8 @@ const ComponentLogoPerfil = () => {
             });
             if(res.ok){
                 setIsLogged(false);
+                setIsOpen(false);
+                window.location.replace("/");
             }
         }catch{
             throw new Error("hubo un error al desloguearse");
@@ -133,7 +153,7 @@ const ComponentLogoPerfil = () => {
                     {isLogged ?
                     <>
                         <h1>{userName}</h1>
-                        <a href="/" onClick={DesLoguearse}>Cerrar sesion</a>
+                        <a onClick={()=>setIsOpen(true)}>Cerrar sesion</a>
                     </> 
                     : 
                     <h2>Iniciar Sesión</h2>}                   
@@ -145,7 +165,6 @@ const ComponentLogoPerfil = () => {
                     style={{ cursor: "pointer" }}
                 />
             </div>
-                
 
             {isOpen && (
                 <div className="modal-overlay">
@@ -154,48 +173,77 @@ const ComponentLogoPerfil = () => {
                             <img src="../Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
                         </div>
                         <form className="modal-form">
-                            {!isRegister ? 
+                            {
+                                isLogged ? 
                                 <>
-                                    <input id="emailUser" type="email" placeholder="Email"/>
-                                    <input id="contraseniaUser" type="text" placeholder="Contraseña"/>
-                                    <p id="aviso"></p>
-                                    
+                                    <h1>{name}</h1>
+                                    <h2>Estas a punto de cerrar sesion</h2>
+                                    <h2>¿De verdad quieres hacerlo?</h2>
                                     <div className="modal-buttons">
-                                        <button type="button" onClick={() => Ingresar()}>
-                                            Ingresar
+                                        <button type="button" onClick={() => DesLoguearse()}>
+                                            Si
                                         </button>
-
                                         <button type="button" onClick={() => setIsOpen(false)}>
-                                            Cerrar
+                                            No
                                         </button>
                                     </div>
-
-                                    <a onClick={() => setIsRegister(true)}>Registrarse</a>
                                 </>
-                            :
-                                <>                                      
-                                    <input id="TagUser" type="text" placeholder="Nombre de usuario" />
-                                    <input id="nameUser" type="text" placeholder="Nombre" />
-                                    <input id="lastNmaeUser" type="text" placeholder="Apellido" />
-                                    <input id="emailUser" type="email" placeholder="Email" />
-                                    <input id="contraseniaUser" type="password" placeholder="Contraseña" /> 
-                                    <p id="aviso"></p>
+                                :
+                                <>
+                                    {!isRegister ? 
+                                    <>
+                                        <input id="emailUser" type="email" placeholder="Email"/>
+                                        <input id="contraseniaUser" type="text" placeholder="Contraseña"/>
+                                        <p id="aviso"></p>
+ 
+                                        <div className="modal-buttons">
+                                            <button type="button" onClick={() => Ingresar()}>
+                                                Ingresar
+                                            </button>
 
-                                    <div className="modal-buttons">
-                                        <button type="button" onClick={() => Ingresar()}>
-                                            Ingresar
-                                        </button>
+                                            <button type="button" onClick={() => setIsOpen(false)}>
+                                                Cerrar
+                                            </button>
+                                        </div>
 
-                                        <button type="button" onClick={() => {setIsOpen(false),setIsRegister(false)}}>
-                                            Cerrar
-                                        </button>
-                                    </div>   
-                                </>
+                                        <a onClick={() => setIsRegister(true)}>Registrarse</a>
+
+                                        {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>    
+                                            
+                                                <GoogleLogin
+                                                onSuccess={handleLoginSuccess}
+                                                onError={() => console.log('Login Failed')}
+                                                />
+                                            
+                                        </GoogleOAuthProvider> */}
+                                    </>
+                                    :
+                                    <>                                      
+                                        <input id="TagUser" type="text" placeholder="Nombre de usuario" />
+                                        <input id="nameUser" type="text" placeholder="Nombre" />
+                                        <input id="lastNmaeUser" type="text" placeholder="Apellido" />
+                                        <input id="emailUser" type="email" placeholder="Email" />
+                                        <input id="contraseniaUser" type="password" placeholder="Contraseña" /> 
+                                        <p id="aviso"></p>
+
+                                        <div className="modal-buttons">
+                                            <button type="button" onClick={() => Ingresar()}>
+                                                Ingresar
+                                            </button>
+
+                                            <button type="button" onClick={() => {setIsOpen(false),setIsRegister(false)}}>
+                                                Cerrar
+                                            </button>
+                                        </div>   
+                                    </>
+                                    }
+                                </>    
                             }
                         </form>
-                    </div> 
+                    </div>
                 </div>
             )}
+
         </div>
     );
 };

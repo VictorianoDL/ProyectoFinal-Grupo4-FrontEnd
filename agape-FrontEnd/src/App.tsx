@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Main from './Components/Main/Main'
 
 import { UserProvider, useUser } from "./Context/UserContext";
+import { CampañaProvider, useCampaña } from "./Context/CampañaContext"; 
 import { useEffect } from "react";
 
 function AppInner() {
@@ -72,9 +73,11 @@ function App() {
     return (
         <>
             <UserProvider>
-                <BrowserRouter>
+                <CampañaProvider>
+                    <BrowserRouter>
                     <AppInner />
-                </BrowserRouter>
+                    </BrowserRouter>
+                </CampañaProvider>
             </UserProvider>
         </>
     )
