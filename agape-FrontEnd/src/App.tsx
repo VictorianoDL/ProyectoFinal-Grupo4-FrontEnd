@@ -4,23 +4,79 @@ import Header from './Components/Header/Header'
 import { BrowserRouter } from 'react-router-dom'
 import Main from './Components/Main/Main'
 
-import { UserProvider } from "./Context/UserContext";
-import { AuthProvider } from './Context/AuthContext'
-import { GoogleOAuthProvider } from '@react-oauth/google'
+import { UserProvider, useUser } from "./Context/UserContext";
+import { useEffect } from "react";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
-function App() {
+function AppInner() {
+    const { setId , setUserName, setName, setLastName, setEmail, setAccessToken } = useUser();
+    
+    useEffect(() => {
+        const tryRefresh = async () => {
+            try {
+                const res = await fetch("http://localhost:3000/auth/refresh", {
+                    method: "POST",
+                    credentials: "include", // importante: incluye la cookie httpOnly
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setAccessToken(data.access_token);
+
+                    // Obtener datos del usuario usando el nuevo access_token
+                    try {
+                        
+                        const userRes = await fetch("http://localhost:3000/auth/me", {
+                            method: "GET",
+                            headers: {
+                                'Authorization': `Bearer ${data.access_token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'include' // opcional pero seguro si el servidor espera cookies también
+                        });
+                        
+                        if (userRes.ok) {
+                            const userData = await userRes.json();
+                            setId(userData.id);
+                            setUserName(userData.nombreUsuario);
+                            setName(userData.nombre);
+                            setLastName(userData.apellido);
+                            setEmail(userData.email);
+
+                        }else {
+                            // manejar no autorizado / error (por ejemplo limpiar contexto)
+                            setAccessToken(null);
+                        }
+                    } catch (err) {
+                        console.error("Error al obtener datos del usuario:", err);
+                    }
+            
+                } else {
+                    setAccessToken(null);
+                }
+            } catch (err) {
+                setAccessToken(null);
+            }
+        };
+        tryRefresh();
+    }, [setAccessToken]);
 
     return (
         <>
-            <GoogleOAuthProvider clientId="29401246921-5uaog6gt89m2dpeadg8absqcuem7n5v6.apps.googleusercontent.com">
+            <Header />
+            <Main />
+            <Footer />
+        </>
+    );
+}
+
+function App() {
+    return (
+        <>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
                 <UserProvider>
-                    <AuthProvider>
-                        <BrowserRouter>
-                            <Header></Header>
-                            <Main></Main>
-                            <Footer></Footer>
-                        </BrowserRouter> 
-                    </AuthProvider>
+                    <BrowserRouter>
+                        <AppInner />
+                    </BrowserRouter>
                 </UserProvider>
             </GoogleOAuthProvider>
         </>

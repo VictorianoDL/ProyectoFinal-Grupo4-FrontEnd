@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const ComponentLogoPerfil = () => {
     const navigate = useNavigate();
@@ -9,11 +9,11 @@ const ComponentLogoPerfil = () => {
     const [isLogged, setIsLogged] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
 
-    const { id, setId } = useUser();
-    const { userName, setUserName } = useUser();
-    const { name, setName } = useUser();
-    const { lastName, setLastName } = useUser();
-    const { email, setEmail } = useUser();
+    const { setId , userName, setUserName, setName, setLastName, setEmail, setAccessToken, accessToken } = useUser();
+
+    if(accessToken != null && isLogged == false){
+        setIsLogged(true)
+    }
     
     const imagenClick = () => {
         if (isLogged) {
@@ -33,20 +33,21 @@ const ComponentLogoPerfil = () => {
         if(!isRegister){
             // logearse
             try {
-                // Fetch de prueba
-                // const res = await fetch("http://localhost:3000/usuarios/1");
-
-                // Este deberia ir
                 const res = await fetch("http://localhost:3000/auth/login", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
                     credentials: 'include',
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email: userEmail.value, contraseña: contraseniaName.value }),
                 });
 
                 
                 if (res.ok){
                     const data = await res.json();
+
+                    // guardar access_token en contexto para usar en futuras peticiones
+                    if (data.access_token) {
+                        setAccessToken(data.access_token);
+                    }
 
                     setId(data.user.id);
                     setUserName(data.user.nombreUsuario);
@@ -57,10 +58,10 @@ const ComponentLogoPerfil = () => {
                     setIsLogged(true);
                     setIsOpen(false);
 
-                
-                } else {
-                  throw new Error("Credenciales inválidas");
+                }else{
+                    throw new Error("Credenciales inválidas");
                 } 
+
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 p.innerText = "Error al iniciar sesión  " + err;
@@ -74,7 +75,7 @@ const ComponentLogoPerfil = () => {
             try {
 
                 let body = {
-                    nombreUsuario: userNameTag.value,
+                    nombreUsuario:userNameTag.value,
                     nombre: userName.value,
                     apellido: userLastName.value,
                     email:userEmail.value,
@@ -82,14 +83,13 @@ const ComponentLogoPerfil = () => {
                 }
 
                 const res = await fetch("http://localhost:3000/auth/register", {
-                    // Acomodar esto
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                 });
 
                 if (res.ok){
-                    
+
                     setUserName(userNameTag.value);
                     setName(userName.value);
                     setLastName(userLastName.value);
@@ -98,49 +98,49 @@ const ComponentLogoPerfil = () => {
                     setIsLogged(true);
                     setIsRegister(false);
                     setIsOpen(false);
-                
+
                 } else {
-                  throw new Error("???");
+                    throw new Error("???");
                 } 
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 // acomodar esto
-                p.innerText = "Error al iniciar sesión  " + err;
-                console.error("Error al iniciar sesión  " + err );
+                p.innerText = "Error al registrarse  " + err;
+                console.error("Error al registrarse  " + err );
             } 
         }  
     };
 
-    const handleGoogleLogin = async (credentialResponse: any) => {
+    const handleGoogleSuccess = async (credentialResponse: any) => {
+        const credential = credentialResponse?.credential || credentialResponse?.access_token;
+        if (!credential) return;
         try {
-            const token = credentialResponse.credential;
-            const res = await fetch("http://localhost:3000/auth/google/callback", {
+            const res = await fetch("http://localhost:3000/auth/google", {
                 method: "POST",
+                credentials: "include",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token }),
-                credentials: "include"
+                body: JSON.stringify({ credential })
             });
-
-            if(res.ok){
-                const data = await res.json();
-                setId(data.user.id);
-                setUserName(data.user.nombreUsuario);
-                setName(data.user.nombre);
-                setLastName(data.user.apellido);
-                setEmail(data.user.email);
+            if (!res.ok) throw new Error(await res.text());
+            const body = await res.json();
+            if (body.access_token) setAccessToken(body.access_token);
+            if (body.user) {
+                setId(body.user.id);
+                setUserName(body.user.nombreUsuario);
+                setName(body.user.nombre);
+                setLastName(body.user.apellido);
+                setEmail(body.user.email);
                 setIsLogged(true);
                 setIsOpen(false);
-            } else {
-                console.error("Error al iniciar sesión con Google");
             }
         } catch (err) {
-            console.error("Error en Google Login:", err);
+            console.error("Google login error:", err);
         }
-    }
+    };
 
     const loginWithGoogle = useGoogleLogin({
-        onSuccess: handleGoogleLogin,
-        onError: () => console.error("Error de Google Login"),
+        onSuccess: handleGoogleSuccess,
+        onError: (err) => console.error("Google login failed:", err),
     });
 
     return (
@@ -181,41 +181,10 @@ const ComponentLogoPerfil = () => {
 
                                     <a onClick={() => setIsRegister(true)}>Registrarse</a>
 
-                                    <GoogleLogin
-                                        onSuccess={async (credentialResponse) => {
-                                            console.log('Google credentialResponse:', credentialResponse);
-                                            // credentialResponse.credential contiene el ID token (JWT) en el flujo "credential"
-                                            const idToken = (credentialResponse as any)?.credential;
-                                            if (!idToken) {
-                                            console.error('No id_token recibido desde Google');
-                                            return;
-                                            }
-                                            try {
-                                            const res = await fetch("http://localhost:3000/auth/google/callback", {
-                                                method: "POST",
-                                                headers: { "Content-Type": "application/json" },
-                                                body: JSON.stringify({ token: idToken }),
-                                                credentials: "include",
-                                            });
-                                            if (!res.ok) {
-                                                console.error('Error en backend Google callback:', await res.text());
-                                                return;
-                                            }
-                                            const data = await res.json();
-                                            // actualizar UserContext igual que haces en login normal
-                                            setId(data.user.id_Usuario ?? data.user.id ?? 0);
-                                            setUserName(data.user.nombreUsuario);
-                                            setName(data.user.nombre);
-                                            setLastName(data.user.apellido);
-                                            setEmail(data.user.email);
-                                            setIsLogged(true);
-                                            setIsOpen(false);
-                                            } catch (err) {
-                                            console.error('Error al enviar token a backend:', err);
-                                            }
-                                        }}
-                                        onError={() => console.error('Error en GoogleLogin componente')}
-                                        />
+                                    <button type="button" onClick={() => loginWithGoogle()}>
+                                        Iniciar sesión con Google
+                                    </button>
+
                                 </>
                             :
                                 <>                                      
