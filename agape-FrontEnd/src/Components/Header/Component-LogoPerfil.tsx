@@ -1,20 +1,25 @@
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+// import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useUser } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
-const ComponentLogoPerfil = () => {
+// interface GooglePayload {
+//   email: string;
+//   name: string;
+//   picture: string;
+// }
+
+const ComponentLogoPerfil = () => {  
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
+    const { setId , userName, setUserName, name, setName, setLastName, setEmail, setAccessToken, accessToken, profilePic, setProfilePic } = useUser();
 
-    const { setId , userName, setUserName, setName, setLastName, setEmail, setAccessToken, accessToken } = useUser();
+    useEffect(() => { setIsLogged(!!accessToken); }, [accessToken]);
 
-    if(accessToken != null && isLogged == false){
-        setIsLogged(true)
-    }
-    
     const imagenClick = () => {
         if (isLogged) {
 
@@ -33,7 +38,7 @@ const ComponentLogoPerfil = () => {
         if(!isRegister){
             // logearse
             try {
-                const res = await fetch("http://localhost:3000/auth/login", {
+                const res = await fetch("/auth/login", {
                     method: "POST",
                     credentials: 'include',
                     headers: { "Content-Type": "application/json" },
@@ -48,6 +53,9 @@ const ComponentLogoPerfil = () => {
                     if (data.access_token) {
                         setAccessToken(data.access_token);
                     }
+
+                    // si backend devuelve foto, guardarla en contexto (persistirá)
+                    if (data.user?.picture) setProfilePic(data.user.picture);
 
                     setId(data.user.id);
                     setUserName(data.user.nombreUsuario);
@@ -82,8 +90,9 @@ const ComponentLogoPerfil = () => {
                     contraseña:contraseniaName.value
                 }
 
-                const res = await fetch("http://localhost:3000/auth/register", {
+                const res = await fetch("/auth/register", {
                     method: "POST",
+                    credentials: 'include',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),
                 });
@@ -112,49 +121,141 @@ const ComponentLogoPerfil = () => {
     };
 
     const handleGoogleSuccess = async (credentialResponse: any) => {
-        const credential = credentialResponse?.credential || credentialResponse?.access_token;
-        if (!credential) return;
+    const credential = credentialResponse?.credential || credentialResponse?.access_token;
+    if (!credential) return;
+
+    const parseJwt = (token: string | undefined | null) => {
         try {
-            const res = await fetch("http://localhost:3000/auth/google", {
-                method: "POST",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ credential })
-            });
-            if (!res.ok) throw new Error(await res.text());
-            const body = await res.json();
-            if (body.access_token) setAccessToken(body.access_token);
-            if (body.user) {
-                setId(body.user.id);
-                setUserName(body.user.nombreUsuario);
-                setName(body.user.nombre);
-                setLastName(body.user.apellido);
-                setEmail(body.user.email);
-                setIsLogged(true);
-                setIsOpen(false);
-            }
-        } catch (err) {
-            console.error("Google login error:", err);
+        if (!token) return null;
+        const base64Url = token.split('.')[1];
+        if (!base64Url) return null;
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+            .split('')
+            .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        );
+        return JSON.parse(jsonPayload);
+        } catch {
+        return null;
         }
     };
+
+    const payload = parseJwt(credential);
+    console.log("Decoded payload:", payload);
+
+    if (payload?.picture) {
+        setProfilePic(payload.picture);
+        setIsLogged(true);
+    }
+
+    if (!payload?.picture && credentialResponse?.access_token) {
+        try {
+        const userinfoRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: { Authorization: `Bearer ${credentialResponse.access_token}` },
+        });
+        if (userinfoRes.ok) {
+            const profile = await userinfoRes.json();
+            console.log("userinfo profile:", profile);
+            if (profile.picture) {
+            setProfilePic(profile.picture);
+            setIsLogged(true);
+            }
+        } else {
+            console.warn("userinfo fetch failed:", await userinfoRes.text());
+        }
+        } catch (err) {
+        console.error("Error fetching userinfo:", err);
+        }
+    }
+
+    try {
+        const res = await fetch("/auth/google", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential }),
+        });
+        if (!res.ok) throw new Error(await res.text());
+        const body = await res.json();
+
+        if (body.access_token) setAccessToken(body.access_token);
+
+        if (body.user) {
+        if (body.user.picture) {
+            setProfilePic(body.user.picture);
+        }
+        setId(body.user.id);
+        setUserName(body.user.nombreUsuario);
+        setName(body.user.nombre);
+        setLastName(body.user.apellido);
+        setEmail(body.user.email);
+        setIsLogged(true);
+        setIsOpen(false);
+        }
+    } catch (err) {
+        console.error("Google login error:", err);
+    }
+    };
+
 
     const loginWithGoogle = useGoogleLogin({
         onSuccess: handleGoogleSuccess,
         onError: (err) => console.error("Google login failed:", err),
     });
+    // const handleLoginSuccess = (credentialResponse: any) => {
+    //     console.log('Google Credential:', credentialResponse);
+    //         // Aquí puedes enviar el token a tu backend o guardar el usuario
+
+    //     const decoded: GooglePayload = jwtDecode(credentialResponse.credential);
+    //     console.log("Usuario logeado:", decoded);
+
+
+    // };
+
+    const DesLoguearse = async () => {
+        try{
+            const res = await fetch("/auth/logout", {
+                method: "POST",
+                credentials: "include", // importante: incluye la cookie httpOnly
+            });
+            if(res.ok){
+                setId(0);
+                setUserName("Invitado");
+                setName("Name");
+                setLastName("Last Name");
+                setEmail("ejemplo@email.com");
+                setAccessToken(null);
+                setProfilePic(null);
+                setIsLogged(false);
+                setIsOpen(false);
+                window.location.replace("/");
+            }
+        }catch{
+            throw new Error("hubo un error al desloguearse");
+        }   
+    }
 
     return (
         <div className="ComponentLogo-Perfil">
             <div className="conteinerImg">
-                {isLogged ? <h2>{userName}</h2> : <h2>Iniciar Sesión</h2>}
+                <div>
+                    {isLogged ?
+                    <>
+                        <h1>{userName}</h1>
+                        <a onClick={()=>setIsOpen(true)}>Cerrar sesion</a>
+                    </> 
+                    : 
+                    <h2>Iniciar Sesión</h2>}                   
+                </div>
                 <img
-                    src="https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"
+                    src={isLogged && profilePic ? profilePic : "https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"}
                     alt="Logo"
                     onClick={imagenClick}
                     style={{ cursor: "pointer" }}
                 />
             </div>
-                
 
             {isOpen && (
                 <div className="modal-overlay">
@@ -163,53 +264,91 @@ const ComponentLogoPerfil = () => {
                             <img src="../Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
                         </div>
                         <form className="modal-form">
-                            {!isRegister ? 
+                            {
+                                isLogged ? 
                                 <>
-                                    <input id="emailUser" type="email" placeholder="Email"/>
-                                    <input id="contraseniaUser" type="text" placeholder="Contraseña"/>
-                                    <p id="aviso"></p>
-                                    
+                                    <h1>{name}</h1>
+                                    <h2>Estas a punto de cerrar sesion</h2>
+                                    <h2>¿De verdad quieres hacerlo?</h2>
                                     <div className="modal-buttons">
-                                        <button type="button" onClick={() => Ingresar()}>
-                                            Ingresar
+                                        <button type="button" onClick={() => DesLoguearse()}>
+                                            Si
                                         </button>
-
                                         <button type="button" onClick={() => setIsOpen(false)}>
-                                            Cerrar
+                                            No
                                         </button>
                                     </div>
 
                                     <a onClick={() => setIsRegister(true)}>Registrarse</a>
 
-                                    <button type="button" onClick={() => loginWithGoogle()}>
-                                        Iniciar sesión con Google
-                                    </button>
+                                    
 
                                 </>
-                            :
-                                <>                                      
-                                    <input id="TagUser" type="text" placeholder="Nombre de usuario" />
-                                    <input id="nameUser" type="text" placeholder="Nombre" />
-                                    <input id="lastNmaeUser" type="text" placeholder="Apellido" />
-                                    <input id="emailUser" type="email" placeholder="Email" />
-                                    <input id="contraseniaUser" type="password" placeholder="Contraseña" /> 
-                                    <p id="aviso"></p>
+                                :
+                                <>
+                                    {!isRegister ? 
+                                    <>
+                                        <input id="emailUser" type="email" placeholder="Email"/>
+                                        <input id="contraseniaUser" type="text" placeholder="Contraseña"/>
+                                        <p id="aviso"></p>
+ 
+                                        <div className="modal-buttons">
+                                            <button type="button" onClick={() => Ingresar()}>
+                                                Ingresar
+                                            </button>
 
-                                    <div className="modal-buttons">
-                                        <button type="button" onClick={() => Ingresar()}>
-                                            Ingresar
-                                        </button>
+                                            <button type="button" onClick={() => setIsOpen(false)}>
+                                                Cerrar
+                                            </button>
+                                        </div>
 
-                                        <button type="button" onClick={() => {setIsOpen(false),setIsRegister(false)}}>
-                                            Cerrar
-                                        </button>
-                                    </div>   
-                                </>
+                                        <a onClick={() => setIsRegister(true)}>Registrarse</a>
+
+                                        
+                                        <GoogleLogin
+                                            onSuccess={(credentialResponse) => {
+                                                handleGoogleSuccess(credentialResponse);
+                                            }}
+                                            onError={() => console.error('GoogleLogin error')}
+                                            
+                                        />
+
+                                        {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>    
+                                            
+                                                <GoogleLogin
+                                                onSuccess={handleLoginSuccess}
+                                                onError={() => console.log('Login Failed')}
+                                                />
+                                            
+                                        </GoogleOAuthProvider> */}
+                                    </>
+                                    :
+                                    <>                                      
+                                        <input id="TagUser" type="text" placeholder="Nombre de usuario" />
+                                        <input id="nameUser" type="text" placeholder="Nombre" />
+                                        <input id="lastNmaeUser" type="text" placeholder="Apellido" />
+                                        <input id="emailUser" type="email" placeholder="Email" />
+                                        <input id="contraseniaUser" type="password" placeholder="Contraseña" /> 
+                                        <p id="aviso"></p>
+
+                                        <div className="modal-buttons">
+                                            <button type="button" onClick={() => Ingresar()}>
+                                                Ingresar
+                                            </button>
+
+                                            <button type="button" onClick={() => {setIsOpen(false),setIsRegister(false)}}>
+                                                Cerrar
+                                            </button>
+                                        </div>   
+                                    </>
+                                    }
+                                </>    
                             }
                         </form>
-                    </div> 
+                    </div>
                 </div>
             )}
+
         </div>
     );
 };

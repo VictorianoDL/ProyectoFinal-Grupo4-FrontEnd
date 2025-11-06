@@ -1,4 +1,4 @@
-import { createContext, useState, type ReactNode, useContext } from "react";
+import { createContext, useState, type ReactNode, useContext, useEffect } from "react";
 
 interface UserContextType {
     id: number;
@@ -13,6 +13,8 @@ interface UserContextType {
     setEmail: (email: string) => void;
     accessToken?: string | null;
     setAccessToken: (t: string | null) => void;
+    profilePic?: string | null;
+    setProfilePic: (p: string | null) => void;
 }
 
 // Creamos el contexto con un valor por defecto
@@ -26,12 +28,30 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [lastName, setLastName] = useState("Last Name");
     const [email, setEmail] = useState("ejemplo@email.com");
     const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [profilePicState, setProfilePicState] = useState<string | null>(null);
+
+    useEffect(() => {
+        try {
+            const saved = localStorage.getItem("agape_profilePic");
+            if (saved) setProfilePicState(saved);
+        } catch (_) {}
+    }, []);
+
+    const setProfilePic = (p: string | null) => {
+        setProfilePicState(p);
+        try {
+            if (p) localStorage.setItem("agape_profilePic", p);
+            else localStorage.removeItem("agape_profilePic");
+        } catch (_) {}
+    };
 
     return (
         <UserContext.Provider value={{ 
                     id, setId, userName, setUserName,
                     name, setName, lastName, setLastName, 
-                    email, setEmail, accessToken, setAccessToken}}>
+                    email, setEmail, accessToken, setAccessToken,
+                    profilePic: profilePicState, setProfilePic
+                  }}>
             {children}
         </UserContext.Provider>
     );

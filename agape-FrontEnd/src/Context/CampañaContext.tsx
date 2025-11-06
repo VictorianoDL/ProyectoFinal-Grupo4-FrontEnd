@@ -1,10 +1,10 @@
 import { createContext, useState, type ReactNode, useContext } from "react";
 
 interface CampañaContextType {
-    id: number;
-    setId: (id: number) => void;
-    name: string;
-    setName: (name: string) => void;
+    idCamp: number;
+    setIdCamp: (id: number) => void;
+    nameCamp: string;
+    setNameCamp: (name: string) => void;
     descripcion: string;
     setDescripcion: (descripcion: string) => void;
     tipo: string;
@@ -24,8 +24,8 @@ const CampañaContext = createContext<CampañaContextType | undefined>(undefined
 
 // Creamos el provider para envolver la app
 export const CampañaProvider = ({ children }: { children: ReactNode }) => {
-    const [id, setId] = useState(0);
-    const [name, setName] = useState("Camapaña Name");
+    const [idCamp, setIdCamp] = useState(0);
+    const [nameCamp, setNameCamp] = useState("Camapaña Name");
     const [descripcion, setDescripcion] = useState("Descripcion de la campaña");
     const [tipo, setTipo] = useState("Tipo");
     const [objetivo, setObjetivo] = useState(0);
@@ -34,14 +34,14 @@ export const CampañaProvider = ({ children }: { children: ReactNode }) => {
     const [activo, setActivo] = useState(false);
 
     return (
-        <CampañaContext.Provider value={{ id, setId, name, setName, descripcion,setDescripcion,tipo,setTipo,objetivo,setObjetivo,recaudado,setRecaudado,fecha_inicio,setFechaInicio,activo,setActivo}}>
+        <CampañaContext.Provider value={{ idCamp, setIdCamp, nameCamp, setNameCamp, descripcion,setDescripcion,tipo,setTipo,objetivo,setObjetivo,recaudado,setRecaudado,fecha_inicio,setFechaInicio,activo,setActivo}}>
             {children}
         </CampañaContext.Provider>
     );
 };
 
 // Hook personalizado para usar el contexto fácilmente
-export const useCamapaña = (): CampañaContextType => {
+export const useCampaña = (): CampañaContextType => {
     const context = useContext(CampañaContext);
     if (!context) {
         throw new Error("useCampaña debe usarse dentro de un UserProvider");

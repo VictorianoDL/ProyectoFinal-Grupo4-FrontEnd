@@ -15,14 +15,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { setId, setUserName, setName, setLastName, setEmail } = useUser();
+  const { setId, setUserName, setName, setLastName, setEmail, setProfilePic } = useUser();
 
 
   useEffect(() => {
   let mounted = true;
   const tryRefresh = async () => {
     try {
-      const res = await fetch('http://localhost:3000/auth/refresh', {
+      const res = await fetch('/auth/refresh', {
         method: 'POST',
         credentials: 'include',
       });
@@ -38,11 +38,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // POBLAR USER CONTEXT
       if (body.user) {
-        setId(body.user.id);
-        setUserName(body.user.nombreUsuario);
-        setName(body.user.nombre);
-        setLastName(body.user.apellido);
-        setEmail(body.user.email);
+        setId(body.user.id ?? body.user.id_Usuario ?? 0);
+        setUserName(body.user.nombreUsuario ?? body.user.nombreUsuario);
+        setName(body.user.nombre ?? '');
+        setLastName(body.user.apellido ?? '');
+        setEmail(body.user.email ?? '');
+        if (body.user.picture) setProfilePic(body.user.picture);
       }
     } catch (err) {
       console.error('refresh failed', err);
@@ -58,7 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:3000/auth/logout', {
+      await fetch('/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
@@ -66,24 +67,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Logout error', e);
     } finally {
       setAccessToken(null);
+      // limpiar user context
+      setId(0);
+      setUserName('Invitado');
+      setName('');
+      setLastName('');
+      setEmail('');
+      if (setProfilePic) setProfilePic(null);
     }
   };
 
   // authedFetch: añade Authorization y si 401 intenta refresh una vez
   const authedFetch = async (input: RequestInfo, init: RequestInit = {}) => {
-    const headers: Record<string, string> = { ...(init.headers as any || {}) };
-    if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+    const hdrs = new Headers(init.headers as HeadersInit || {});
+    if (accessToken) hdrs.set('Authorization', `Bearer ${accessToken}`);
 
-    let res = await fetch(input, { ...init, headers, credentials: 'include' });
+    let res = await fetch(input, { ...init, headers: hdrs, credentials: 'include' });
     if (res.status === 401) {
       // intentar refresh
-      const r = await fetch('http://localhost:3000/auth/refresh', { method: 'POST', credentials: 'include' });
+      const r = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' });
       if (r.ok) {
         const body = await r.json();
         if (body.access_token) {
           setAccessToken(body.access_token);
-          headers['Authorization'] = `Bearer ${body.access_token}`;
-          res = await fetch(input, { ...init, headers, credentials: 'include' });
+          hdrs.set('Authorization', `Bearer ${body.access_token}`);
+          res = await fetch(input, { ...init, headers: hdrs, credentials: 'include' });
         }
       }
     }
