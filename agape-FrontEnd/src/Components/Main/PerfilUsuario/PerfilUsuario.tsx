@@ -3,58 +3,105 @@ import { useUser } from "../../../Context/UserContext";
 import { useCampaña } from '../../../Context/CampañaContext';
 import './PerfilUsuario.css'
 
-// crear endpoint para buscar una campaña con el id de usuario
+
 // fetch para traer donaciones de un usuario
-// fetch para traer datos su de una campaña
+
 // fetch y post para actualizar datos de usuario
 // fetch y post para actualizar datos de campaña
 
-// acomodar los estilos del boton editar para que este encima de los div de informacion de campaña y usuario
-// achicar las dimensiones del modal de edicion
+// acomodar cuando se toca en "Perfil de campaña", se ve por unos segundos que no hay ninguna campaña y se puede tocar el boton crear campaña
 
 
 const PerfilUsuario = () => {
+    const [query, setQuery] = useState('');
     
-    const { id,    userName,    name,    lastName,    email   } = useUser();
+    const { id,    userName,    name,    lastName,    email   , accessToken} = useUser();
     const { setId, setUserName, setName, setLastName, setEmail} = useUser();
     const { idCamp,    nameCamp,    descripcion,    tipo,    objetivo,    recaudado,    fecha_inicio,   activo    } = useCampaña();
     const { setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo } = useCampaña();
-    const [ isOpen, setIsOpen ] = useState(false);
     const [ haveCampania, setHaveCampania ] = useState(false);
 
+    const [ isOpenModal, setIsOpenModal ] = useState(false);
+    const [ isEditing, setIsEditing ] = useState(false);
+  
+    const [activeTab, setActiveTab] = useState("usuario");
+    
 
-    const fetchCampaña = async () => { 
+    if(activeTab === "campania"){
+        const fetchCampaña = async () => { 
+            try{
+                const res = await fetch(`http://localhost:3000/campanias/owner/` + id, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+                if (res.ok){
+                    const data = await res.json();
+                    setActivo(data.activo);
+                    setDescripcion(data.descripcion);
+                    // setFechaInicio(data.fecha_inicio);
+                    setIdCamp(data.id_campania);
+                    setNameCamp(data.nombre);
+                    setObjetivo(data.objetivo);
+                    setRecaudado(data.recaudado);
+                    setTipo(data.tipo);
+                    
+                    setHaveCampania(true);
+                }else{
+                    throw new Error("No se encontro ninguna campaña, osea la respuesta del fetch campaña fue no ok");
+                } 
+            }catch(err){
+                console.log("Error: " + err );
+            }
+        }
+        fetchCampaña();
+    }
+    
+    // fetch donaciones hechas por el usuario
+
+    const createCampaña = async () => {
         try{
             const res = await fetch("http://localhost:3000/campanias", {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-                // acomodar esto
-                body: JSON.stringify(1),
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({
+                    nombre: (document.getElementById("name") as HTMLInputElement).value,
+                    descripcion: (document.getElementById("descripcion") as HTMLInputElement).value,
+                    tipo: (document.getElementById("tipo") as HTMLInputElement).value,
+                    objetivo: Number((document.getElementById("objetivo") as HTMLInputElement).value),
+                    recaudado: 0,
+                    fecha_inicio: new Date(),
+                    activo: true
+                })
             });
             if (res.ok){
                 const data = await res.json();
-                // setIdCamp(data.id);
-                // setNameCamp(data.name);
-                // setDescripcion(data.descripcion);
-                // setTipo(data.tipo);
-                // setObjetivo(data.objetivo);
-                // setRecaudado(data.recaudado);
+
+                setActivo(data.activo);
+                setDescripcion(data.descripcion);
                 // setFechaInicio(data.fecha_inicio);
-                // setActivo(data.activo);
+                setIdCamp(data.id_campania);
+                setNameCamp(data.nombre);
+                setObjetivo(data.objetivo);
+                setRecaudado(data.recaudado);
+                setTipo(data.tipo);
 
+                document.getElementById("aviso")!.innerText = "Campaña creada con exito";
                 setHaveCampania(true);
+                setIsOpenModal(false);
             }else{
-                throw new Error("ALgo salio mal xd");
-            } 
+                throw new Error("ALgo salio mal xd " + res.statusText);
+            }    
         }catch(err){
-            console.error("Error " + err );
+            document.getElementById("aviso")!.innerText = "Error al crear campaña: " + err;
         }
-    }
-    fetchCampaña();
+    };            
+            
+    const updateUsuario = async () => {};
 
-    const [query, setQuery] = useState('');
-    const [activeTab, setActiveTab] = useState("usuario");
-    const [modalOpen, setModalOpen] = useState(false);
+    const updateCampaña = async () => {};
 
     // const [formState, setFormState] = useState<Partial<Usuario & Campania>>({});
 
@@ -122,10 +169,7 @@ const PerfilUsuario = () => {
             
             <div className="tabContent">
 
-                <button className='botonEditar' onClick={() => {}}>
-                    Editar
-                </button>
-
+                <button className='botonEditar' onClick={() => { setIsEditing(true); setIsOpenModal(true); }}>Editar informacion</button>
 
                 {activeTab === "usuario" && (
                     <div className='usuarioContent'>
@@ -173,13 +217,54 @@ const PerfilUsuario = () => {
                         <>  
                             <h1>No tienes una campaña</h1>
                             <h2>¿Deseas crear una campaña?</h2>
-                            <button>Crear Campaña</button>
+                            <button onClick={()=>setIsOpenModal(true)}>Crear Campaña</button>
                         </> 
                         }  
                     </div>
                 )}
 
             </div>
+            
+            {/* Modal de Editar y crear */}
+            {isOpenModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <form className="modal-form">
+                            {isEditing ? 
+                            <>
+                                Editar {activeTab === "usuario" ? "Usuario" : "Campaña"}
+                            </> 
+                            : 
+                            <>
+                                <h2>Crear Campaña</h2>
+                                <input id="name" type="text" placeholder="Nombre de la Campaña" />
+                                <input id="tipo" type="text" placeholder="Tipo" />
+                                <input id="objetivo" type="number" placeholder="Objetivo" />
+                                <textarea id="descripcion" name="descripcion" required />                                
+                            </> 
+                            }   
+                        </form>
+                        <p id="aviso"></p>
+                        <div className='modal-buttons'>
+                            {isEditing ? 
+                            <>
+                                <button
+                                    onClick={() => {
+                                        // Lógica para guardar cambios
+                                    }}
+                                >Guardar Cambios</button>
+                            </>  
+                            : 
+                            <>
+                                <button onClick={() => {createCampaña()}}>Crear Campaña</button>
+                            </>
+                            }
+                            <button onClick={()=>{ setIsEditing(false); setIsOpenModal(false); }}>Cancelar</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            )}
 
             {/* <div>
                 <h2>Donaciones Hechas</h2>
@@ -205,30 +290,6 @@ const PerfilUsuario = () => {
                     )}
                 </div>
             </div> */}
-
-            {/* {modalOpen && (
-                <div className="modalOverlay">
-                    <div className="modal">
-                    <div className="modalHeader">
-                        <h1>{activeTab === 'usuario' ? 'Editar Usuario' : 'Editar Campaña'}</h1>
-                    </div>
-
-                    {activeTab === 'usuario' ? (
-                        <>
-                        
-                        </>
-                    ) : (
-                        <>
-                        
-                        </>
-                    )}
-
-                    <div className='modal-buttons'>
-                        <button>Cancelar</button>
-                    </div>
-                </div>
-            </div>
-            )} */}
 
         </div>
     );

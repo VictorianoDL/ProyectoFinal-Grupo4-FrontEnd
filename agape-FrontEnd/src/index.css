@@ -18,6 +18,9 @@
     --colorAmarillo: #FAD928;
     --colorNaranja: #FF9915;
     --colorNaranjaClaro: #FDD6A4;
+
+    --indexHeader: 10;
+    --indexModal: 20;
 }
 
 h1,h2,h3,h4 {
@@ -63,15 +66,36 @@ input:focus, textarea:focus{
 }
 
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+/* Conteiner del modal */
+.modal-overlay {
+    z-index: var(--indexModal);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    color: white;
+    background: var(--colorNaranjaClaro);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1.5rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}

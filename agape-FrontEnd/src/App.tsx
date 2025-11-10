@@ -36,7 +36,7 @@ function AppInner() {
                         
                         if (userRes.ok) {
                             const userData = await userRes.json();
-                            setId(userData.id);
+                            setId(userData.id_Usuario);
                             setUserName(userData.nombreUsuario);
                             setName(userData.nombre);
                             setLastName(userData.apellido);
@@ -75,7 +75,7 @@ function App() {
             <UserProvider>
                 <CampañaProvider>
                     <BrowserRouter>
-                    <AppInner />
+                        <AppInner />
                     </BrowserRouter>
                 </CampañaProvider>
             </UserProvider>

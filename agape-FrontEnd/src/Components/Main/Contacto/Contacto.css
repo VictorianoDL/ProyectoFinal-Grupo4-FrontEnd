@@ -16,17 +16,17 @@
     gap: 15px;
 }
 
-form div{
+.Contacto form div{
     display: grid;
     grid-template-columns: 1fr 1fr 2fr;
     gap: 10px;
 }
-form div button{
+.Contacto form div button{
     background-color: var(--colorCeleste);
     font-weight: bold;
     padding: 10px;
 }
-form div button:hover{
+.Contacto form div button:hover{
     background-color: #289a92;  
 }
 
