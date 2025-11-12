@@ -13,31 +13,48 @@
     flex-direction: column;
 }
 
-.porcentaje {
-    border-radius: 10px;
-    background-color: var(--colorAmarillo);
-    margin: 0px;
-    width: 100%;
-    text-align: center;
-}
-.porcentaje h2{
-    margin: 0px;
+
+.barra-overlay{
+    z-index: var(--indexHeader);
+    background: linear-gradient(to bottom, #00000000, #000000c0);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
 }
 
-.lista-boton{
+.barra-content{
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    align-items: center;
+    grid-template-columns: 5fr 1fr;
+    padding: 20px 100px;
+    gap: 20px;
 }
-.lista-boton button{
-    background-color: var(--colorAmarilloClaro);
-    color: var(--colorNaranja);
-    font-weight: 600;
+
+.barra-porcentaje{
+    background: var(--colorCelesteOscuro);
     padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--colorCeleste);
 }
-.lista-boton button:hover{
-    background-color: var(--colorAmarillo);
+
+.barra{
+    background-color: var(--colorNaranja);
+    border-radius: 10px;
+    text-align: center;
 }
+
+.progress{
+    background-color: var(--colorCeleste);
+    border-radius: 10px;
+}
+
+.info{
+    display: flex;
+    justify-content: space-between;
+}
+
+
 
 .lista-donadores{
     margin: 0px;
@@ -46,7 +63,6 @@
     height: 100%;   
 }
 
-
 .conteiner-informacion {
     padding: 20px;
 }
@@ -54,5 +70,9 @@
 .conteiner-informacion h1, .conteiner-informacion h3{
     margin: 0px;
 }
+
+
+
+
 
 

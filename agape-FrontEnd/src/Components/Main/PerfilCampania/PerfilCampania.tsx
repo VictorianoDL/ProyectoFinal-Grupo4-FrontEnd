@@ -1,19 +1,92 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './PerfilCampania.css'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCampaña } from '../../../Context/CampañaContext';
 
 const PerfilCampania = () => {
     const navigate = useNavigate();
+    const params = useParams<{ id: string }>(); // <-- usa useParams
+    const parsedRouteId = params.id ? parseInt(params.id, 10) : undefined;
+    const routeId: number | undefined = typeof parsedRouteId === 'number' && !Number.isNaN(parsedRouteId)
+    ? parsedRouteId : undefined;
+
+    const { 
+        idCamp   , nameCamp   , descripcion   , tipo   , objetivo   , recaudado   , fecha_inicio  , activo, ownerUsuario, ownerEmail,
+        setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo, setOwnerUsuario, setOwnerEmail
+    } = useCampaña();
+
+    useEffect(() => {
+        const fetchCampaña = async (searchId: number) => { 
+            try{
+                const res = await fetch(`http://localhost:3000/campanias/` + searchId, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+                if (res.ok){
+                    const data = await res.json();
+                    setActivo(data.activo);
+                    setDescripcion(data.descripcion);
+                    setFechaInicio(data.fecha_inicio);
+                    setIdCamp(data.id_campania ?? data.id);
+                    setNameCamp(data.nombre);
+                    setObjetivo(data.objetivo);
+                    setRecaudado(data.recaudado);
+                    setTipo(data.tipo);
+                    setOwnerUsuario(data.usuario.nombre);
+                    setOwnerEmail(data.usuario.email);
+
+                }else{
+                    // si no existe la campaña, redirigir a la ruta 404 (la ruta "*" en Main)
+                    navigate('/404', { replace: true });
+                } 
+            }catch(err){
+                // en caso de error de red también redirigir a 404
+                console.log("Error: " + err );
+                navigate('/404', { replace: true });
+            }
+        };
+
+       const idToFetch =
+            routeId !== undefined
+                ? routeId
+                : (typeof idCamp === 'number' && !Number.isNaN(idCamp) ? idCamp : undefined);
+
+        if (typeof idToFetch === 'number') {
+            fetchCampaña(idToFetch);
+        }
+    }, [routeId, idCamp, setActivo, setDescripcion, setFechaInicio, setIdCamp, setNameCamp, setObjetivo, setRecaudado, setTipo]);
+
+
+    const recaudadoPorcentaje = (recaudado / objetivo) * 100;
+
     
     return (
         <div className="perfil-campania">
-            <div className='conteiner-donaciones'>
-                <div className='porcentaje'>
-                    <h2>20%</h2>
-                </div>
-                <div className='lista-boton'>
-                    <h3>lista donaciones</h3>
+            <div className='barra-overlay'>
+                <div className='barra-content'>
+
+                    <div className='barra-porcentaje'>
+
+                        <div className='barra'>
+                            <div className='progress' style={{ width: `${recaudadoPorcentaje}%` }}>{Math.round(recaudadoPorcentaje)}%</div>
+                        </div>
+
+                        <div className='info'>
+                            <p>Recaudado: ${recaudado} </p>
+                            <p>Objetivo: ${objetivo} </p>
+                        </div>
+
+                    </div>
+
                     <button onClick={()=>navigate("/donar")}>Donar</button>
+
+                </div>
+            </div>
+            
+
+            <div className='conteiner-donaciones'>  
+                <div className='lista-boton'>
+                    <h3>Ultimas Donaciones</h3>
                 </div>
                 <div className='lista-donadores'>
                     <p>nombreUsuario | fecha | monto</p>
@@ -21,11 +94,15 @@ const PerfilCampania = () => {
                     <p>nombreUsuario | fecha | monto</p>
                 </div>
             </div>
+
+ 
             <div className='conteiner-informacion'>
-                <h1>Nombre Campania</h1>
-                <h3>Usuario Owner</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>   
+                <h3>Dueño: {ownerEmail}</h3>
+                <h1>{nameCamp}</h1>
+                <p>Tipo: {tipo}</p>
+                <p>{descripcion}</p>
             </div>
+ 
         </div>
     );
 };

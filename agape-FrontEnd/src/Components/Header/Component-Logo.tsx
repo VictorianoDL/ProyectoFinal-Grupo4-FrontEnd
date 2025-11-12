@@ -18,7 +18,7 @@ const ComponentLogo = () => {
                     <Route path="/campanias" element= {<h3>Campañas</h3>} />
                     <Route path="/contacto" element= {<h3>Contacto</h3>} />
                     <Route path="/usuario" element= {<h3>Perfil de Usuario</h3>} />
-                    <Route path="/perfil-campania" element= {<h3>Perfil de Campania</h3>} />
+                    <Route path="/perfil-campania/:id" element= {<h3>Perfil de Campania</h3>} />
                     <Route path="/donar" element= {<h3>Donacion</h3>} />
                 </Routes> 
             </div>

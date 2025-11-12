@@ -7,14 +7,15 @@ import Main from './Components/Main/Main'
 import { UserProvider, useUser } from "./Context/UserContext";
 import { CampañaProvider, useCampaña } from "./Context/CampañaContext"; 
 import { useEffect } from "react";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function AppInner() {
     const { setId , setUserName, setName, setLastName, setEmail, setAccessToken } = useUser();
-
+    
     useEffect(() => {
         const tryRefresh = async () => {
             try {
-                const res = await fetch("http://localhost:3000/auth/refresh", {
+                const res = await fetch("/auth/refresh", {
                     method: "POST",
                     credentials: "include", // importante: incluye la cookie httpOnly
                 });
@@ -25,7 +26,7 @@ function AppInner() {
                     // Obtener datos del usuario usando el nuevo access_token
                     try {
                         
-                        const userRes = await fetch("http://localhost:3000/auth/me", {
+                        const userRes = await fetch("/auth/me", {
                             method: "GET",
                             headers: {
                                 'Authorization': `Bearer ${data.access_token}`,
@@ -72,13 +73,15 @@ function AppInner() {
 function App() {
     return (
         <>
-            <UserProvider>
-                <CampañaProvider>
-                    <BrowserRouter>
-                        <AppInner />
-                    </BrowserRouter>
-                </CampañaProvider>
-            </UserProvider>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
+                <UserProvider>
+                    <CampañaProvider>
+                        <BrowserRouter>
+                            <AppInner />
+                        </BrowserRouter>
+                    </CampañaProvider>
+                </UserProvider>
+            </GoogleOAuthProvider>
         </>
     )
 }

@@ -99,3 +99,20 @@ input:focus, textarea:focus{
     gap: 10px;
     width: 100%;
 }
+
+#label-group{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+#label-group span{
+    padding: 10px;
+    background-color: #feb049;
+    border-radius: 10px 0px 0px 10px;
+}
+#label-group input{
+    padding: 10px;
+    border-radius: 0px 10px 10px 0px;
+    margin: 0px;
+    transition: outline 0.3s;
+}
