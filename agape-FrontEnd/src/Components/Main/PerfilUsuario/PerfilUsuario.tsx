@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from "../../../Context/UserContext";
 import { useCampaña } from '../../../Context/CampañaContext';
 import './PerfilUsuario.css'
@@ -6,7 +6,6 @@ import './PerfilUsuario.css'
 
 // fetch para traer donaciones de un usuario
 
-// fetch y post para actualizar datos de usuario
 // fetch y post para actualizar datos de campaña
 
 // acomodar cuando se toca en "Perfil de campaña", se ve por unos segundos que no hay ninguna campaña y se puede tocar el boton crear campaña
@@ -25,37 +24,38 @@ const PerfilUsuario = () => {
     const [ isEditing, setIsEditing ] = useState(false);
   
     const [activeTab, setActiveTab] = useState("usuario");
-    
 
-    if(activeTab === "campania"){
-        const fetchCampaña = async () => { 
-            try{
-                const res = await fetch(`http://localhost:3000/campanias/owner/` + id, {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" }
-                });
-                if (res.ok){
-                    const data = await res.json();
-                    setActivo(data.activo);
-                    setDescripcion(data.descripcion);
-                    setFechaInicio(data.fecha_inicio);
-                    setIdCamp(data.id_campania);
-                    setNameCamp(data.nombre);
-                    setObjetivo(data.objetivo);
-                    setRecaudado(data.recaudado);
-                    setTipo(data.tipo);
-                    
-                    setHaveCampania(true);
-                }else{
-                    throw new Error("No se encontro ninguna campaña, osea la respuesta del fetch campaña fue no ok");
-                } 
-            }catch(err){
-                console.log("Error: " + err );
+    useEffect(() => {
+        if (activeTab === "campania") {
+            const fetchCampaña = async () => {
+                try {
+                    const res = await fetch(`http://localhost:3000/campanias/owner/` + id, {
+                        method: "GET",
+                        headers: { "Content-Type": "application/json" }
+                    });
+                    if (res.ok){
+                        const data = await res.json();
+                        setActivo(data.activo);
+                        setDescripcion(data.descripcion);
+                        setFechaInicio(data.fecha_inicio);
+                        setIdCamp(data.id_campania);
+                        setNameCamp(data.nombre);
+                        setObjetivo(data.objetivo);
+                        setRecaudado(data.recaudado);
+                        setTipo(data.tipo);
+                        
+                        setHaveCampania(true);
+                    }else{
+                        throw new Error("No se encontro ninguna campaña, osea la respuesta del fetch campaña fue no ok");
+                    } 
+                }catch(err){
+                    console.log("Error: " + err );
+                }
             }
+            fetchCampaña();
         }
-        fetchCampaña();
-    }
-    
+    });
+
     // fetch donaciones hechas por el usuario
 
     const createCampaña = async () => {
