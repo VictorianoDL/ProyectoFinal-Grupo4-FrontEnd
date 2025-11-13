@@ -52,3 +52,58 @@
 .CampaniaCard:active {
     transform: scale(0.99); 
 }
+
+/* Responsive */
+
+/* --- Tablets --- */
+@media (max-width: 1024px) {
+  .fila {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cuadrado,
+  .rectangulo {
+    width: 45%;
+    min-width: 280px;
+    aspect-ratio: 1 / 0;
+    flex-grow: 0;
+  }
+}
+
+/* --- Móviles --- */
+@media (max-width: 768px) {
+  #h2 {
+    font-size: 28px;
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .fila {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    height: auto;
+  }
+
+  .cuadrado,
+  .rectangulo {
+    width: 90%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* ---------- Moviles pequeños ---------- */
+@media (max-width: 480px) {
+  #h2 {
+    font-size: 24px;
+    margin-top: 40px;
+  }
+
+  .cuadrado,
+  .rectangulo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+}

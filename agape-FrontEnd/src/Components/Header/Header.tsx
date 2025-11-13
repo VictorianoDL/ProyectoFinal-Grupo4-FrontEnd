@@ -16,7 +16,7 @@ const Header = () => {
                     <img src="../Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
                 </div>
             </div>
-            
+
             <ComponentLogoPerfil></ComponentLogoPerfil>
         </header>
     );

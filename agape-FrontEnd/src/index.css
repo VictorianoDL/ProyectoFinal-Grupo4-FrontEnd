@@ -20,6 +20,10 @@
     --colorNaranjaClaro: #FDD6A4;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 h1,h2,h3,h4 {
     margin: 0;
     user-select: none;
@@ -63,15 +67,3 @@ input:focus, textarea:focus{
 }
 
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */

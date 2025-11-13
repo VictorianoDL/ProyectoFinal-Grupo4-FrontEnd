@@ -1,20 +1,30 @@
-
-
+/* ------------Carrucel de imagenes---------- */
 .Carrucel {
     width: 100%;
-    height: 600px;
+    height: auto;
+    aspect-ratio: 16/7;
+    max-height: 720px;
+    min-height: 240px;
+    overflow: hidden;
     position: relative;
     gap: 20px;
     margin: 20px 0;
-    background-color: rgba(1, 39, 121, 0.274);
 }
+
+.carruselContainer {
+  position: relative;
+  width: 100%;
+}
+
 .Carrucel img {
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 .Carrucel button{
     height: 100%;
     position: absolute;
+    border: none;
     width: 30%;
     transition: 0.5s;
 }
@@ -23,7 +33,7 @@
 }
 
 #Izquierda{
-    background: linear-gradient( to left,#2590c900, #000000ca);
+    background: linear-gradient( to left,#2590c900, #000000ca);;
     left: 0px;
 }
 #Derecha{
@@ -38,16 +48,20 @@
 }
 
 .aCampanias {
-    background-color: var(--colorNaranja);
+    position: absolute;
+    bottom: 10%; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: var(--colorNaranja);
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px 25px;
     border: none;
     border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    font-weight: 600;
-    color: var(--colorNaranjaClaro);
     cursor: pointer;
-    margin-bottom: 20px;
-    text-decoration: none; 
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .aCampanias:hover {
@@ -72,8 +86,8 @@
     align-items: center;
     border-radius: 10px;
     margin: 10px 0;
-    background-color: #EDECB3;
     transition: 0.5s; 
+    overflow: hidden;
 }
 .CasillaInfo img {
     -webkit-user-drag: none;
@@ -85,19 +99,26 @@
     height: 250px;
 }
 #texto {
-    z-index: 1;
+    z-index: 4;
+    margin-left: 30px;
+    color: white;
 }
 #texto h2{
-    font-size: 30px;
+    margin: 0 0 8px 0;
+    font-size: 1.6rem;
 }
-#texto p, #texto h2{
-    width: 800px;
-    max-height: 250px;
-    font-size: auto;
-    margin:0px 25px 0px 25px ;
-    color: #EDECB3;
-    transition: 0.5s;
-} 
+#texto p{
+    margin: 0;
+    line-height: 1.5;
+    max-width: 100ch;
+}
+
+.CasillaInfo.row-rev #texto {
+    text-align: right;
+    margin-left: 0;
+    margin-right: 30px;
+}
+
 .CasillaInfo:hover{
     transform: scale(1.01);
     .shadow0{
@@ -109,6 +130,33 @@
     .shadow2{
         width: 90%;
     }  
+}
+
+@media (max-width: 768px) {
+  .CasillaInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .CasillaInfo img {
+    display: none;
+  }
+
+  #texto {
+    margin: 0;
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  #texto h2 {
+    font-size: 1.4rem;
+  }
+
+  #texto p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
 }
 
 /* imagen de linea naranja */
@@ -133,4 +181,55 @@
     width: 80%;
     transition: 0.3s; 
     filter: grayscale(1) sepia(1) saturate(5) hue-rotate(0deg) 
+}
+
+/* Carrucel Responsive */
+
+@media (max-width: 1024px) {
+  .Carrucel {
+    height: 450px;
+  }
+
+  .aCampanias {
+    font-size: 1rem;
+    padding: 10px 20px;
+    bottom: 8%;
+  }
+}
+
+@media (max-width: 768px) {
+  .Carrucel {
+    height: 350px;
+  }
+
+  .aCampanias {
+    font-size: 0.9rem;
+    padding: 8px 18px;
+    bottom: 6%;
+  }
+
+  .Carrucel button {
+    width: 25%;
+  }
+
+  .Casillas-Informacion {
+    background-color: var(--colorNaranja);
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Carrucel {
+    height: 250px;
+  }
+
+  .aCampanias {
+    font-size: 0.8rem;
+    padding: 6px 15px;
+    bottom: 5%;
+  }
+
+  .Carrucel button:hover {
+    width: 30%;
+  }
 }

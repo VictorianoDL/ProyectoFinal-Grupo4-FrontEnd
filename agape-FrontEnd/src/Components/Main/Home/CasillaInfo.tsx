@@ -25,7 +25,7 @@ const CasillaInfo = ({imageUrl,description,row}:CasillaInfoProps) => {
 
     }else{
         return (
-            <div className="CasillaInfo" style={{flexDirection: 'row-reverse'}}>
+            <div className="CasillaInfo row-rev" style={{flexDirection: 'row-reverse'}}>
                 <div id="texto">
                     <h2>Agápe: amor que transforma</h2>
                     <p> {description} </p>

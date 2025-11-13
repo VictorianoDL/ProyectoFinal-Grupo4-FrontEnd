@@ -5,12 +5,12 @@ import './Home.css'
 
 
 const image = [
-    "https://st.depositphotos.com/67109346/56769/v/450/depositphotos_567692978-stock-illustration-concept-cohesion-five-outstretched-hands.jpg",
-    "https://img.freepik.com/vector-premium/icono-red-social-establece-vector-conexion-comunidad-simbolo-conexion-global-signo-conexion-global-icono-red_268104-13390.jpg?w=360"
+    "/imagenes/home2.jpg",
+    "/imagenes/home1.jpg"
 ];
 
 const descripcion = [
-    `Agápe: amor que transforma.
+    `
     En Agápe creemos que ayudar es un acto de amor puro.
     Nuestra plataforma conecta a personas solidarias con causas reales, permitiendo donar de manera segura, simple y transparente.
     Cada aporte, por pequeño que parezca, tiene el poder de cambiar una vida.
@@ -28,8 +28,13 @@ const Home = () => {
     
     return (
         <div className="home">
-            <Carrucel />
-            <button className="aCampanias" onClick={() => navigate("/campanias")}>ir a campañas</button>
+            <div className="carruselContainer">
+                <Carrucel />
+                <button 
+                    className="aCampanias"
+                    onClick={() => navigate("/campanias")}>Explorar Campañas
+                </button>
+            </div>
             <div className="Casillas-Informacion">
                 <CasillaInfo imageUrl={image[1]} description={descripcion[1]} row={true}/>
                 <CasillaInfo imageUrl={image[0]} description={descripcion[0]} row={false} />
