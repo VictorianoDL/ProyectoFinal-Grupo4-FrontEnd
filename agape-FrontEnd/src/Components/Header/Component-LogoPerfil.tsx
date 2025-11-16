@@ -1,15 +1,9 @@
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-// import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useUser } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
-// interface GooglePayload {
-//   email: string;
-//   name: string;
-//   picture: string;
-// }
 
 const ComponentLogoPerfil = () => {  
     const navigate = useNavigate();
@@ -166,7 +160,7 @@ const ComponentLogoPerfil = () => {
             console.warn("userinfo fetch failed:", await userinfoRes.text());
         }
         } catch (err) {
-        console.error("Error fetching userinfo:", err);
+            console.error("Error fetching userinfo:", err);
         }
     }
 
@@ -204,21 +198,12 @@ const ComponentLogoPerfil = () => {
         onSuccess: handleGoogleSuccess,
         onError: (err) => console.error("Google login failed:", err),
     });
-    // const handleLoginSuccess = (credentialResponse: any) => {
-    //     console.log('Google Credential:', credentialResponse);
-    //         // Aquí puedes enviar el token a tu backend o guardar el usuario
-
-    //     const decoded: GooglePayload = jwtDecode(credentialResponse.credential);
-    //     console.log("Usuario logeado:", decoded);
-
-
-    // };
 
     const DesLoguearse = async () => {
         try{
             const res = await fetch("/auth/logout", {
                 method: "POST",
-                credentials: "include", // importante: incluye la cookie httpOnly
+                credentials: "include",
             });
             if(res.ok){
                 setId(0);
@@ -263,7 +248,7 @@ const ComponentLogoPerfil = () => {
                         <div>
                             <img src="../Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
                         </div>
-                        <form className="modal-form">
+                        <form className="modal-form" >
                             {
                                 isLogged ? 
                                 <>
@@ -278,18 +263,13 @@ const ComponentLogoPerfil = () => {
                                             No
                                         </button>
                                     </div>
-
-                                    <a onClick={() => setIsRegister(true)}>Registrarse</a>
-
-                                    
-
                                 </>
                                 :
                                 <>
                                     {!isRegister ? 
                                     <>
-                                        <input id="emailUser" type="email" placeholder="Email"/>
-                                        <input id="contraseniaUser" type="text" placeholder="Contraseña"/>
+                                        <input id="emailUser" type="email" placeholder="Email" />
+                                        <input id="contraseniaUser" type="text" placeholder="Contraseña" autoComplete="off"/>
                                         <p id="aviso"></p>
  
                                         <div className="modal-buttons">
@@ -302,7 +282,7 @@ const ComponentLogoPerfil = () => {
                                             </button>
                                         </div>
 
-                                        <a onClick={() => setIsRegister(true)}>Registrarse</a>
+                                        <button onClick={() => setIsRegister(true)} className="btnRegister">Registrarse</button>
 
                                         
                                         <GoogleLogin

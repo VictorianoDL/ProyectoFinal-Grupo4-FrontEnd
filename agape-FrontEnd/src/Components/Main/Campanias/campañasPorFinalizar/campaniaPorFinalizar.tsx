@@ -14,7 +14,7 @@ const CampaniasPorFinalizar: React.FC = () => {
 
   return (
     <div className="segundoContainer">
-      <h2>A nada de llegar al objetivo!</h2>
+      <h2>A un paso del objetivo!</h2>
       {campanias.map((campania, index) => (
         <div key={index} className="barraContainer" onClick={() => navigate("/perfil-campania")}>
           <div className="barraFondo">

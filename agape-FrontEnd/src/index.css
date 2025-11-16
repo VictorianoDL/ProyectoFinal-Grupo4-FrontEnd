@@ -18,6 +18,9 @@
     --colorAmarillo: #FAD928;
     --colorNaranja: #FF9915;
     --colorNaranjaClaro: #FDD6A4;
+
+    --indexHeader: 10;
+    --indexModal: 20;
 }
 
 html, body {
@@ -67,3 +70,53 @@ input:focus, textarea:focus{
 }
 
 
+/* Conteiner del modal */
+.modal-overlay {
+    z-index: var(--indexModal);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    color: white;
+    background: var(--colorNaranjaClaro);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1.5rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+#label-group{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+#label-group span{
+    padding: 10px;
+    background-color: #feb049;
+    border-radius: 10px 0px 0px 10px;
+}
+#label-group input{
+    padding: 10px;
+    border-radius: 0px 10px 10px 0px;
+    margin: 0px;
+    transition: outline 0.3s;
+}

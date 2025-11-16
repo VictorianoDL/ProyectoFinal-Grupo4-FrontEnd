@@ -52,9 +52,7 @@
     bottom: 10%; 
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;
-    background: var(--colorNaranja);
-    color: white;
+    z-index: 9;
     font-size: 1.2rem;
     padding: 12px 25px;
     border: none;
@@ -65,8 +63,6 @@
 }
 
 .aCampanias:hover {
-    background-color: var(--colorNaranjaClaro);
-    color: var(--colorNaranja);
     transition: 0.3s;
 }
 

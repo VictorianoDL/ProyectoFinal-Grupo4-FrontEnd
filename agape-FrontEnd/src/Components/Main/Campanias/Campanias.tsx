@@ -10,7 +10,6 @@ const Campanias = () => {
     { id: '2', nombre: 'Campaña 2', descripcion: 'Descripción de la campaña 2' },
     { id: '3', nombre: 'Campaña 3', descripcion: 'Descripción de la campaña 3' },
     { id: '4', nombre: 'Campaña 4', descripcion: 'Descripción de la campaña 4' },
-
   ]; 
 
   return (

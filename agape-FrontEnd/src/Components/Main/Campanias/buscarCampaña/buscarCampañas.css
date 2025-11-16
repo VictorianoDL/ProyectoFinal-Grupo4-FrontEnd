@@ -39,3 +39,13 @@ input{
 .resultadoCard:active {
     transform: scale(0.99); 
 }
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  input {
+    width: 100%;
+  }
+}

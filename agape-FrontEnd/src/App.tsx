@@ -12,7 +12,7 @@ import Home from './Components/Main/Home/Home'
 import Campanias from './Components/Main/Campanias/Campanias'
 import Contacto from './Components/Main/Contacto/Contacto'
 import PerfilCampania from './Components/Main/PerfilCampania/PerfilCampania'
-import Donar from './Components/Main/PerfilCampania/Donar/Donar'
+import Donar from './Components/Main/Donar/Donar'
 import PerfilUsuario from './Components/Main/PerfilUsuario/PerfilUsuario'
 
 function AppInner() {
@@ -43,7 +43,7 @@ function AppInner() {
                         
                         if (userRes.ok) {
                             const userData = await userRes.json();
-                            setId(userData.id);
+                            setId(userData.id_Usuario);
                             setUserName(userData.nombreUsuario);
                             setName(userData.nombre);
                             setLastName(userData.apellido);
@@ -83,7 +83,7 @@ function App() {
                 <UserProvider>
                     <CampañaProvider>
                         <BrowserRouter>
-                        <AppInner />
+                            <AppInner />
                         </BrowserRouter>
                     </CampañaProvider>
                 </UserProvider>

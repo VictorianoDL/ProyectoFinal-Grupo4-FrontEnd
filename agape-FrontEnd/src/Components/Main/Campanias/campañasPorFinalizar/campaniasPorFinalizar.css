@@ -60,3 +60,14 @@
 .barraFondo:active {
     transform: scale(0.99); 
 }
+
+@media (max-width: 480px) {
+  .segundoContainer h2 {
+    font-size: 21px;
+    margin-bottom: 5px;
+  }
+
+  .barraPorcentaje {
+    justify-content:flex-end;
+  }
+}

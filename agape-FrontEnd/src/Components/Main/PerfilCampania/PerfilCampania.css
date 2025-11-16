@@ -13,31 +13,48 @@
     flex-direction: column;
 }
 
-.porcentaje {
-    border-radius: 10px;
-    background-color: var(--colorAmarillo);
-    margin: 0px;
-    width: 100%;
-    text-align: center;
-}
-.porcentaje h2{
-    margin: 0px;
+
+.barra-overlay{
+    z-index: var(--indexHeader);
+    background: linear-gradient(to bottom, #00000000, #000000c0);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
 }
 
-.lista-boton{
+.barra-content{
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    align-items: center;
+    grid-template-columns: 5fr 1fr;
+    padding: 20px 100px;
+    gap: 20px;
 }
-.lista-boton button{
-    background-color: var(--colorAmarilloClaro);
-    color: var(--colorNaranja);
-    font-weight: 600;
+
+.barra-porcentaje{
+    background: var(--colorCelesteOscuro);
     padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--colorCeleste);
 }
-.lista-boton button:hover{
-    background-color: var(--colorAmarillo);
+
+.barra{
+    background-color: var(--colorNaranja);
+    border-radius: 10px;
+    text-align: center;
 }
+
+.progress{
+    background-color: var(--colorCeleste);
+    border-radius: 10px;
+}
+
+.info{
+    display: flex;
+    justify-content: space-between;
+}
+
+
 
 .lista-donadores{
     margin: 0px;
@@ -45,7 +62,6 @@
     background-color: brown; 
     height: 100%;   
 }
-
 
 .conteiner-informacion {
     padding: 20px;
@@ -55,4 +71,141 @@
     margin: 0px;
 }
 
+@media (max-width: 1024px) {
+  :root { --barra-height-desktop: var(--barra-height-tablet); }
+  .perfil-campania {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    min-height: calc(100vh - var(--barra-height-tablet));
+    padding-bottom: var(--barra-height-tablet);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .barra-content{
+    grid-template-columns: 1fr 1fr;
+    padding: 14px 24px;
+  }
+
+  .barra{
+    height: 34px;
+  }
+
+  .progress { font-size: 0.95rem; }
+  .info { font-size: 0.92rem; }
+}
+
+/* ---------- Moviles pequeños ---------- */
+@media (max-width: 480px) {
+    .perfil-campania {
+        display: block;
+        padding-bottom: var(--barra-height-mobile);
+        padding-left: 12px;
+        padding-right: 12px;
+        min-height: auto;
+    }
+
+    .conteiner-donaciones {
+        padding: 12px;
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 8px;
+    }
+
+    .barra-overlay {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 55%);
+        z-index: var(--indexHeader, 999);
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .barra-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+        padding: 10px 12px;
+    }
+
+    .barra-porcentaje {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid var(--colorCeleste);
+    }
+
+    .barra {
+        height: 34px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .progress {
+        display: block;
+        height: 100%;
+        padding: 0 8px;
+        line-height: 34px;
+        font-size: 0.95rem;
+        border-radius: 6px;
+        width: auto;
+        box-sizing: border-box;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 0.88rem;
+    }
+
+    .barra-content > button,
+    .barra-content button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .lista-donadores {
+        padding: 8px 4px;
+        font-size: 0.92rem;
+    }
+
+    .lista-donadores p { margin: 6px 0; }
+
+    .conteiner-informacion {
+        padding: 12px;
+    }
+
+    .conteiner-informacion h3 { font-size: 0.95rem; margin-bottom: 6px; }
+    .conteiner-informacion h1 { font-size: 1.25rem; margin-bottom: 8px; }
+    .conteiner-informacion p { font-size: 0.95rem; margin: 6px 0; }
+
+    .perfil-campania {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-bottom: var(--barra-height-mobile);
+    }
+
+    .conteiner-informacion {
+        order: 1;
+        padding: 12px;
+    }
+
+    .conteiner-donaciones {
+        order: 2;
+        margin-top: 0;
+        padding: 12px;
+        border-radius: 10px 10px 0 0;
+    }
+
+}
 

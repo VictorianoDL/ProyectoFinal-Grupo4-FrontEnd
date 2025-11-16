@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 
 const ComponentLogo = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +43,7 @@ const ComponentLogo = () => {
                     <Link to="/contacto" onClick={handleCloseMenu}>
                         <h2>Contacto</h2>
                     </Link>
-                </div>
+                </div>  
             </div>
         </div>
     );

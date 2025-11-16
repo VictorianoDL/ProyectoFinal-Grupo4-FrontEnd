@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./buscarCampañas.css";
 import { useNavigate } from "react-router-dom";
+import { useCampaña } from '../../../../Context/CampañaContext';
 
 type Campania = {
     id_campania: number;
     nombre: string;
-    descripcion?: string;
+    descripcion: string;
 };
 
 const BuscarCampañas: React.FC = () => {
     const [query, setQuery] = useState<string>("");
     const [campanias, setCampanias] = useState<Campania[]>([]);
     const navigate = useNavigate();
+
+    const { 
+        idCamp   , nameCamp   , descripcion   , tipo   , objetivo   , recaudado   , fecha_inicio  , activo,
+        setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo 
+    } = useCampaña();
 
     useEffect(() => {
         const fetchCampanias = async () => {
@@ -48,15 +54,15 @@ const BuscarCampañas: React.FC = () => {
                 <div
                     key={campania.id_campania}
                     className="resultadoCard"
-                    onClick={() => navigate("/perfil-campania")}
+                    onClick={() => navigate(`/perfil-campania/${campania.id_campania}`)}
                 >
                     <p className="nombre">{campania.nombre}</p>
                     <p className="descripcion">{campania.descripcion}</p>
                 </div>
                 ))
-            ) : (
-                <p>No se encontraron campañas.</p>
-            )}
+                ) : (
+                    <p>No se encontraron campañas.</p>
+                )}
             </div>
         </div>
     );
