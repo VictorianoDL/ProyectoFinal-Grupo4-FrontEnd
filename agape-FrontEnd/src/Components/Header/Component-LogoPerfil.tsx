@@ -203,7 +203,7 @@ const ComponentLogoPerfil = () => {
         try{
             const res = await fetch("/auth/logout", {
                 method: "POST",
-                credentials: "include", // importante: incluye la cookie httpOnly
+                credentials: "include",
             });
             if(res.ok){
                 setId(0);
@@ -248,7 +248,7 @@ const ComponentLogoPerfil = () => {
                         <div>
                             <img src="../Logos/Agape - Logo AZUL Completo.png" alt="Logo" />
                         </div>
-                        <form className="modal-form">
+                        <form className="modal-form" >
                             {
                                 isLogged ? 
                                 <>
@@ -268,8 +268,8 @@ const ComponentLogoPerfil = () => {
                                 <>
                                     {!isRegister ? 
                                     <>
-                                        <input id="emailUser" type="email" placeholder="Email"/>
-                                        <input id="contraseniaUser" type="text" placeholder="Contraseña"/>
+                                        <input id="emailUser" type="email" placeholder="Email" />
+                                        <input id="contraseniaUser" type="text" placeholder="Contraseña" autoComplete="off"/>
                                         <p id="aviso"></p>
  
                                         <div className="modal-buttons">
@@ -282,7 +282,7 @@ const ComponentLogoPerfil = () => {
                                             </button>
                                         </div>
 
-                                        <a onClick={() => setIsRegister(true)}>Registrarse</a>
+                                        <button onClick={() => setIsRegister(true)} className="btnRegister">Registrarse</button>
 
                                         
                                         <GoogleLogin

@@ -35,6 +35,17 @@ const CampaniasRecientes = ({ campanias }: Props) => {
         <div className="campanias-recientes">
             <h1>Recientes</h1>
             <div className="campanias-grid">
+                {/* {recientes.map(c => (
+                    <div
+                        key={c.id_campania}
+                        className="CampaniaCard"
+                        onClick={() => navigate(`/perfil-campania/${c.id_campania}`)}
+                    >
+                        <h2>{c.nombre}</h2>
+                        <p>{c.descripcion}</p>
+                        <small>{new Date(c.fecha_inicio).toLocaleDateString()}</small>
+                    </div>
+                ))} */}
                 <div className="fila">
                     <CampaniaCard className="cuadrado" {...recientes[0]} />
                     <CampaniaCard className="rectangulo" {...recientes[1]} />

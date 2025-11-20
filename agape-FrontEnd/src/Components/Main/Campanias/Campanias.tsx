@@ -1,11 +1,9 @@
 import CampaniRecientes from "./CampañasRecientes/CampaniasRecientes";
-import CampaniasPorFinalizar from "./CampañasPorFinalizar/CampaniaPorFinalizar";
+import CampaniasPorFinalizar from "./CampañasPorFinalizar/campaniaPorFinalizar";
 import BuscarCampañas from "./BuscarCampaña/BuscarCampañas";
 import "./Campanias.css";
 
 import { useEffect, useState } from "react";
-
-
 
 const Campanias = () => {
     const [campaniasArray, setCampanias] = useState<[]>([]);

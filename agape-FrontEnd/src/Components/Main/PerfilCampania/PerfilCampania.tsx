@@ -6,7 +6,7 @@ import UltimasDons from './UltimasDons';
 
 const PerfilCampania = () => {
     const navigate = useNavigate();
-    const params = useParams<{ id: string }>(); // <-- usa useParams
+    const params = useParams<{ id: string }>();
     const parsedRouteId = params.id ? parseInt(params.id, 10) : undefined;
     const routeId: number | undefined = typeof parsedRouteId === 'number' && !Number.isNaN(parsedRouteId)
     ? parsedRouteId : undefined;

@@ -1,18 +1,15 @@
 import './Donar.css'
 import { useCampaña } from '../../../Context/CampañaContext';
 import { useUser } from '../../../Context/UserContext';
-import { use, useEffect } from 'react';
 
 const Donar = () => {
     const {accessToken} = useUser();
     const { 
-        idCamp   , nameCamp   , descripcion   , tipo   , objetivo   , recaudado   , fecha_inicio  , activo, ownerUsuario, ownerEmail,
-        setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo, setOwnerUsuario, setOwnerEmail
+        idCamp, nameCamp, ownerEmail
     } = useCampaña();
 
 
     const handleDonar = async () => {
-        
         let avisoElem = document.getElementById("aviso") as HTMLElement;
         const montoStr = (document.getElementById("monto") as HTMLInputElement).value;
         const monto = Number(montoStr);

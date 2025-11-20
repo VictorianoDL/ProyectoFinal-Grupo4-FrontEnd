@@ -1,13 +1,19 @@
 import './App.css'
 import Footer from './Components/Footer/Footer'
 import Header from './Components/Header/Header'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Main from './Components/Main/Main'
 
 import { UserProvider, useUser } from "./Context/UserContext";
 import { CampañaProvider, useCampaña } from "./Context/CampañaContext"; 
 import { useEffect } from "react";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import Home from './Components/Main/Home/Home'
+import Campanias from './Components/Main/Campanias/Campanias'
+import Contacto from './Components/Main/Contacto/Contacto'
+import PerfilCampania from './Components/Main/PerfilCampania/PerfilCampania'
+import Donar from './Components/Main/Donar/Donar'
+import PerfilUsuario from './Components/Main/PerfilUsuario/PerfilUsuario'
 
 function AppInner() {
     const { setId , setUserName, setName, setLastName, setEmail, setAccessToken } = useUser();
@@ -65,7 +71,7 @@ function AppInner() {
         <>
             <Header />
             <Main />
-            <Footer />
+            <Footer /> 
         </>
     );
 }
