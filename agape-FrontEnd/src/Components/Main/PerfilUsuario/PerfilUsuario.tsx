@@ -3,11 +3,6 @@ import { useUser } from "../../../Context/UserContext";
 import { useCampaña } from '../../../Context/CampañaContext';
 import './PerfilUsuario.css'
 
-
-// fetch para traer donaciones de un usuario
-
-// fetch y post para actualizar datos de campaña
-
 // acomodar cuando se toca en "Perfil de campaña", se ve por unos segundos que no hay ninguna campaña y se puede tocar el boton crear campaña
 
 
@@ -15,9 +10,9 @@ const PerfilUsuario = () => {
     const [query, setQuery] = useState('');
     
     const { id,    userName,    name,    lastName,    email   , accessToken, profilePic} = useUser();
-    const { setId, setUserName, setName, setLastName, setEmail } = useUser();
-    const { idCamp,    nameCamp,    descripcion,    tipo,    objetivo,    recaudado,    fecha_inicio,   activo    } = useCampaña();
+    const { idCamp,    nameCamp,    descripcion,    tipo,    objetivo,    recaudado,    fecha_inicio} = useCampaña();
     const { setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo } = useCampaña();
+    const [ loadingCampania, setLoadingCampania] = useState(true);
     const [ haveCampania, setHaveCampania ] = useState(false);
 
     const [ isOpenModal, setIsOpenModal ] = useState(false);
@@ -44,9 +39,10 @@ const PerfilUsuario = () => {
                         setRecaudado(data.recaudado);
                         setTipo(data.tipo);
                         
+                        setLoadingCampania(false);
                         setHaveCampania(true);
                     }else{
-                        throw new Error("No se encontro ninguna campaña, osea la respuesta del fetch campaña fue no ok");
+                        throw new Error("No se encontro ninguna campaña");
                     } 
                 }catch(err){
                     console.log("Error: " + err );
@@ -56,7 +52,22 @@ const PerfilUsuario = () => {
         }
     });
 
-    // fetch donaciones hechas por el usuario
+    let [dataDonaciones, setDataDonaciones] = useState<any[]>([]);
+
+    useEffect (() => {
+        const fetchDonaciones = async () => {
+            const resDonaciones = await fetch(`http://localhost:3000/donaciones/usuario/`+ id, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            });
+            if (resDonaciones.ok) {
+                const dataDonaciones = await resDonaciones.json();
+                console.log(dataDonaciones);
+                setDataDonaciones(dataDonaciones);
+            }
+        };
+        fetchDonaciones();
+    }, [id]);
 
     const createCampaña = async () => {
         try{
@@ -135,55 +146,54 @@ const PerfilUsuario = () => {
     };
 
     const updateCampaña = async () => {
+        try{
+            const body = {
+                nombre: (document.getElementById("name") as HTMLInputElement).value,
+                tipo: (document.getElementById("tipo") as HTMLInputElement).value,
+                objetivo: Number((document.getElementById("objetivo") as HTMLInputElement).value),
+                descripcion: (document.getElementById("descripcion") as HTMLInputElement).value
+            };
+            if(body.nombre === "" || body.tipo === "" || body.objetivo === null || body.descripcion === ""){
+                throw new Error("Por favor complete todos los campos. Si no desea cambiar un campo, deje el mismo valor.");
+            }
+            if(body.nombre === nameCamp && body.tipo === tipo && body.objetivo === objetivo && body.descripcion === descripcion){
+                throw new Error("Los datos son iguales a los anteriores, no hay nada para actualizar.");        
+            }
 
+            const res = await fetch("http://localhost:3000/campanias/" + idCamp, {
+                method: "PATCH",
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`,
+                credentials: 'include'
+                },
+                body: JSON.stringify({...body})
+            });
+            if (res.ok){
+                setIsOpenModal(false);
+            }else{
+                throw new Error("No se pudo actualizar la campaña: " + res.statusText);
+            }
+        }catch(err){
+            document.getElementById("aviso")!.innerText = "Error al actualizar datos de campaña: " + err;
+        }
     };
 
-    // const [formState, setFormState] = useState<Partial<Usuario & Campania>>({});
+    const donacionesFiltradas = dataDonaciones.filter(donacion =>donacion.campania.nombre.toLowerCase().includes(query.toLowerCase()));
 
-
-    // const donaciones = [
-    //     { campaña: "Campaña1", monto: 100, fecha: "2023-10-01" },
-    //     { campaña: "Campaña Solidaria", monto: 250, fecha: "2023-11-10" },
-    //     { campaña: "Ayuda Animal", monto: 150, fecha: "2023-12-05" }
-    // ];
-
-    // const donacionesFiltradas = donaciones.filter(donacion =>donacion.campaña.toLowerCase().includes(query.toLowerCase()));
-
-
-    // interface Campania {
-    //     nombre: string;
-    //     descripcion: string;
-    //     tipo: string;
-    //     total: string;
-    // }
-
-    // const [datosUsuario, setDatosUsuario] = useState({
-    //     nombre: 'Nombre1234',
-    //     apellido: 'Apellido1234',
-    //     username: 'Usuario1234',
-    //     email: 'Email1234@gmail.com',
-    //     password: '********'
-    // });
-
-    // const [datosCampania, setDatosCampania] = useState({
-    //     nombre: 'Campania1234',
-    //     descripcion: 'Descripcion1234',
-    //     tipo: 'Tipo1234',
-    //     total: '12345'
-    // });
-
+    const imagen = "./imagenes/img-perfil-usuario.png";
 
     return (
         <div className="perfilUsuario">
-            <div className="container1Usuario">
+            <div className="headerUsuario">
                 <img 
                     src={profilePic ?? "https://t4.ftcdn.net/jpg/01/24/65/69/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"}
                     alt="LogoUsuario" 
                     className="fotoUsuario"
                 />
 
-                <div className='container2Usuario'>
-                    <h2>{userName}</h2>
+                <div className='headerNombre'>
+                    <h1>{userName}</h1>
                     <p>{email}</p>
                 </div>
             </div>
@@ -215,8 +225,8 @@ const PerfilUsuario = () => {
                 </>}
                 
                 {activeTab === "usuario" && (
-                    <div className='usuarioContent'>
-                        <dl className='datosUsuario'>
+                    <div className='conteinerContent'>
+                        <dl className='datosContent'>
                             <dt>Nombre:</dt>
                             <dd>{name}</dd>
 
@@ -233,36 +243,45 @@ const PerfilUsuario = () => {
                 )}
 
                 {activeTab === "campania" && (
-                    <div className='campaniaContent'>
-                        {haveCampania ? 
-                        <>
-                            <dl className='datosCampania'>
-                                <dt>Fecha de Creacion:</dt>
-                                <dd>{fecha_inicio.toString()}</dd>
+                    <div className='conteinerContent'>
+                        {loadingCampania ?
+                            <>
+                                <div id="cargando">Cargando...</div>
+                            </>
+                            :
+                            <>
+                                {haveCampania ? 
+                                <>
+                                    <dl className='datosContent'>
+                                        <dt>Fecha de Creacion:</dt>
+                                        <dd>{new Date(fecha_inicio).toLocaleDateString()}</dd>
 
-                                <dt>Nombre:</dt>
-                                <dd>{nameCamp}</dd>
+                                        <dt>Nombre:</dt>
+                                        <dd>{nameCamp}</dd>
 
-                                <dt>Descripcion:</dt>
-                                <dd>{descripcion}</dd>
+                                        <dt>Descripcion:</dt>
+                                        <dd>{descripcion}</dd>
 
-                                <dt>Tipo</dt>
-                                <dd>{tipo}</dd>
+                                        <dt>Tipo</dt>
+                                        <dd>{tipo}</dd>
 
-                                <dt>Objetivo:</dt>
-                                <dd>{objetivo}</dd>
+                                        <dt>Objetivo:</dt>
+                                        <dd>{objetivo}</dd>
 
-                                <dt>Recaudado:</dt>
-                                <dd>{recaudado}</dd>
-                            </dl> 
-                        </>
-                        :
-                        <>  
-                            <h1>No tienes una campaña</h1>
-                            <h2>¿Deseas crear una campaña?</h2>
-                            <button onClick={()=>setIsOpenModal(true)}>Crear Campaña</button>
-                        </> 
-                        }  
+                                        <dt>Recaudado:</dt>
+                                        <dd>{recaudado}</dd>
+                                    </dl> 
+                                </>
+                                :
+                                <div id='sinCampaña'>  
+                                    <h1>No tienes una campaña</h1>
+                                    <h2>¿Deseas crear una campaña?</h2>
+                                    <button onClick={()=>setIsOpenModal(true)}>Crear Campaña</button>  
+                                </div> 
+                                } 
+                            </>
+                        }
+                         
                     </div>
                 )}
 
@@ -325,8 +344,11 @@ const PerfilUsuario = () => {
                         <p id="aviso"></p>
                         <div className='modal-buttons'>
                             {isEditing ? 
-                            <>
-                                <button onClick={() => {updateUsuario()}}>Guardar Cambios</button>
+                            <>  
+                                {activeTab === "campania" ?
+                                <button onClick={() => {updateCampaña()}}>Guardar Cambios</button>
+                                :
+                                <button onClick={() => {updateUsuario()}}>Guardar Cambios</button>}
                             </>  
                             : 
                             <>
@@ -340,30 +362,44 @@ const PerfilUsuario = () => {
                 </div>
             )}
 
-            {/* <div>
-                <h2>Donaciones Hechas</h2>
-
-                <input
-                    type="text"
-                    placeholder="Buscar donación..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                />
-
-                <div className='donacionesRecibidas'>
-                    {donacionesFiltradas.length > 0 ? (
-                        donacionesFiltradas.map((donacion, index) => (
-                            <div key={index} className='donacionesUsuario'>
-                                <p><strong>Campaña:</strong> {donacion.campaña}</p>
-                                <p><strong>Monto:</strong> ${donacion.monto}</p>
-                                <p><strong>Fecha:</strong> {donacion.fecha}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No se encontraron resultados.</p>
-                    )}
+            <div id='donaciones-conteiner'>
+                <div id='donacionesRealizadas'>
+                    <h2>Donaciones Realizadas</h2>
+                    <input
+                        type="text"
+                        placeholder="Buscar donación por nombre..."
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
                 </div>
-            </div> */}
+
+                <div className="table-wrapper">
+                    <table>
+                        <tr id='tr-header'>
+                            <th>Nom. Campaña</th>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                        </tr>
+                        {dataDonaciones.length > 0 ? (
+                            (donacionesFiltradas.length === 0 ?
+                                <>
+                                   <tr><td colSpan={4}>No se encontro ninguna donacion.</td></tr> 
+                                </>
+                                :
+                                (donacionesFiltradas.map((donacion: any) => (
+                                    <tr>
+                                        <td>{donacion.campania.nombre}</td>
+                                        <td>{new Date(donacion.fecha).toLocaleDateString()}</td>
+                                        <td>${donacion.monto}</td>
+                                    </tr>
+                                )))   
+                            )                                   
+                        ) : (
+                            <tr><td colSpan={4}>No hay donaciones aún.</td></tr>
+                        )}
+                    </table>
+                </div>
+            </div>
 
         </div>
     );

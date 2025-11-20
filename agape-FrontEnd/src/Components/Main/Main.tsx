@@ -6,7 +6,6 @@ import PerfilCampania from "./PerfilCampania/PerfilCampania";
 import Contacto from "./Contacto/Contacto";
 import Donar from "./Donar/Donar";
 
-// ...existing code...
 
 // Wrapper que valida que :id sea number; si no, muestra 404
 const PerfilCampaniaWrapper = () => {
@@ -16,7 +15,7 @@ const PerfilCampaniaWrapper = () => {
     typeof parsed === "number" && !Number.isNaN(parsed) ? parsed : undefined;
 
   if (routeId === undefined) {
-    return <h1>404 ERROR - No existe pagina</h1>;
+    return <div> <h1>404 ERROR - No existe pagina</h1> </div>;
   }
 
   return <PerfilCampania />;
@@ -32,7 +31,7 @@ const Main = () => {
         <Route path="/perfil-campania/:id" element= {<PerfilCampaniaWrapper />} />
         <Route path="/donar" element= {<Donar />}/>
         <Route path="/contacto" element= {<Contacto />}/>
-        <Route path="*" element= {<h1>404 ERROR - No existe pagina</h1>} /> 
+        <Route path="*" element= {<div> <h1>404 ERROR - No existe pagina</h1> </div>} /> 
       </Routes>
     </div>
   );

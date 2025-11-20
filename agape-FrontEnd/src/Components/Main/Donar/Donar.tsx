@@ -1,6 +1,7 @@
 import './Donar.css'
 import { useCampaña } from '../../../Context/CampañaContext';
 import { useUser } from '../../../Context/UserContext';
+import { use, useEffect } from 'react';
 
 const Donar = () => {
     const {accessToken} = useUser();
@@ -9,28 +10,51 @@ const Donar = () => {
         setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo, setOwnerUsuario, setOwnerEmail
     } = useCampaña();
 
+
     const handleDonar = async () => {
-        // Lógica para procesar la donación: DNACION NO FUNCIONA
-        const monto = (document.getElementById("monto") as HTMLInputElement).value;
+        
+        let avisoElem = document.getElementById("aviso") as HTMLElement;
+        const montoStr = (document.getElementById("monto") as HTMLInputElement).value;
+        const monto = Number(montoStr);
+        if (!monto || monto <= 0) {
+            avisoElem.innerText = "Ingrese un monto válido";
+            return;
+        }
+
+        const campaniaId = Number(idCamp);
+        if (!campaniaId || Number.isNaN(campaniaId)) {
+            avisoElem.innerText = "No hay campaña seleccionada";
+            return;
+        }
+
+        const payload = {
+            monto, 
+            fecha: new Date().toISOString(), 
+            campaniaId
+        };
+
         try{
             const res = await fetch('http://localhost:3000/donaciones', {
                 method: 'POST',
+                credentials: 'include', 
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${accessToken}`,
-                    credentials: 'include' 
+                    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
                 },
-                body: JSON.stringify({monto: monto, campaniaId: idCamp})
+                body: JSON.stringify(payload),
             });
-            if(res.ok){
 
+            if(res.ok){
+               avisoElem.innerText = "Todo salio correctamente ¡Gracias por tu donación!"; 
             }else{
                 throw new Error("Respuesta fue no ok " + res.statusText);    
             }
         }catch(err){
             console.log(err);
         }
-    };
+    };    
+  
+    
 
     return (
         <div className='donar'> 

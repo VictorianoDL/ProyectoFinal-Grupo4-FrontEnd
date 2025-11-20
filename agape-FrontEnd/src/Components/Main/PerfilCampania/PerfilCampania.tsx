@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './PerfilCampania.css'
 import { useNavigate, useParams } from "react-router-dom";
 import { useCampaña } from '../../../Context/CampañaContext';
+import UltimasDons from './UltimasDons';
 
 const PerfilCampania = () => {
     const navigate = useNavigate();
@@ -27,14 +28,13 @@ const PerfilCampania = () => {
                     setActivo(data.activo);
                     setDescripcion(data.descripcion);
                     setFechaInicio(data.fecha_inicio);
-                    setIdCamp(data.id_campania ?? data.id);
+                    setIdCamp(data.id_campania);
                     setNameCamp(data.nombre);
                     setObjetivo(data.objetivo);
                     setRecaudado(data.recaudado);
                     setTipo(data.tipo);
                     setOwnerUsuario(data.usuario.nombre);
                     setOwnerEmail(data.usuario.email);
-
                 }else{
                     // si no existe la campaña, redirigir a la ruta 404 (la ruta "*" en Main)
                     navigate('/404', { replace: true });
@@ -89,9 +89,7 @@ const PerfilCampania = () => {
                     <h3>Ultimas Donaciones</h3>
                 </div>
                 <div className='lista-donadores'>
-                    <p>nombreUsuario | fecha | monto</p>
-                    <p>nombreUsuario | fecha | monto</p>
-                    <p>nombreUsuario | fecha | monto</p>
+                    <UltimasDons />    
                 </div>
             </div>
 

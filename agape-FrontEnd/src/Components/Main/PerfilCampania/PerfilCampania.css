@@ -54,12 +54,9 @@
     justify-content: space-between;
 }
 
-
-
 .lista-donadores{
     margin: 0px;
     padding: 10px;
-    background-color: brown; 
     height: 100%;   
 }
 
@@ -70,9 +67,3 @@
 .conteiner-informacion h1, .conteiner-informacion h3{
     margin: 0px;
 }
-
-
-
-
-
-
