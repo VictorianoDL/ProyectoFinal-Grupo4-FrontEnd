@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import CampaniaCard from "./CampaniaCard";
+import CampaniaCard from "./campaniaCard";
 
 type Campania = {
     id_campania: number;
