@@ -1,12 +1,13 @@
 import CampaniRecientes from "./CampañasRecientes/CampaniasRecientes";
 import CampaniasPorFinalizar from "./CampañasPorFinalizar/campaniaPorFinalizar";
-import BuscarCampañas from "./BuscarCampaña/BuscarCampañas";
+import BuscarCampañas from "./BuscarCampaña/buscarCampañas";
 import "./Campanias.css";
 
 import { useEffect, useState } from "react";
 
 const Campanias = () => {
     const [campaniasArray, setCampanias] = useState<[]>([]);
+    const [isLoading, setIsLoading] = useState();
 
     useEffect(() => {
         const fetchCampanias = async () => {
@@ -30,7 +31,7 @@ const Campanias = () => {
         <div>
             <CampaniRecientes campanias={campaniasArray} />
             <CampaniasPorFinalizar campanias={campaniasArray} />
-            <BuscarCampañas />
+            <BuscarCampañas campanias={campaniasArray} />
         </div>
     );
 };

@@ -298,18 +298,26 @@ const PerfilUsuario = () => {
                                 {activeTab === "usuario" ?
                                 <>  
                                     <label id='label-group'>
+                                        <p>Nombre</p>
                                         <span>{name}</span>
                                         <input id="name" type="text" placeholder="Nombre" defaultValue={name} />
                                     </label>
+
+                                    
                                     <label id='label-group'>
+                                        <p>Apellido</p>
                                         <span>{lastName}</span>
                                         <input id="lastName" type="text" placeholder="Apellido" defaultValue={lastName} />
                                     </label>
+                                    
                                     <label id='label-group'>
+                                        <p>Nombre de Usuario</p>
                                         <span>{userName}</span>
                                         <input id="userName" type="text" placeholder="Nombre de Usuario" defaultValue={userName} />
                                     </label>
+                                    
                                     <label id='label-group'>
+                                        <p>Email</p>
                                         <span>{email}</span>
                                         <input id="email" type="email" placeholder="Email" defaultValue={email} />
                                     </label>    
@@ -317,18 +325,24 @@ const PerfilUsuario = () => {
                                 :
                                 <>
                                     <label id='label-group'>
+                                        <p>Nombre Campaña</p>
                                         <span>{nameCamp}</span>
                                         <input id="name" type="text" placeholder="Nombre de la Campaña" defaultValue={nameCamp} />
                                     </label>
                                     <label id='label-group'>
+                                        <p>Tipo</p>
                                         <span>{tipo}</span>
                                         <input id="tipo" type="text" placeholder="Tipo" defaultValue={tipo} />
                                     </label>
                                     <label id='label-group'>
+                                        <p>Objetivo</p>
                                         <span>{objetivo}</span>
                                         <input id="objetivo" type="number" placeholder="Objetivo" defaultValue={objetivo} />
                                     </label>
-                                    <textarea id="descripcion" name="descripcion" required defaultValue={descripcion} />
+                                    <label id='label-group'>
+                                        <p>Descripcion</p>
+                                        <textarea id="descripcion" name="descripcion" required defaultValue={descripcion} />
+                                    </label>
                                 </>}  
                             </>       
                             : 

@@ -1,50 +1,35 @@
-import React, { useEffect, useState } from "react";
-import "./buscarCampañas.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Campania = {
     id_campania: number;
     nombre: string;
     descripcion: string;
+    fecha_inicio: Date;
 };
 
+type Props = {
+    campanias: Campania[]; 
+};
 
-
-
-const BuscarCampañas: React.FC = () => {
+const BuscarCampañas = ({ campanias }: Props) => {
     const [query, setQuery] = useState<string>("");
-    const [campanias, setCampanias] = useState<Campania[]>([]);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchCampanias = async () => {
-            try {
-                const res = await fetch("http://localhost:3000/campanias");
-                if (!res.ok) {
-                    console.error("Error en la respuesta:", res.status, res.statusText);
-                    return;
-                }
-                const data: Campania[] = await res.json();
-                setCampanias(data);
-            } catch (err) {
-                console.error("Error al cargar campañas", err);
-            }
-        };
-        fetchCampanias();
-    }, []);
 
     const resultadosFiltrados = campanias.filter(c => c.nombre.toLowerCase().includes(query.toLowerCase()));
 
     return (
         <div>
-            <h1>Buscar Campañas</h1>
-            <input
-                type="text"
-                placeholder="Buscar..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
-
+            <div id="buscarCampañas">
+                <h1>Buscar Campañas</h1>
+                <input
+                    type="text"
+                    placeholder="Buscar..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+            </div>
+                
             <div className="buscarCampañas">
                 {resultadosFiltrados.length > 0 ? (
                     resultadosFiltrados.map(campania => (

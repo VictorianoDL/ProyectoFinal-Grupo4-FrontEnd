@@ -33,7 +33,7 @@ const UltimasDons = () => {
                     <th>Email</th>
                 </tr> 
             {dataDonaciones.length === 0 ? (
-                    <tr><td colSpan={4}>No hay donaciones aún.</td></tr>
+                    <tr><td colSpan={4}>No hay donaciones aún...</td></tr>
                 ) : (
                     dataDonaciones.map((donacion: any) => (
                         // <p key={donacion.id_donacion}>{donacion.usuario.nombre} | {new Date(donacion.fecha).toLocaleDateString()} | ${donacion.monto}</p>

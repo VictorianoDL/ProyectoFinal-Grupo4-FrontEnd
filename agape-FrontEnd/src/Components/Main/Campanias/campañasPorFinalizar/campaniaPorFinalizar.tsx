@@ -40,68 +40,148 @@ const CampaniasPorFinalizar = ({ campanias, threshold = 0.8, limit = 5 }: Props)
 
 
     if (!campanias || campanias.length === 0) {
-        return <div>No hay campañas disponibles.</div>;
+        // cargando..
+        return (
+            <div className="segundoContainer">
+                <h2>A nada de llegar al objetivo!</h2>
+                {
+                    Array.from({ length: limit }, (_, i) => (
+                        <div
+                            key={"itemId"+i+1}
+                            className="barraContainer"
+                            style={{ cursor: "pointer" }}
+                        >
+                            <div className="barraFondo">
+                                <div
+                                    className="barraRelleno"
+                                    style={{ width: `0%` }}
+                                >
+                                    <div>
+                                        <div className="barraNombre">Cargando...</div>
+                                        <div className="meta">
+                                            <small>Faltan: $---</small>
+                                        </div>
+                                    </div>
+                                    <div className="barraPorcentaje">Cargando...</div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        );
+
+    }else{
+        // ya estan las campañas disponibles 
+        return(
+            <div className="segundoContainer">
+                <h2>A nada de llegar al objetivo!</h2>
+                {porFinalizar.length === 0 ?
+                    <>
+                        {
+                            Array.from({ length: limit }, (_, i) => (
+                                <div
+                                    key={"itemId"+i+1}
+                                    className="barraContainer"
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <div className="barraFondo">
+                                        <div
+                                            className="barraRelleno"
+                                            style={{ width: `0%` }}
+                                        >
+                                            <div>
+                                                <div className="barraNombre">Nada que Mostrar</div>
+                                                <div className="meta">
+                                                    <small>Faltan: $---</small>
+                                                </div>
+                                            </div>
+                                            <div className="barraPorcentaje">None</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </>
+                    :
+                    <>
+                        {porFinalizar.map((campania) => (
+                            <div
+                                key={campania.id_campania}
+                                className="barraContainer"
+                                onClick={() => navigate(`/perfil-campania/${campania.id_campania}`)}
+                                style={{ cursor: "pointer" }}
+                            >
+
+                                <div className="barraFondo">
+                                    <div
+                                        className="barraRelleno"
+                                        style={{ width: `${campania.porcentaje}%` }}
+                                    >
+                                        <div>
+                                            <div className="barraNombre">{campania.nombre}</div>
+                                            <div className="meta">
+                                                <small>Faltan: ${campania.faltante}</small>
+                                            </div>
+                                        </div>
+                                        <div className="barraPorcentaje">{campania.porcentaje}%</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        ))}
+                        
+                        {(limit - porFinalizar.length) < limit ?
+                            Array.from({ length: limit - porFinalizar.length }, (_, i) => (
+                                <div
+                                    key={"itemId"+i+1}
+                                    className="barraContainer"
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <div className="barraFondo">
+                                        <div
+                                            className="barraRelleno"
+                                            style={{ width: `0%` }}
+                                        >
+                                            <div>
+                                                <div className="barraNombre">Nada que Mostrar</div>
+                                                <div className="meta">
+                                                    <small>Faltan: $---</small>
+                                                </div>
+                                            </div>
+                                            <div className="barraPorcentaje">None</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                            :
+                            <>
+                            </>
+                        }
+
+                    </>
+                }
+            </div>
+        )
     }
 
     if (porFinalizar.length === 0) {
-        return <div>No hay campañas cerca de su objetivo.</div>;
+        return (
+            <div className="segundoContainer">
+                <h2>A nada de llegar al objetivo!</h2>
+                
+            </div>
+        );
+    }else{
+        return (
+            <div className="segundoContainer">
+                <h2>A nada de llegar al objetivo!</h2>
+                
+        
+            </div>
+        );
     }
-
-    return (
-        <div className="segundoContainer">
-            <h2>A nada de llegar al objetivo!</h2>
-            {porFinalizar.map((campania) => (
-                <div
-                    key={campania.id_campania}
-                    className="barraContainer"
-                    onClick={() => navigate(`/perfil-campania/${campania.id_campania}`)}
-                    style={{ cursor: "pointer" }}
-                >
-
-
-
-                    <div className="barraFondo">
-                        <div
-                            className="barraRelleno"
-                            style={{ width: `${campania.porcentaje}%` }}
-                        >
-                            <div>
-                                <div className="barraNombre">{campania.nombre}</div>
-                                <div className="meta">
-                                    <small>Faltan: ${campania.faltante}</small>
-                                </div>
-                            </div>
-                            <div className="barraPorcentaje">{campania.porcentaje}%</div>
-                        </div>
-                    </div>
-
-                    
-
-
-
-                </div>
-            ))}
-        </div>
-    );
 };
 
 export default CampaniasPorFinalizar;
-
-
-
-{/* <div className="segundoContainer">
-            <h2>A nada de llegar al objetivo!</h2>
-            {campanias.map((campania, index) => (
-                <div key={index} className="barraContainer" onClick={() => navigate("/perfil-campania")}>
-                    <div className="barraFondo">
-                        <div
-                            className="barraRelleno"
-                            style={{ width: `${campania.porcentaje}%` }}>
-                            <div className="barraNombre">{campania.nombre}</div>
-                            <div className="barraPorcentaje">{campania.porcentaje}%</div>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div> */}
 

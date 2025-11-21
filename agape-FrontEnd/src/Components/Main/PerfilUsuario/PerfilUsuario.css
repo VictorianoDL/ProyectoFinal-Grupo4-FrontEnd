@@ -37,10 +37,6 @@
     padding-left: 55px;  
 }
 
-#label-group input {
-    height: auto;
-}
-
 .crearCampania {
     display: flex;
     flex-direction: column;
@@ -93,6 +89,8 @@
 }
 
 
+
+
 .conteinerContent {
     position: relative;
 
@@ -119,14 +117,13 @@
 .datosContent  dt {
     font-weight: bold;
     margin-top: 10px;
-    ;
 }
 
 #donaciones-conteiner{
     margin-bottom: 50px;
 }
 
-#donacionesRealizadas{
+#donacionesRealizadas, #buscarCampañas{
     display: flex;
     justify-content: space-between;
     align-items: center;

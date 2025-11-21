@@ -91,7 +91,7 @@ input:focus, textarea:focus{
     background: var(--colorNaranjaClaro);
     padding: 2rem;
     border-radius: 10px;
-    width: 400px;
+    width: 500px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -108,15 +108,22 @@ input:focus, textarea:focus{
 
 /* Labels */
 #label-group{
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
 }
 
+#label-group p{
+    position: absolute;
+    top: -25px;
+}
+
 #label-group span{
+    width: 80%;
     padding: 10px;
-    background-color: var(--colorCelesteOscuro);
-    border: var(--colorCeleste) solid 1px;
+    background-color: var(--colorNaranja);
+    border-radius: 10px 0px 0px 10px;
 }
 #label-group .span-start{
     border-radius: 10px 0px 0px 10px;
@@ -126,9 +133,24 @@ input:focus, textarea:focus{
 }
 
 #label-group input{
+    height: auto;
     padding: 10px;
     border-radius: 0px 10px 10px 0px;
     margin: 0px;
+    width: 100%;
+    transition: outline 0.3s;
+}
+
+form textarea{
+    font-size: large;
+    padding: 10px;
+    border-radius: 10px;
+    min-height: 100px;
+    resize: vertical;
+    margin: 0px;
+    width: 100%;
+    color: rgb(0, 0, 0);
+    background-color: #ffffff99;
     transition: outline 0.3s;
 }
 

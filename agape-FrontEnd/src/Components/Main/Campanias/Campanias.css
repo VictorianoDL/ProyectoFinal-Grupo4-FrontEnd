@@ -6,11 +6,8 @@
   cursor: pointer;
 }
 
-#h2 {
-  font-size: 35px;
-  margin-top: 100px;
-}
 
+/* Campanias recientes */
 .fila {
   display: flex;
   gap: 20px;
@@ -128,6 +125,65 @@
     transform: scale(0.99); 
 }
 
+
+/* buscar campanias  */
+/* este estilo del input no deberiam estar aca porque son generales  */
+input{
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    width: 300px;
+    background-color: #D9D9D9;
+    color: black;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.buscarCampañas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 20px;
+   
+}
+
+.resultadoCard{
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #FDD6A4;
+    color: black;
+    transition: transform 0.2s; 
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resultadoCard:hover{
+    transform: scale(1.01);
+}
+
+.resultadoCard:active {
+    transform: scale(0.99); 
+}
+
+
+/* Responsive  buscar campanias*/
+@media (max-width: 480px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+
+/* Responsive por finalizar*/
 @media (max-width: 480px) {
   .segundoContainer h2 {
     font-size: 21px;
@@ -139,10 +195,6 @@
   }
 }
 
-
-
-
-/* Responsive */
 
 /* --- Tablets --- */
 @media (max-width: 1024px) {
