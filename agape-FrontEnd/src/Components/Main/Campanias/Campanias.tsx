@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 const Campanias = () => {
     const [campaniasArray, setCampanias] = useState<[]>([]);
-    const [isLoading, setIsLoading] = useState();
 
     useEffect(() => {
         const fetchCampanias = async () => {

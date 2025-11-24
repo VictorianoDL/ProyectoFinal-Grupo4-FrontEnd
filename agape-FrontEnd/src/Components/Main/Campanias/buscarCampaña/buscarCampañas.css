@@ -1,0 +1,43 @@
+#conteiner-buscarCampañas{
+  margin-bottom: 100px;
+}
+
+.buscarCampañas { 
+  display: grid;
+  gap: 8px; 
+}
+
+.resultadoCard {
+  position: relative;
+  padding: 12px;
+  border-radius: 8px;
+  border: solid 2px var(--colorCeleste);
+  background-color: rgba(200, 200, 200, 0.3);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  cursor: pointer;
+  outline: none;
+}
+
+.resultadoNombre { 
+  font-weight: 600; 
+  margin: 0; 
+}
+
+.resultadoTipo { 
+  font-size: 0.9rem; 
+  color: var(--colorNaranja); 
+  margin: 4px 0 0 0; 
+}
+
+.descripcion {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 200ms ease, opacity 200ms ease;
+  margin-top: 8px;
+}
+
+.resultadoCard:hover .descripcion, .resultadoCard:focus-within .descripcion {
+  max-height: 6rem; /* ajustar segun contenido */
+  opacity: 1;
+}

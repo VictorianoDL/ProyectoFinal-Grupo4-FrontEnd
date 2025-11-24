@@ -377,7 +377,7 @@ const PerfilUsuario = () => {
             )}
 
             <div id='donaciones-conteiner'>
-                <div id='donacionesRealizadas'>
+                <div className='conteinerH2-Input'>
                     <h2>Donaciones Realizadas</h2>
                     <input
                         type="text"
