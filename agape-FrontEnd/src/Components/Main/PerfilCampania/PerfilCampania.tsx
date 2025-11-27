@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import './PerfilCampania.css'
 import { useNavigate, useParams } from "react-router-dom";
 import { useCampaña } from '../../../Context/CampañaContext';
+import UltimasDons from './UltimasDons';
 
 const PerfilCampania = () => {
     const navigate = useNavigate();
     const params = useParams<{ id: string }>();
     const parsedRouteId = params.id ? parseInt(params.id, 10) : undefined;
-    const routeId: number | undefined = typeof parsedRouteId === 'number' && !Number.isNaN(parsedRouteId)
-    ? parsedRouteId : undefined;
+    const routeId: number | undefined = typeof parsedRouteId === 'number' && !Number.isNaN(parsedRouteId) ? parsedRouteId : undefined;
+    const [ loadingCampania, setLoadingCampania] = useState(true);
 
     const { 
         idCamp   , nameCamp   , descripcion   , tipo   , objetivo   , recaudado   , fecha_inicio  , activo, ownerUsuario, ownerEmail,
@@ -27,14 +28,14 @@ const PerfilCampania = () => {
                     setActivo(data.activo);
                     setDescripcion(data.descripcion);
                     setFechaInicio(data.fecha_inicio);
-                    setIdCamp(data.id_campania ?? data.id);
+                    setIdCamp(data.id_campania);
                     setNameCamp(data.nombre);
                     setObjetivo(data.objetivo);
                     setRecaudado(data.recaudado);
                     setTipo(data.tipo);
                     setOwnerUsuario(data.usuario.nombre);
                     setOwnerEmail(data.usuario.email);
-
+                    setLoadingCampania(false);
                 }else{
                     // si no existe la campaña, redirigir a la ruta 404 (la ruta "*" en Main)
                     navigate('/404', { replace: true });
@@ -60,51 +61,103 @@ const PerfilCampania = () => {
     const recaudadoPorcentaje = (recaudado / objetivo) * 100;
 
     
-    return (
-        <div className="perfil-campania">
-            <div className='barra-overlay'>
-                <div className='barra-content'>
 
-                    <div className='barra-porcentaje'>
 
-                        <div className='barra'>
-                            <div className='progress' style={{ width: `${recaudadoPorcentaje}%` }}>{Math.round(recaudadoPorcentaje)}%</div>
+    if(loadingCampania){
+        return(
+            <div className="perfil-campania">
+                <div className='barra-overlay'>
+                    <div className='barra-content'>
+
+                        <div className='barra-porcentaje'>
+
+                            <div className='barra'>
+                                <div className='progress'>NaN</div>
+                            </div>
+
+                            <div className='info'>
+                                <p>Recaudado: --- </p>
+                                <p>Objetivo: --- </p>
+                            </div>
+
                         </div>
 
-                        <div className='info'>
-                            <p>Recaudado: ${recaudado} </p>
-                            <p>Objetivo: ${objetivo} </p>
-                        </div>
+                        <button>Donar</button>
 
                     </div>
+                </div>
 
-                    <button onClick={()=>navigate("/donar")}>Donar</button>
-
+                <div className='conteiner-donaciones'>  
+                    <div className='lista-boton'>
+                        <h3>Ultimas Donaciones</h3>
+                    </div>
+                    <div className='lista-donadores'>
+                        <div className="table-wrapper">
+                            <table>
+                                <tr id='tr-header'>
+                                    <th>Donante</th>
+                                    <th>Fecha</th>
+                                    <th>Monto</th>
+                                    <th>Email</th>
+                                </tr> 
+                                <tr><td colSpan={4}>Cargando...</td></tr>
+                            </table>
+                        </div>   
+                    </div>
+                </div>
+    
+                <div className='conteiner-informacion'>
+                    <h3>Dueño: -- </h3>
+                    <h1>Cargando Datos...</h1>
+                    <p>Tipo: ---</p>
+                    <p> Descripcion </p>
                 </div>
             </div>
-            
+        )
+    }else{
+         return (
+            <div className="perfil-campania">
+                <div className='barra-overlay'>
+                    <div className='barra-content'>
 
-            <div className='conteiner-donaciones'>  
-                <div className='lista-boton'>
-                    <h3>Ultimas Donaciones</h3>
-                </div>
-                <div className='lista-donadores'>
-                    <p>nombreUsuario | fecha | monto</p>
-                    <p>nombreUsuario | fecha | monto</p>
-                    <p>nombreUsuario | fecha | monto</p>
-                </div>
-            </div>
+                        <div className='barra-porcentaje'>
 
- 
-            <div className='conteiner-informacion'>
-                <h3>Dueño: {ownerEmail}</h3>
-                <h1>{nameCamp}</h1>
-                <p>Tipo: {tipo}</p>
-                <p>{descripcion}</p>
+                            <div className='barra'>
+                                <div className='progress' style={{ width: `${recaudadoPorcentaje}%` }}>{Math.round(recaudadoPorcentaje)}%</div>
+                            </div>
+
+                            <div className='info'>
+                                <p>Recaudado: ${recaudado} </p>
+                                <p>Objetivo: ${objetivo} </p>
+                            </div>
+
+                        </div>
+
+                        <button onClick={()=>navigate("/donar")}>Donar</button>
+
+                    </div>
+                </div>
+
+                <div className='conteiner-donaciones'>  
+                    <div className='lista-boton'>
+                        <h3>Ultimas Donaciones</h3>
+                    </div>
+                    <div className='lista-donadores'>
+                        <UltimasDons />    
+                    </div>
+                </div>
+    
+                <div className='conteiner-informacion'>
+                    <h3>Dueño: {ownerEmail}</h3>
+                    <h1>{nameCamp}</h1>
+                    <p>Tipo: {tipo}</p>
+                    <p>{descripcion}</p>
+                </div>
+    
             </div>
- 
-        </div>
-    );
+        );
+    }
+   
 };
 
 export default PerfilCampania;

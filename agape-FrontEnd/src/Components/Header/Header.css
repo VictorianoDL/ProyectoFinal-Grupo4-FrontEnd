@@ -10,6 +10,64 @@ Header {
     background: linear-gradient( #0000007c, #ff000000); 
 }
 
+/*--------- Nav Centro - logo grande */
+.Logo-Agape-Grande{
+    display: flex;
+    justify-content: center;
+}
+
+.Logo-Agape-Grande img, .modal-overlay img{
+    height: 110px;
+    transition: 0.5s;   
+}
+.Logo-Agape-Grande img:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+#conteinerLogo{
+    display: flex;
+    justify-content: center;
+}
+
+/*--------- Nav izquierda - logo min */
+.ComponentLogo{
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+
+
+
+.navegadorDiv {
+    z-index: 1;
+}
+
+.navegadorDiv a{
+    display: flex;
+    text-decoration: none;
+    color: var(--colorAmarilloClaro);
+    transition: color 0.2s ease, transform 0.2s ease;
+    margin-right: 10px;
+}
+
+.navegadorDiv h2{
+    cursor: pointer;
+}
+
+.navegadorDiv a:hover {
+    color: var(--colorNaranjaClaro);
+    transform: scale(1.09);
+}
+
+.rutasH3{
+   position: absolute;
+   top: 50px;   
+}
+
+
+
+
 .headerContainer2{
     display: flex;
     position: relative;
@@ -39,51 +97,9 @@ Header {
     z-index: 1;
 }
 
-/*--------- Nav Centro - logo grande */
-.Logo-Agape-Grande{
-    display: flex;
-    justify-content: center;
-}
 
-.Logo-Agape-Grande img, .modal-overlay img{
-    height: 110px;
-    transition: 0.5s;   
-}
-.Logo-Agape-Grande img:hover{
-    cursor: pointer;
-    transform: scale(1.2);
-}
-#conteinerLogo{
-    display: flex;
-    justify-content: center;
-}
 
-/*--------- Nav izquierda - logo min */
-.ComponentLogo{
-    display: flex;
-    justify-content: flex-start;
-}
 
-.navegadorDiv {
-    z-index: 1;
-}
-
-.navegadorDiv a{
-    display: flex;
-    text-decoration: none;
-    color: var(--colorAmarilloClaro);
-    transition: color 0.2s ease, transform 0.2s ease;
-    margin-right: 10px;
-}
-
-.navegadorDiv h2{
-    cursor: pointer;
-}
-
-.navegadorDiv a:hover {
-    color: var(--colorNaranjaClaro);
-    transform: scale(1.09);
-}
 
 /* Conjuntos de Nav Izquierda y Derecha */
 .conteinerImg,.ComponentLogo{
@@ -128,7 +144,7 @@ Header {
 .modal-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     align-items: center;
     width: 100%;
 }

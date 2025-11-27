@@ -1,0 +1,229 @@
+.campanias {
+  margin: 0 auto;
+}
+
+.campanias h2{
+  cursor: pointer;
+}
+
+
+/* Campanias recientes */
+.fila {
+  display: flex;
+  gap: 20px;
+  height: 280px;
+  margin-bottom: 20px;
+}
+
+.cuadrado {
+  aspect-ratio: 1 / 1;
+  width: 400px;
+}
+
+.rectangulo {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.CampaniaCard {
+  background-image: url('/imagenesTemporales/pexels-123.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border: 1px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform 0.15s;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.CampaniaCard:hover {
+    transform: scale(1.01); 
+}
+
+.CampaniaCard:active {
+    transform: scale(0.99); 
+}
+
+
+
+
+/* Campañas por finalizar */
+.segundoContainer {
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  transition: transform 0.2s;
+}
+
+.barraContainer {
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.barraFondo {         
+  background-color: #FDD6A4;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s;
+}
+
+.barraRelleno {
+  background-color: #FF9915;
+  border-end-end-radius: 30px;
+  height: 100%;
+  transition: flex-grow 0.5s ease;
+}
+
+.barraNombre, .meta {
+  position: absolute;
+  left: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: black;
+}
+
+.barraNombre{
+  top: -10px;
+}
+.meta{
+  top: 10px;
+}
+
+
+.barraPorcentaje {
+  position: absolute;
+  width: 100%;       
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: black;
+  pointer-events: none;
+}
+
+.segundoContainer h2{
+    font-size: 35px;
+}
+
+.barraFondo:hover{
+    transform: scale(1.02);
+}
+
+.barraFondo:active {
+    transform: scale(0.99); 
+}
+
+
+/* buscar campanias  */
+/* este estilo del input no deberiam estar aca porque son generales  */
+input{
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    width: 300px;
+    background-color: #D9D9D9;
+    color: black;
+    outline: none;
+    box-sizing: border-box;
+}
+
+
+
+/* Responsive  buscar campanias*/
+@media (max-width: 480px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+
+/* Responsive por finalizar*/
+@media (max-width: 480px) {
+  .segundoContainer h2 {
+    font-size: 21px;
+    margin-bottom: 5px;
+  }
+
+  .barraPorcentaje {
+    justify-content:flex-end;
+  }
+}
+
+
+/* --- Tablets --- */
+@media (max-width: 1024px) {
+  .fila {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cuadrado,
+  .rectangulo {
+    width: 45%;
+    min-width: 280px;
+    aspect-ratio: 1 / 0;
+    flex-grow: 0;
+  }
+}
+
+/* --- Móviles --- */
+@media (max-width: 768px) {
+  #h2 {
+    font-size: 28px;
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .fila {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    height: auto;
+  }
+
+  .cuadrado,
+  .rectangulo {
+    width: 90%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* ---------- Moviles pequeños ---------- */
+@media (max-width: 480px) {
+  .fila {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: auto;
+    width: 100%;
+  }
+
+  .cuadrado,
+  .rectangulo {
+    width: 90%;
+    min-width: 0;
+    flex-grow: 0;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+  }
+}

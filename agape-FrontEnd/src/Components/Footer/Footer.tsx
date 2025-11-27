@@ -21,8 +21,6 @@ const Footer = () => {
                     <ul>
                         <li><button onClick={() => navigate("/")} className="footer-link-btn">Home</button></li>
                         <li><button onClick={() => navigate("/campanias")} className="footer-link-btn">Campañas</button></li>
-                        <li><button onClick={() => navigate("/usuario")} className="footer-link-btn">Usuario</button></li>
-                        <li><button onClick={() => navigate("/perfil-campania")} className="footer-link-btn">Perfil de Campaña</button></li>
                         <li><button onClick={() => navigate("/contacto")} className="footer-link-btn">Contacto</button></li>
                     </ul>
                 </div>

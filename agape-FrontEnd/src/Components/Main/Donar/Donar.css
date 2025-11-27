@@ -90,7 +90,7 @@
 #aviso {
     margin: 0;
     font-size: 0.95rem;
-    color: #b00;
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 

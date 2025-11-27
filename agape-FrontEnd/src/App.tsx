@@ -23,13 +23,12 @@ function AppInner() {
             try {
                 const res = await fetch("/auth/refresh", {
                     method: "POST",
-                    credentials: "include", // importante: incluye la cookie httpOnly
+                    credentials: "include",
                 });
                 if (res.ok) {
                     const data = await res.json();
                     setAccessToken(data.access_token);
 
-                    // Obtener datos del usuario usando el nuevo access_token
                     try {
                         
                         const userRes = await fetch("/auth/me", {
@@ -38,7 +37,7 @@ function AppInner() {
                                 'Authorization': `Bearer ${data.access_token}`,
                                 'Content-Type': 'application/json'
                             },
-                            credentials: 'include' // opcional pero seguro si el servidor espera cookies también
+                            credentials: 'include'
                         });
                         
                         if (userRes.ok) {
@@ -50,7 +49,6 @@ function AppInner() {
                             setEmail(userData.email);
 
                         }else {
-                            // manejar no autorizado / error (por ejemplo limpiar contexto)
                             setAccessToken(null);
                         }
                     } catch (err) {

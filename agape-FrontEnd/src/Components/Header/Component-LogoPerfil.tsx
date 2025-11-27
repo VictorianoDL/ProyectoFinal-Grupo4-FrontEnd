@@ -103,11 +103,10 @@ const ComponentLogoPerfil = () => {
                     setIsOpen(false);
 
                 } else {
-                    throw new Error("???");
+                    throw new Error("El usuario ya esta registrado");
                 } 
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
-                // acomodar esto
                 p.innerText = "Error al registrarse  " + err;
                 console.error("Error al registrarse  " + err );
             } 

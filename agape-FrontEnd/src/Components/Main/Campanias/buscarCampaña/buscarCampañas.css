@@ -1,51 +1,43 @@
-input{
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #D9D9D9;
-    border-radius: 10px;
-    width: 300px;
-    background-color: #D9D9D9;
-    color: black;
-    outline: none;
-    box-sizing: border-box;
+#conteiner-buscarCampañas{
+  margin-bottom: 100px;
 }
 
-.buscarCampañas{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
-    margin-top: 20px;
-    
+.buscarCampañas { 
+  display: grid;
+  gap: 8px; 
 }
 
-.resultadoCard{
-    border: 1px solid #D9D9D9;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-    background-color: #FDD6A4;
-    color: black;
-    transition: transform 0.2s; 
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.resultadoCard {
+  position: relative;
+  padding: 12px;
+  border-radius: 8px;
+  border: solid 2px var(--colorCeleste);
+  background-color: rgba(200, 200, 200, 0.3);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  cursor: pointer;
+  outline: none;
 }
 
-.resultadoCard:hover{
-    transform: scale(1.01);
+.resultadoNombre { 
+  font-weight: 600; 
+  margin: 0; 
 }
 
-.resultadoCard:active {
-    transform: scale(0.99); 
+.resultadoTipo { 
+  font-size: 0.9rem; 
+  color: var(--colorNaranja); 
+  margin: 4px 0 0 0; 
 }
 
-@media (max-width: 480px) {
-  h2 {
-    font-size: 24px;
-  }
+.descripcion {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 200ms ease, opacity 200ms ease;
+  margin-top: 8px;
+}
 
-  input {
-    width: 100%;
-  }
+.resultadoCard:hover .descripcion, .resultadoCard:focus-within .descripcion {
+  max-height: 6rem; /* ajustar segun contenido */
+  opacity: 1;
 }
