@@ -1,0 +1,167 @@
+.donar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.donarContainer{
+    display: grid;
+    align-items: center;
+    grid-template-rows: auto 1fr auto;
+    gap: 16px;
+    font-size: 1.1rem;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    border: solid 2px var(--colorCeleste);
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.15);
+    height: auto;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.datosCampañaContainer{
+    display: grid;
+    grid-template-columns: 120px 1fr; 
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+}
+
+.datosCampañaContainer h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    width: 120px;
+    margin: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(200,200,200,0.3), rgba(220,220,220,0.15));
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.montoContainer input{
+    width: 98%;
+    height: 56px;
+    font-size: 1rem;
+    background: #fff;
+}
+
+/* Responsive */
+
+.datosCampañaContainer h2{
+    margin: 0 0 6px 0;
+    font-size: 1.4rem;
+}
+.datosCampañaContainer p{
+    margin: 0;
+}
+
+.montoContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.montoContainer input:focus{
+    border-color: var(--colorCeleste);
+    box-shadow: 0 0 0 4px rgba(135,206,235,0.07);
+}
+
+.donarContainer > button,
+.donarContainer button {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1.05rem;
+    border-radius: 8px;
+    background: var(--colorNaranja);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#aviso {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+/* ---------------- Tablet ---------------- */
+@media (max-width: 1024px) {
+  .donarContainer{
+    max-width: 720px;
+    padding: 18px;
+    gap: 12px;
+  }
+  .datosCampañaContainer{
+    grid-template-columns: 96px 1fr;
+  }
+  .datosCampañaContainer h1{
+    width: 96px;
+    height: 96px;
+  }
+  .montoContainer input{
+    height: 52px;
+    font-size: 0.98rem;
+  }
+}
+
+/* ---------------- Mobile: <= 480px ---------------- */
+@media (max-width: 480px) {
+
+  .donarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+    width: calc(100% - 24px);
+    max-width: 480px;
+  }
+
+  .datosCampañaContainer {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .datosCampañaContainer h1 {
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+  }
+
+  .datosCampañaContainer > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .datosCampañaContainer h2{
+    font-size: 1.15rem;
+  }
+
+  .montoContainer {
+    gap: 8px;
+  }
+
+  .montoContainer input {
+    height: 48px;
+    width: auto;
+    font-size: 0.98rem;
+  }
+
+  .donarContainer > button,
+  .donarContainer button {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  
+  #aviso { font-size: 0.9rem; }
+}
+

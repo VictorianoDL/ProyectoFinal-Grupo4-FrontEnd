@@ -1,36 +1,48 @@
-import React, { useState } from "react";
-import "./buscarCampañas.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import './buscarCampañas.css'; 
 
-const BuscarCampañas: React.FC = () => {
-    const [query, setQuery] = useState('');
+type Campania = {
+    id_campania: number;
+    nombre: string;
+    descripcion: string;
+    tipo:string;
+    fecha_inicio: Date;
+};
 
-    const campanias = [
-        { nombre: 'Campaña 1', descripcion: 'Descripción de la campaña 1' },
-        { nombre: 'Campaña 2', descripcion: 'Descripción de la campaña 2' },
-        { nombre: 'Campaña 3', descripcion: 'Descripción de la campaña 3' },
-        { nombre: 'Campaña 4', descripcion: 'Descripción de la campaña 4' },
-        { nombre: 'Campaña 5', descripcion: 'Descripción de la campaña 5' },
-        { nombre: 'Campaña 6', descripcion: 'Descripción de la campaña 6' },
-        { nombre: 'Campaña 7', descripcion: 'Descripción de la campaña 7' }
-    ];
+type Props = {
+    campanias: Campania[]; 
+};
 
-    const resultadosFiltrados = campanias.filter(campania => campania.nombre.toLowerCase().includes(query.toLowerCase()));
+const BuscarCampañas = ({ campanias }: Props) => {
+    const [query, setQuery] = useState<string>("");
+    const navigate = useNavigate();
+
+    const resultadosFiltrados = campanias.filter(c => c.nombre.toLowerCase().includes(query.toLowerCase()));
 
     return (
-        <div>
-            <h2>Buscar Campañas</h2>
-            <input
-                type="text"
-                placeholder="Buscar..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
-
+        <div id="conteiner-buscarCampañas">
+            <div className='conteinerH2-Input'>
+                <h1>Buscar Campañas</h1>
+                <input
+                    type="text"
+                    placeholder="Buscar..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+            </div>
+                
             <div className="buscarCampañas">
                 {resultadosFiltrados.length > 0 ? (
-                    resultadosFiltrados.map((campania, index) => (
-                        <div key={index} className="resultadoCard" onClick={() => {}}>
-                            <p className="nombre">{campania.nombre}</p>
+                    resultadosFiltrados.map(campania => (
+                        <div
+                            key={campania.id_campania}
+                            className="resultadoCard"
+                            onClick={() => navigate(`/perfil-campania/${campania.id_campania}`)}
+                            tabIndex={0}
+                        >
+                            <h2 className="resultadoNombre">{campania.nombre}</h2>
+                            <h4 className="resultadoTipo">{campania.tipo}</h4>
                             <p className="descripcion">{campania.descripcion}</p>
                         </div>
                     ))

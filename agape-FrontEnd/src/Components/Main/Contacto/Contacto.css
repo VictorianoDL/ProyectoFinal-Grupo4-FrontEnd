@@ -1,27 +1,32 @@
 .Contacto{
-    padding: 20px;
     background-color: var(--colorNaranja);
     border-radius: 10px 10px 0px 0px;
     color: var(--colorAmarilloClaro);
 }
 
+.Contacto h1{
+    padding: 20px;
+    margin: 0px;
+}
+
 .Contacto form{
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-form div{
+.Contacto form div{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr;
     gap: 10px;
 }
-form div button{
+.Contacto form div button{
     background-color: var(--colorCeleste);
     font-weight: bold;
     padding: 10px;
 }
-form div button:hover{
+.Contacto form div button:hover{
     background-color: #289a92;  
 }
 
@@ -33,7 +38,6 @@ form div button:hover{
     padding: 10px;
     background-color: #feb049;
     border-radius: 10px 0px 0px 10px;
-
 }
 #label-nombre input, #label-email input{
     padding: 10px;
@@ -43,7 +47,6 @@ form div button:hover{
     margin: 0px;
     transition: outline 0.3s;
 }
-
 
 #label-mensaje{
     display: flex;
@@ -58,16 +61,150 @@ form div button:hover{
 }
 
 #label-mensaje textarea{
-    padding: 10px;
     color: orangered;
     background-color: #ffd6a1;
     border-radius: 0px 0px 10px 10px;
-    margin: 0px;
-    min-height: 100px;
-    resize: vertical;
     transition: outline 0.3s;
 }
 
-input:focus, textarea:focus{
-    outline: 3px solid var(--colorCeleste);
+/* Responsive */
+
+.Contacto input[type="text"],
+.Contacto input[type="email"],
+.Contacto textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font: inherit;
+}
+
+.Contacto input[type="text"]:focus,
+.Contacto input[type="email"]:focus,
+.Contacto textarea:focus,
+.Contacto button:focus {
+    outline: 3px solid rgba(255,255,255,0.12);
+    outline-offset: 2px;
+}
+
+.Contacto .field-error {
+    display: block;
+    color: #fee6d0;
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
+
+#label-nombre,
+#label-email {
+    display: flex;
+    flex-direction: row;
+}
+
+/* --- Tablets --- */
+@media (max-width: 1024px) {
+  .Contacto h1 { font-size: 1.6rem; padding: 16px; }
+
+  .Contacto form > div {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #label-nombre span,
+  #label-email span,
+  #label-mensaje p {
+    padding: 8px;
+  }
+
+  .Contacto form > div button {
+    padding: 10px 14px;
+  }
+}
+
+/* --- Móviles --- */
+@media (max-width: 768px) {
+    .Contacto form {
+        padding: 16px;
+    }
+
+    .Contacto form > div {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .Contacto form > div button {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+    }
+
+    #label-nombre,
+    #label-email {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #label-nombre span,
+    #label-email span {
+        border-radius: 10px 10px 0 0;
+        display: inline-block;
+        width: auto;
+    }
+
+    #label-nombre input,
+    #label-email input {
+        border-radius: 0 0 10px 10px;
+    }
+
+    #label-mensaje {
+        width: 100%;
+    }
+    #label-mensaje textarea {
+        min-height: 140px;
+    }
+
+    #texto, .Contacto p, .Contacto label span {
+        font-size: 0.98rem;
+    }
+
+    .Contacto form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .Contacto form > div {
+        display: contents;
+    }
+
+    .Contacto form label,
+    .Contacto form #label-mensaje {
+        width: 100%;
+        display: block;
+    }
+
+    #label-nombre { order: 1; }
+    #label-email  { order: 2; }
+    #label-mensaje{ order: 3; }
+
+    .Contacto form > div button,
+    .Contacto form button[type="submit"] {
+        order: 4;
+        width: 100%;
+        margin-top: 8px;
+        padding: 12px;
+    }
+
+    #label-mensaje textarea {
+        min-height: 140px;
+        width: 100%;
+    }
+
+}
+
+/* ---------- Moviles pequeños ---------- */
+@media (max-width: 420px) {
+    .Contacto h1 { font-size: 1.4rem; padding: 12px; }
+    .Contacto form > div button { padding: 10px; font-size: 0.95rem; }
+    #label-mensaje textarea { min-height: 120px; }
 }

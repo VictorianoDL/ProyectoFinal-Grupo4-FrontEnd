@@ -1,0 +1,295 @@
+.headerUsuario{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.fotoUsuario {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: solid 4px var(--colorCeleste);
+    z-index: 2;
+}
+
+.headerNombre {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.headerNombre h2, p {
+    margin: 0;
+}
+
+.headerNombre p {
+    color: black;
+    background: var(--colorNaranja);
+    box-shadow: 10px 0px 0px rgb(251, 175, 33), 19px 0px 0px rgb(255, 200, 97);
+    width: 110%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 0px;
+    margin-left: -50px;
+    padding-left: 55px;  
+}
+
+.crearCampania {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.navPerfil {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.navPerfil h2 {
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0;
+    height: 35px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.navPerfil h2.active {
+    background-color: rgba(200, 200, 200, 0.3);
+    border-radius: 10px 10px 0px 0px ;
+}
+
+
+.linea {
+    height: 3px;            
+    background-color: var(--colorAmarillo); 
+    border-radius: 10px;
+}
+
+
+.tabContent{
+    position: relative;
+}
+
+.botonEditar {
+    position: absolute;
+    z-index: 2;
+    right: 2px;
+    top: 2px;
+    border-radius: 0px 8px 0px 10px;
+}
+
+
+
+
+.conteinerContent {
+    position: relative;
+
+    min-height: 500px;
+    margin-top: 20px;
+
+    background-color: rgba(200, 200, 200, 0.3);
+    border: solid 2px var(--colorCeleste);
+    border-radius: 10px;
+}
+#sinCampaña, #cargando{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.datosContent {
+    font-size: 18px;
+    padding: 20px;
+}
+
+.datosContent  dt {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#donaciones-conteiner{
+    margin-bottom: 50px;
+}
+
+.donacionesUsuario {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    justify-content: space-around;
+    border: solid 2px var(--colorCeleste);
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.3);
+    margin-bottom: 10px;
+}
+
+.donacionesUsuario p{
+    margin: 10px;
+}
+
+
+/* Responsive */
+
+/* --- Tablets --- */
+@media (max-width: 1024px) {
+  .fotoUsuario {
+    width: 120px;
+    height: 120px;
+  }
+
+  .container2Usuario {
+    margin-left: 18px;
+  }
+
+  .container2Usuario p {
+    padding-left: 42px;
+  }
+
+  .datosUsuario, .datosCampania {
+    font-size: 16px;
+    padding: 16px;
+  }
+
+  .navPerfil h2 {
+    font-size: 18px;
+  }
+}
+
+/* --- Móviles --- */
+@media (max-width: 768px) {
+  .perfilUsuario {
+    padding: 0px;
+  }
+
+  .container1Usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .fotoUsuario {
+    width: 100px;
+    height: 100px;
+    border-width: 3px;
+  }
+
+  .container2Usuario {
+    margin-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .container2Usuario p {
+    width: auto;
+    display: inline-flex;
+    padding: 8px 14px;
+    margin-left: 0;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    background-color: var(--colorNaranjaClaro);
+  }
+
+  .navPerfil {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    margin-top: 12px;
+  }
+  .navPerfil h2 {
+    width: 100%;
+    text-align: center;
+    padding: 10px 6px;
+    margin: 0;
+    font-size: 16px;
+    height: auto;
+  }
+  .navPerfil h2.active {
+    border-radius: 8px;
+    background-color: rgba(200,200,200,0.3);
+  }
+
+  .linea {
+    margin-top: 8px;
+  }
+
+  .usuarioContent, .campaniaContent {
+    margin-top: 12px;
+    padding: 10px;
+  }
+
+  .datosUsuario, .datosCampania {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .datosUsuario dt, .datosCampania dt { margin-top: 8px; }
+
+  .botonEditar {
+    position: static;
+    z-index: 2;
+    display: block;
+    width: calc(100% - 24px);
+    margin: 8px auto;
+    right: auto;
+    top: auto;
+    border-radius: 8px;
+  }
+
+  .donacionesUsuario {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: calc(100% - 32px);
+    max-width: 520px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  .modal-content .Logo-Agape-Login img {
+    height: 160px;
+    margin-top: 12px;
+  }
+
+  .modal-form input,
+  .modal-form textarea,
+  #label-group input {
+    width: 100%;
+    padding: 10px;
+  }
+
+  textarea { min-height: 120px; resize: vertical; }
+
+  .Logo-Agape-Grande img:hover,
+  .conteinerImg:hover {
+    transform: none;
+    padding-right: 0;
+  }
+}
+
+/* ---------- Moviles pequeños ---------- */
+@media (max-width: 480px) {
+  .fotoUsuario { width: 84px; height: 84px; }
+  .container2Usuario h2 { font-size: 18px; }
+  .container2Usuario p { font-size: 14px; padding-left: 12px; padding-right: 12px; }
+
+  .navPerfil h2 { padding: 10px; font-size: 15px; }
+
+  .modal-content { padding: 0.8rem; max-width: 420px; }
+}
+
