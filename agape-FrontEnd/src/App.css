@@ -1,7 +1,6 @@
 /* ---------------------Main-------------------- */
 .main{
     padding: 0 40px;
-    
 }
 
 .main > div{
@@ -19,3 +18,17 @@
     margin: 10px;   
 }
 
+/* responsive */
+@media (max-width: 1024px) {
+    .main > div{
+        margin-top: 100px;
+    }
+}
+@media (max-width: 480px) {
+    .main{
+        padding: 0px;
+    }
+    .main > div{
+        margin-top: 70px;
+    }
+}

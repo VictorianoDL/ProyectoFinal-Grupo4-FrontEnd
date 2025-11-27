@@ -42,13 +42,9 @@
 }
 
 .montoContainer input{
-    width: 100%;
+    width: 98%;
     height: 56px;
     font-size: 1rem;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.12);
-    outline: none;
     background: #fff;
 }
 
@@ -60,7 +56,6 @@
 }
 .datosCampañaContainer p{
     margin: 0;
-    color: #222;
 }
 
 .montoContainer{
@@ -90,7 +85,7 @@
 #aviso {
     margin: 0;
     font-size: 0.95rem;
-    color: #b00;
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 

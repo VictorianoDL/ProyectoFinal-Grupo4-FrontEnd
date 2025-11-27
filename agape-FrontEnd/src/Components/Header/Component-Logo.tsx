@@ -31,9 +31,7 @@ const ComponentLogo = () => {
             <div className="headerContainer2">
                 <img src="../Logos/Agape - Logo AZUL Min.png" alt="Logo" />
 
-
                 <div className={`navegadorDiv ${isMenuOpen ? 'open' : ''}`}>
-
                     <Link to="/" onClick={handleCloseMenu}>
                         <h2>Home</h2>
                     </Link>
@@ -45,20 +43,18 @@ const ComponentLogo = () => {
                     <Link to="/contacto" onClick={handleCloseMenu}>
                         <h2>Contacto</h2>
                     </Link>
-
-                    <div className="rutasH3">
-                        <Routes>    
-                            <Route path="/" element= {<h3>Home</h3>} />
-                            <Route path="/campanias" element= {<h3>Campañas</h3>} />
-                            <Route path="/usuario" element= {<h3>Perfil de Usuario</h3>} />
-                            <Route path="/perfil-campania/:id" element= {<h3>Perfil de Campania</h3>} />
-                            <Route path="/Contacto" element= {<h3>Contacto</h3>} />
-                        </Routes>
-                    </div>
-
                 </div>  
 
-                
+                <div className="rutasH3">
+                    <Routes>    
+                        <Route path="/" element= {<h3>Home</h3>} />
+                        <Route path="/campanias" element= {<h3>Campañas</h3>} />
+                        <Route path="/usuario" element= {<h3>Perfil de Usuario</h3>} />
+                        <Route path="/perfil-campania/:id" element= {<h3>Perfil de Campania</h3>} />
+                        <Route path="/Contacto" element= {<h3>Contacto</h3>} />
+                        <Route path="/Donar" element= {<h3>Donar</h3>} />
+                    </Routes>
+                </div>
             </div>
             
             

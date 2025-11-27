@@ -16,12 +16,9 @@ const ComponentLogoPerfil = () => {
 
     const imagenClick = () => {
         if (isLogged) {
-
             navigate("/usuario");
-
         } else {
             setIsOpen(true);
-            // setIsRegister(false);
         }
     };
 
@@ -115,89 +112,85 @@ const ComponentLogoPerfil = () => {
     };
 
     const handleGoogleSuccess = async (credentialResponse: any) => {
-    const credential = credentialResponse?.credential || credentialResponse?.access_token;
-    if (!credential) return;
+        const credential = credentialResponse?.credential || credentialResponse?.access_token;
+        if (!credential) return;
 
-    const parseJwt = (token: string | undefined | null) => {
-        try {
-        if (!token) return null;
-        const base64Url = token.split('.')[1];
-        if (!base64Url) return null;
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-            .split('')
-            .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-            .join('')
-        );
-        return JSON.parse(jsonPayload);
-        } catch {
-        return null;
-        }
-    };
-
-    const payload = parseJwt(credential);
-    console.log("Decoded payload:", payload);
-
-    if (payload?.picture) {
-        setProfilePic(payload.picture);
-        setIsLogged(true);
-    }
-
-    if (!payload?.picture && credentialResponse?.access_token) {
-        try {
-        const userinfoRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-            headers: { Authorization: `Bearer ${credentialResponse.access_token}` },
-        });
-        if (userinfoRes.ok) {
-            const profile = await userinfoRes.json();
-            console.log("userinfo profile:", profile);
-            if (profile.picture) {
-            setProfilePic(profile.picture);
-            setIsLogged(true);
+        const parseJwt = (token: string | undefined | null) => {
+            try {
+                if (!token) return null;
+                const base64Url = token.split('.')[1];
+                if (!base64Url) return null;
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(
+                    atob(base64)
+                    .split('')
+                    .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                    .join('')
+                );
+                return JSON.parse(jsonPayload);
+            } catch {
+                return null;
             }
-        } else {
-            console.warn("userinfo fetch failed:", await userinfoRes.text());
+        };
+
+        const payload = parseJwt(credential);
+        console.log("Decoded payload:", payload);
+
+        if (payload?.picture) {
+            setProfilePic(payload.picture);
         }
+
+        if (!payload?.picture && credentialResponse?.access_token) {
+            try {
+                const userinfoRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+                    headers: { Authorization: `Bearer ${credentialResponse.access_token}` },
+                });
+                if (userinfoRes.ok) {
+                    const profile = await userinfoRes.json();
+                    console.log("userinfo profile:", profile);
+                    if (profile.picture) {
+                        setProfilePic(profile.picture);
+                    }
+                } else {
+                    console.warn("userinfo fetch failed:", await userinfoRes.text());
+                }
+            } catch (err) {
+                console.error("Error fetching userinfo:", err);
+            }
+        }
+
+        try {
+            const res = await fetch("/auth/google", {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ credential }),
+            });
+
+            if (!res.ok) throw new Error(await res.text());
+
+            const body = await res.json();
+
+            if (body.access_token) setAccessToken(body.access_token);
+
+            if (body.user) {
+                if (body.user.picture) {
+                    setProfilePic(body.user.picture);
+                }
+                setId(body.user.id);
+                setUserName(body.user.nombreUsuario);
+                setName(body.user.nombre);
+                setLastName(body.user.apellido);
+                setEmail(body.user.email);
+
+                setIsLogged(true);
+                setIsRegister(false);
+                setIsOpen(false);
+            }
         } catch (err) {
-            console.error("Error fetching userinfo:", err);
+            console.error("Google login error:", err);
         }
-    }
-
-    try {
-        const res = await fetch("/auth/google", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ credential }),
-        });
-        if (!res.ok) throw new Error(await res.text());
-        const body = await res.json();
-
-        if (body.access_token) setAccessToken(body.access_token);
-
-        if (body.user) {
-        if (body.user.picture) {
-            setProfilePic(body.user.picture);
-        }
-        setId(body.user.id);
-        setUserName(body.user.nombreUsuario);
-        setName(body.user.nombre);
-        setLastName(body.user.apellido);
-        setEmail(body.user.email);
-        setIsLogged(true);
-        setIsOpen(false);
-        }
-    } catch (err) {
-        console.error("Google login error:", err);
-    }
     };
-
-
-    const loginWithGoogle = useGoogleLogin({
-        onSuccess: handleGoogleSuccess,
-        onError: (err) => console.error("Google login failed:", err),
-    });
 
     const DesLoguearse = async () => {
         try{
@@ -289,18 +282,8 @@ const ComponentLogoPerfil = () => {
                                             onSuccess={(credentialResponse) => {
                                                 handleGoogleSuccess(credentialResponse);
                                             }}
-                                            onError={() => console.error('GoogleLogin error')}
-                                            
+                                            onError={() => console.error('GoogleLogin error')} 
                                         />
-
-                                        {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>    
-                                            
-                                                <GoogleLogin
-                                                onSuccess={handleLoginSuccess}
-                                                onError={() => console.log('Login Failed')}
-                                                />
-                                            
-                                        </GoogleOAuthProvider> */}
                                     </>
                                     :
                                     <>                                      

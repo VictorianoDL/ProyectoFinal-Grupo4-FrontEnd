@@ -25,26 +25,30 @@ const UltimasDons = () => {
 
     return(
         <div className="table-wrapper">
-            <table>  
-                <tr id='tr-header'>
-                    <th>Donante</th>
-                    <th>Fecha</th>
-                    <th>Monto</th>
-                    <th>Email</th>
-                </tr> 
-            {dataDonaciones.length === 0 ? (
-                    <tr><td colSpan={4}>No hay donaciones aún...</td></tr>
-                ) : (
-                    dataDonaciones.map((donacion: any) => (
-                        // <p key={donacion.id_donacion}>{donacion.usuario.nombre} | {new Date(donacion.fecha).toLocaleDateString()} | ${donacion.monto}</p>
-                        <tr>
-                            <td>{donacion.usuario.nombre}</td>
-                            <td>{new Date(donacion.fecha).toLocaleDateString()}</td>
-                            <td>${donacion.monto}</td>
-                            <td>{donacion.usuario.email}</td>
-                        </tr>
-                    ))
-                )} 
+            <table>
+                <thead>
+                    <tr id='tr-header'>
+                        <th>Donante</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Email</th>
+                    </tr> 
+                </thead>  
+                <tbody>
+                    {dataDonaciones.length === 0 ? (
+                        <tr><td colSpan={4}>No hay donaciones aún...</td></tr>
+                    ) : (
+                        dataDonaciones.map((donacion: any) => (
+                            // <p >{donacion.usuario.nombre} | {new Date(donacion.fecha).toLocaleDateString()} | ${donacion.monto}</p>
+                            <tr key={donacion.id_donacion}>
+                                <td>{donacion.usuario.nombre}</td>
+                                <td>{new Date(donacion.fecha).toLocaleDateString()}</td>
+                                <td>${donacion.monto}</td>
+                                <td>{donacion.usuario.email}</td>
+                            </tr>
+                        ))
+                    )}
+                </tbody>      
             </table>
         </div>
     )

@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useUser } from "../../../Context/UserContext";
 import { useCampaña } from '../../../Context/CampañaContext';
 import './PerfilUsuario.css'
-
-// acomodar cuando se toca en "Perfil de campaña", se ve por unos segundos que no hay ninguna campaña y se puede tocar el boton crear campaña
-
+import { useNavigate } from 'react-router-dom';
 
 const PerfilUsuario = () => {
     const [query, setQuery] = useState('');
-    
+    const navigate = useNavigate();
     const { id,    userName,    name,    lastName,    email   , accessToken, profilePic} = useUser();
     const { idCamp,    nameCamp,    descripcion,    tipo,    objetivo,    recaudado,    fecha_inicio} = useCampaña();
     const { setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo } = useCampaña();
@@ -42,6 +40,7 @@ const PerfilUsuario = () => {
                         setLoadingCampania(false);
                         setHaveCampania(true);
                     }else{
+                        setLoadingCampania(false);
                         throw new Error("No se encontro ninguna campaña");
                     } 
                 }catch(err){
@@ -271,6 +270,7 @@ const PerfilUsuario = () => {
                                         <dt>Recaudado:</dt>
                                         <dd>{recaudado}</dd>
                                     </dl> 
+                                    <button onClick={() => navigate("/perfil-campania/"+idCamp)}>Ir a Mi Campaña</button>
                                 </>
                                 :
                                 <div id='sinCampaña'>  
@@ -281,7 +281,6 @@ const PerfilUsuario = () => {
                                 } 
                             </>
                         }
-                         
                     </div>
                 )}
 
@@ -291,7 +290,7 @@ const PerfilUsuario = () => {
             {isOpenModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <form className="modal-form">
+                        <form className="modal-form modalEditar">
                             {isEditing ? 
                             <>
                                 <h2> Editar {activeTab === "usuario" ? "Usuario" : "Campaña"} </h2>
@@ -389,28 +388,33 @@ const PerfilUsuario = () => {
 
                 <div className="table-wrapper">
                     <table>
-                        <tr id='tr-header'>
-                            <th>Nom. Campaña</th>
-                            <th>Fecha</th>
-                            <th>Monto</th>
-                        </tr>
-                        {dataDonaciones.length > 0 ? (
-                            (donacionesFiltradas.length === 0 ?
-                                <>
-                                   <tr><td colSpan={4}>No se encontro ninguna donacion.</td></tr> 
-                                </>
-                                :
-                                (donacionesFiltradas.map((donacion: any) => (
-                                    <tr>
-                                        <td>{donacion.campania.nombre}</td>
-                                        <td>{new Date(donacion.fecha).toLocaleDateString()}</td>
-                                        <td>${donacion.monto}</td>
-                                    </tr>
-                                )))   
-                            )                                   
-                        ) : (
-                            <tr><td colSpan={4}>No hay donaciones aún.</td></tr>
-                        )}
+                        <thead>
+                            <tr id='tr-header'>
+                                <th>Nom. Campaña</th>
+                                <th>Fecha</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {dataDonaciones.length > 0 ? (
+                                (donacionesFiltradas.length === 0 ?
+                                    <>
+                                    <tr><td colSpan={4}>No se encontro ninguna donacion.</td></tr> 
+                                    </>
+                                    :
+                                    (donacionesFiltradas.map((donacion: any) => (
+                                        <tr>
+                                            <td>{donacion.campania.nombre}</td>
+                                            <td>{new Date(donacion.fecha).toLocaleDateString()}</td>
+                                            <td>${donacion.monto}</td>
+                                        </tr>
+                                    )))   
+                                )                                   
+                            ) : (
+                                <tr><td colSpan={4}>No hay donaciones aún.</td></tr>
+                            )}
+                        </tbody>    
+                            
                     </table>
                 </div>
             </div>

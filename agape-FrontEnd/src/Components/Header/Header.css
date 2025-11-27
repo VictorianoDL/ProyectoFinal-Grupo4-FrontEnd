@@ -62,10 +62,9 @@ Header {
 
 .rutasH3{
    position: absolute;
-   top: 50px;   
+   top: 50px; 
+   left: 70px;  
 }
-
-
 
 
 .headerContainer2{
@@ -141,44 +140,8 @@ Header {
 }
 
 /* Modal del login */
-.modal-form {
-    display: flex;
-    flex-direction: column;
+.modalEditar{
     gap: 2rem;
-    align-items: center;
-    width: 100%;
-}
-
-.modal-form input {
-    width: 80%;
-    height: 40px;
-    padding: 0.5rem;
-    background-color: #ffffff;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
-}
-
-.modal-form a{
-    cursor: pointer;
-    text-decoration:underline;
-}
-
-.modal-content .Logo-Agape-Login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.modal-content .Logo-Agape-Login img {
-    margin-top: 80px;
-    height: 250px;
-    background: none;
-    max-width: 320px;
-    object-fit: contain;
-    transition: none;
-    transform: none;
-    cursor: default;
 }
 
 .boton-google {
@@ -255,6 +218,12 @@ body.menu-open {
     .Logo-Agape-Grande img {
         display: none;
     }
+
+    .rutasH3{
+        position: static;
+        font-size:xx-small;
+        width: 50%;
+    }
 }
 
 /* --- Móviles --- */
@@ -302,7 +271,9 @@ body.menu-open {
     .navegadorDiv.open h2 {
         color: white;
         padding: 10px;
-        background-color: rgba(0, 0, 0, 0.609);
+        border-radius: 10px;
+        border: 1px solid var(--colorCeleste);
+        background-color: var(--colorCelesteOscuro);
     } 
 
     .Logo-Agape-Grande img {
@@ -348,18 +319,18 @@ body.menu-open {
         top: 0;
         left: 0;
         height: 100vh;
-        width: 72%;
+        width: 40%;
         max-width: 300px;
         transform: translateX(-100%);
         transition: transform 0.26s ease;
         z-index: 250;
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 1px;
         align-items: flex-start;
         padding-top: 72px;
         padding-left: 12px;
-        background: linear-gradient(90deg, var(--colorNaranja) 0%, rgba(255,255,255,0.04) 100%);
+        
         box-shadow: 2px 0 10px rgba(0,0,0,0.22);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;

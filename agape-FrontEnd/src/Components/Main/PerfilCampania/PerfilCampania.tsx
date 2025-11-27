@@ -3,6 +3,7 @@ import './PerfilCampania.css'
 import { useNavigate, useParams } from "react-router-dom";
 import { useCampaña } from '../../../Context/CampañaContext';
 import UltimasDons from './UltimasDons';
+import { useUser } from '../../../Context/UserContext';
 
 const PerfilCampania = () => {
     const navigate = useNavigate();
@@ -11,9 +12,12 @@ const PerfilCampania = () => {
     const routeId: number | undefined = typeof parsedRouteId === 'number' && !Number.isNaN(parsedRouteId) ? parsedRouteId : undefined;
     const [ loadingCampania, setLoadingCampania] = useState(true);
 
+    const {
+        id
+    } = useUser();
     const { 
-        idCamp   , nameCamp   , descripcion   , tipo   , objetivo   , recaudado   , fecha_inicio  , activo, ownerUsuario, ownerEmail,
-        setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo, setOwnerUsuario, setOwnerEmail
+        idCamp   , nameCamp   , descripcion   , tipo   , objetivo   , recaudado   ,  ownerUsuario, ownerEmail, ownerId,
+        setIdCamp, setNameCamp, setDescripcion, setTipo, setObjetivo, setRecaudado, setFechaInicio, setActivo, setOwnerUsuario, setOwnerEmail, setOwnerId
     } = useCampaña();
 
     useEffect(() => {
@@ -33,8 +37,11 @@ const PerfilCampania = () => {
                     setObjetivo(data.objetivo);
                     setRecaudado(data.recaudado);
                     setTipo(data.tipo);
+
+                    setOwnerId(data.usuario.id_Usuario);
                     setOwnerUsuario(data.usuario.nombre);
                     setOwnerEmail(data.usuario.email);
+
                     setLoadingCampania(false);
                 }else{
                     // si no existe la campaña, redirigir a la ruta 404 (la ruta "*" en Main)
@@ -60,8 +67,6 @@ const PerfilCampania = () => {
 
     const recaudadoPorcentaje = (recaudado / objetivo) * 100;
 
-    
-
 
     if(loadingCampania){
         return(
@@ -82,8 +87,6 @@ const PerfilCampania = () => {
 
                         </div>
 
-                        <button>Donar</button>
-
                     </div>
                 </div>
 
@@ -94,13 +97,17 @@ const PerfilCampania = () => {
                     <div className='lista-donadores'>
                         <div className="table-wrapper">
                             <table>
-                                <tr id='tr-header'>
-                                    <th>Donante</th>
-                                    <th>Fecha</th>
-                                    <th>Monto</th>
-                                    <th>Email</th>
-                                </tr> 
-                                <tr><td colSpan={4}>Cargando...</td></tr>
+                                <thead>
+                                    <tr id='tr-header'>
+                                        <th>Donante</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colSpan={4}>Cargando...</td></tr>
+                                </tbody>
                             </table>
                         </div>   
                     </div>
@@ -123,7 +130,9 @@ const PerfilCampania = () => {
                         <div className='barra-porcentaje'>
 
                             <div className='barra'>
-                                <div className='progress' style={{ width: `${recaudadoPorcentaje}%` }}>{Math.round(recaudadoPorcentaje)}%</div>
+                                <div className='progress' style={{ width: `${
+                                    (recaudadoPorcentaje <= 100) ? recaudadoPorcentaje : 100
+                                }%` }}>{Math.round(recaudadoPorcentaje)}%</div>
                             </div>
 
                             <div className='info'>
@@ -132,12 +141,20 @@ const PerfilCampania = () => {
                             </div>
 
                         </div>
+                        
 
-                        <button onClick={()=>navigate("/donar")}>Donar</button>
+                        <button onClick={()=>{
+                            if ((ownerId === 0) || (ownerId !== id)) {
+                                navigate("/donar")
+                            }else{
+                                alert("No puedes donar a tu propia campaña")
+                            }
+                        }    
+                        }>Donar</button>
 
                     </div>
                 </div>
-
+                
                 <div className='conteiner-donaciones'>  
                     <div className='lista-boton'>
                         <h3>Ultimas Donaciones</h3>
@@ -153,7 +170,7 @@ const PerfilCampania = () => {
                     <p>Tipo: {tipo}</p>
                     <p>{descripcion}</p>
                 </div>
-    
+
             </div>
         );
     }

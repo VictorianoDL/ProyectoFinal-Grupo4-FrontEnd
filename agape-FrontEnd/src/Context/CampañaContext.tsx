@@ -17,6 +17,9 @@ interface CampañaContextType {
     setFechaInicio: (fecha_inicio: Date) => void;
     activo: boolean;
     setActivo: (activo: boolean) => void;
+
+    ownerId: number;
+    setOwnerId: (id: number) => void;
     ownerUsuario: string;
     setOwnerUsuario: (ownerUsuario: string) => void;
     ownerEmail: string;
@@ -36,11 +39,14 @@ export const CampañaProvider = ({ children }: { children: ReactNode }) => {
     const [recaudado, setRecaudado] = useState(0);
     const [fecha_inicio, setFechaInicio] = useState(new Date ("2025-5-12"));
     const [activo, setActivo] = useState(false);
+    const [ownerId, setOwnerId] = useState(0);
     const [ownerUsuario, setOwnerUsuario] = useState("Usuario Owner");
     const [ownerEmail, setOwnerEmail] = useState("Email Usuario");
 
     return (
-        <CampañaContext.Provider value={{ idCamp, setIdCamp, nameCamp, setNameCamp, descripcion,setDescripcion,tipo,setTipo,objetivo,setObjetivo,recaudado,setRecaudado,fecha_inicio,setFechaInicio,activo,setActivo, ownerUsuario, setOwnerUsuario, ownerEmail, setOwnerEmail }}>
+        <CampañaContext.Provider value={{ idCamp, setIdCamp, nameCamp, setNameCamp, descripcion,setDescripcion,tipo,setTipo,objetivo
+                                        ,setObjetivo,recaudado,setRecaudado,fecha_inicio,setFechaInicio,activo,setActivo, ownerUsuario
+                                        , setOwnerUsuario, ownerEmail, setOwnerEmail, ownerId, setOwnerId}}>
             {children}
         </CampañaContext.Provider>
     );
