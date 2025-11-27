@@ -4,6 +4,8 @@ import { useCampaña } from '../../../Context/CampañaContext';
 import './PerfilUsuario.css'
 import { useNavigate } from 'react-router-dom';
 
+const urlBack = import.meta.env.VITE_URL_BACKEND;
+
 const PerfilUsuario = () => {
     const [query, setQuery] = useState('');
     const navigate = useNavigate();
@@ -22,7 +24,7 @@ const PerfilUsuario = () => {
         if (activeTab === "campania") {
             const fetchCampaña = async () => {
                 try {
-                    const res = await fetch(`http://localhost:3000/campanias/owner/` + id, {
+                    const res = await fetch(urlBack+"/campanias/owner/" + id, {
                         method: "GET",
                         headers: { "Content-Type": "application/json" }
                     });
@@ -55,7 +57,7 @@ const PerfilUsuario = () => {
 
     useEffect (() => {
         const fetchDonaciones = async () => {
-            const resDonaciones = await fetch(`http://localhost:3000/donaciones/usuario/`+ id, {
+            const resDonaciones = await fetch(urlBack+"/donaciones/usuario/"+ id, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
@@ -70,7 +72,7 @@ const PerfilUsuario = () => {
 
     const createCampaña = async () => {
         try{
-            const res = await fetch("http://localhost:3000/campanias", {
+            const res = await fetch(urlBack+"/campanias", {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",
@@ -125,7 +127,7 @@ const PerfilUsuario = () => {
                 throw new Error("Los datos son iguales a los anteriores, no hay nada para actualizar.");        
             }
 
-            const res = await fetch("http://localhost:3000/usuarios/" + id, {
+            const res = await fetch(urlBack+"/usuarios/" + id, {
                 method: "PATCH",
                 headers: {
                 "Content-Type": "application/json",
@@ -159,7 +161,7 @@ const PerfilUsuario = () => {
                 throw new Error("Los datos son iguales a los anteriores, no hay nada para actualizar.");        
             }
 
-            const res = await fetch("http://localhost:3000/campanias/" + idCamp, {
+            const res = await fetch(urlBack+"/campanias/" + idCamp, {
                 method: "PATCH",
                 headers: {
                 "Content-Type": "application/json",

@@ -3,15 +3,14 @@ import { useCampaña } from '../../../Context/CampañaContext';
 import { useUser } from '../../../Context/UserContext';
 import "./Donar.css";
 
+const urlBack = import.meta.env.VITE_URL_BACKEND;
+
 const Donar = () => {
     const { accessToken } = useUser();
-    // Desestructuramos los datos de la campaña
     const { idCamp, nameCamp, ownerEmail } = useCampaña();
 
-    // Usamos estado local para controlar el input del monto
     const [montoInput, setMontoInput] = useState("");
     const [loading, setLoading] = useState(false);
-
 
     const handleDonar = async () => {
         // 1. Validación básica antes de llamar al servidor
@@ -29,16 +28,13 @@ const Donar = () => {
         setLoading(true);
 
         try {
-            // 2. Llamada a TU Backend (NestJS)
-            const res = await fetch('http://localhost:3000/mercadopago/create_preference', {
+            const res = await fetch(urlBack+"/mercadopago/create_preference", {
                 method: 'POST',
                 credentials: 'include', 
                 headers: {
                     'Content-Type': 'application/json',
-                    // Mantenemos tu token si tu backend protege esta ruta
                     "Authorization": `Bearer ${accessToken}`, 
                 },
-                // 3. IMPORTANTE: Los nombres aquí deben coincidir con tu DTO de NestJS
                 body: JSON.stringify({
                     amount: Number(montoInput), 
                     campaignId: String (idCamp) 
@@ -48,7 +44,6 @@ const Donar = () => {
             if (res.ok) {
                 const data = await res.json();
                 
-                // 4. Si NestJS nos devuelve la URL, redirigimos al usuario
                 if (data.url) {
                     console.log("Redirigiendo a Mercado Pago...", data.url);
                     window.location.href = data.url; 
@@ -90,7 +85,6 @@ const Donar = () => {
                     />
                 </div>
 
-                {/* El botón se deshabilita mientras carga para evitar dobles clics */}
                 <button onClick={handleDonar} disabled={loading}>
                     {loading ? "Procesando..." : "Ir a Pagar con Mercado Pago"}
                 </button>

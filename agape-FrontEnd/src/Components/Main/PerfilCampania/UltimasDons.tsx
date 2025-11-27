@@ -1,5 +1,7 @@
 import { useCampaña } from '../../../Context/CampañaContext';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+const urlBack = import.meta.env.VITE_URL_BACKEND;
 
 const UltimasDons = () => {
     const { 
@@ -10,7 +12,7 @@ const UltimasDons = () => {
 
     useEffect (() => {
         const fetchDonaciones = async () => {
-            const resDonaciones = await fetch(`http://localhost:3000/donaciones/campania/` + idCamp, {
+            const resDonaciones = await fetch(urlBack+"/donaciones/campania/" + idCamp, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
@@ -39,7 +41,6 @@ const UltimasDons = () => {
                         <tr><td colSpan={4}>No hay donaciones aún...</td></tr>
                     ) : (
                         dataDonaciones.map((donacion: any) => (
-                            // <p >{donacion.usuario.nombre} | {new Date(donacion.fecha).toLocaleDateString()} | ${donacion.monto}</p>
                             <tr key={donacion.id_donacion}>
                                 <td>{donacion.usuario.nombre}</td>
                                 <td>{new Date(donacion.fecha).toLocaleDateString()}</td>

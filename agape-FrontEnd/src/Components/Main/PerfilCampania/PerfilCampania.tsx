@@ -5,6 +5,8 @@ import { useCampaña } from '../../../Context/CampañaContext';
 import UltimasDons from './UltimasDons';
 import { useUser } from '../../../Context/UserContext';
 
+const urlBack = import.meta.env.VITE_URL_BACKEND;
+
 const PerfilCampania = () => {
     const navigate = useNavigate();
     const params = useParams<{ id: string }>();
@@ -23,7 +25,7 @@ const PerfilCampania = () => {
     useEffect(() => {
         const fetchCampaña = async (searchId: number) => { 
             try{
-                const res = await fetch(`http://localhost:3000/campanias/` + searchId, {
+                const res = await fetch(urlBack+"/campanias/" + searchId, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" }
                 });
