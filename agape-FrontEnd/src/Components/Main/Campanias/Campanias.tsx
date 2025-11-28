@@ -1,6 +1,6 @@
-import CampaniRecientes from "./CampañasRecientes/CampaniasRecientes";
-import CampaniasPorFinalizar from "./CampañasPorFinalizar/campaniaPorFinalizar";
-import BuscarCampañas from "./BuscarCampaña/buscarCampañas";
+import CampaniRecientes from "./campañasRecientes/CampaniasRecientes";
+import CampaniasPorFinalizar from "./campañasPorFinalizar/campaniaPorFinalizar";
+import BuscarCampañas from "./buscarCampaña/buscarCampañas";
 import { useEffect, useState } from "react";
 import "./Campanias.css";
 
