@@ -4,6 +4,7 @@ import { useUser } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
+const urlBack = import.meta.env.VITE_URL_BACKEND;
 
 const ComponentLogoPerfil = () => {  
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const ComponentLogoPerfil = () => {
         if(!isRegister){
             // logearse
             try {
-                const res = await fetch("/auth/login", {
+                const res = await fetch(urlBack+"/auth/login", {
                     method: "POST",
                     credentials: 'include',
                     headers: { "Content-Type": "application/json" },
@@ -81,7 +82,7 @@ const ComponentLogoPerfil = () => {
                     contraseña:contraseniaName.value
                 }
 
-                const res = await fetch("/auth/register", {
+                const res = await fetch(urlBack+"/auth/register", {
                     method: "POST",
                     credentials: 'include',
                     headers: { "Content-Type": "application/json" },
@@ -159,7 +160,7 @@ const ComponentLogoPerfil = () => {
         }
 
         try {
-            const res = await fetch("/auth/google", {
+            const res = await fetch(urlBack+"/auth/google", {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
@@ -193,7 +194,7 @@ const ComponentLogoPerfil = () => {
 
     const DesLoguearse = async () => {
         try{
-            const res = await fetch("/auth/logout", {
+            const res = await fetch(urlBack+"/auth/logout", {
                 method: "POST",
                 credentials: "include",
             });
