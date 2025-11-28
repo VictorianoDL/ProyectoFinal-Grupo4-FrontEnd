@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth': {
-        target: 'https://proyectofinal-grupo4-backend.onrender.com',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
       },
