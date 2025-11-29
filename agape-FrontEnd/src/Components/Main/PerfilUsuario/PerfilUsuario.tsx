@@ -24,6 +24,7 @@ const PerfilUsuario = () => {
         if (activeTab === "campania") {
             const fetchCampaña = async () => {
                 try {
+                    console.log(id);
                     const res = await fetch(urlBack+"/campanias/owner/" + id, {
                         method: "GET",
                         headers: { "Content-Type": "application/json" }

@@ -22,7 +22,7 @@ const UltimasDons = () => {
             }
         };
         fetchDonaciones();
-    }, [idCamp]);
+    }, [idCamp,urlBack,setDataDonaciones]);
     
 
     return(

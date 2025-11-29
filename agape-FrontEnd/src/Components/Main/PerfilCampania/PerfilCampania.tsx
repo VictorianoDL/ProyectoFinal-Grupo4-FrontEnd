@@ -64,7 +64,7 @@ const PerfilCampania = () => {
         if (typeof idToFetch === 'number') {
             fetchCampaña(idToFetch);
         }
-    }, [routeId, idCamp, setActivo, setDescripcion, setFechaInicio, setIdCamp, setNameCamp, setObjetivo, setRecaudado, setTipo]);
+    }, [urlBack, routeId, idCamp, setActivo, setDescripcion, setFechaInicio, setIdCamp, setNameCamp, setObjetivo, setRecaudado, setTipo]);
 
 
     const recaudadoPorcentaje = (recaudado / objetivo) * 100;
