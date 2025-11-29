@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useUser } from './UserContext';
 
+const urlBack = import.meta.env.VITE_URL_BACKEND;
+
 type AuthContextValue = {
   accessToken: string | null;
   setAccessToken: (t: string | null) => void;
@@ -22,7 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   let mounted = true;
   const tryRefresh = async () => {
     try {
-      const res = await fetch('/auth/refresh', {
+      const res = await fetch(urlBack+'/auth/refresh', {
         method: 'POST',
         credentials: 'include',
       });
@@ -59,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      await fetch('/auth/logout', {
+      await fetch(urlBack+'/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
@@ -85,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     let res = await fetch(input, { ...init, headers: hdrs, credentials: 'include' });
     if (res.status === 401) {
       // intentar refresh
-      const r = await fetch('/auth/refresh', { method: 'POST', credentials: 'include' });
+      const r = await fetch(urlBack+'/auth/refresh', { method: 'POST', credentials: 'include' });
       if (r.ok) {
         const body = await r.json();
         if (body.access_token) {
