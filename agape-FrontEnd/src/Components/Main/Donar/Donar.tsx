@@ -13,9 +13,12 @@ const Donar = () => {
     const [loading, setLoading] = useState(false);
 
     const handleDonar = async () => {
+        let p = document.getElementById("aviso") as HTMLParagraphElement;
+        p.className = "colorRojoError";
+
         // 1. Validación básica antes de llamar al servidor
         if (!montoInput || Number(montoInput) <= 0) {
-            alert("Por favor ingresa un monto válido mayor a 0");
+            p.innerText = "Por favor ingresa un monto válido Mayor a 0";
             return;
         }
 
@@ -43,21 +46,20 @@ const Donar = () => {
 
             if (res.ok) {
                 const data = await res.json();
-                
                 if (data.url) {
-                    console.log("Redirigiendo a Mercado Pago...", data.url);
                     window.location.href = data.url; 
                 } else {
                     console.error("El servidor no devolvió la URL de pago");
-                    alert("Hubo un error al generar el link de pago.");
+                    p.innerText = "Hubo un error al generar el link de pago.";
                 }
             } else {
                 console.error("Error del servidor:", res.statusText);
-                alert("No se pudo conectar con el servicio de pagos.");
+                p.innerText = "No se pudo conectar con el servicio de pagos.";
             }
+
         } catch (err) {
             console.error("Error de red:", err);
-            alert("Error de conexión.");
+            p.innerText = "Error de conexión.";
         } finally {
             setLoading(false);
         }
@@ -83,15 +85,12 @@ const Donar = () => {
                         value={montoInput}
                         onChange={(e) => setMontoInput(e.target.value)}
                     />
+                    <p id="aviso"></p> 
                 </div>
 
                 <button onClick={handleDonar} disabled={loading}>
                     {loading ? "Procesando..." : "Ir a Pagar con Mercado Pago"}
                 </button>
-                
-                <p id="aviso">
-                    Serás redirigido a Mercado Pago de forma segura.
-                </p>   
             </div>
         </div>
     );

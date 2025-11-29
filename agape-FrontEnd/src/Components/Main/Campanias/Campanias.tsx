@@ -14,13 +14,12 @@ const Campanias = () => {
             try {
                 const res = await fetch(urlBack+"/campanias");
                 if (!res.ok) {
-                    console.error("Error en la respuesta:", res.status, res.statusText);
-                    return;
+                    throw new Error("Error en la respuesta: "+ res.status + " " + res.statusText);
                 }
                 const data = await res.json();
                 setCampanias(data);
             } catch (err) {
-                console.error("Error al cargar campañas", err);
+                console.error("Error al cargar campañas ", err);
             }
         };
         fetchCampanias();

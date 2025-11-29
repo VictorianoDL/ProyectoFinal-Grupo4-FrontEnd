@@ -65,7 +65,6 @@ const ComponentLogoPerfil = () => {
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 p.innerText = "Error al iniciar sesión  " + err;
-                console.error("Error al iniciar sesión  " + err );
             }  
         }else{
             // registrarse
@@ -106,7 +105,6 @@ const ComponentLogoPerfil = () => {
             } catch (err) {
                 let p = document.getElementById("aviso") as HTMLParagraphElement;
                 p.innerText = "Error al registrarse  " + err;
-                console.error("Error al registrarse  " + err );
             } 
         }  
     };
@@ -134,7 +132,6 @@ const ComponentLogoPerfil = () => {
         };
 
         const payload = parseJwt(credential);
-        console.log("Decoded payload:", payload);
 
         if (payload?.picture) {
             setProfilePic(payload.picture);
@@ -147,7 +144,6 @@ const ComponentLogoPerfil = () => {
                 });
                 if (userinfoRes.ok) {
                     const profile = await userinfoRes.json();
-                    console.log("userinfo profile:", profile);
                     if (profile.picture) {
                         setProfilePic(profile.picture);
                     }
