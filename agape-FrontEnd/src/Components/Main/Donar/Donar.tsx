@@ -12,7 +12,7 @@ const Donar = () => {
     const [montoInput, setMontoInput] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleDonar = async () => {
+    const handleDonarMercadoPago = async () => {
         let p = document.getElementById("aviso") as HTMLParagraphElement;
         p.className = "colorRojoError";
 
@@ -24,7 +24,7 @@ const Donar = () => {
 
         const campaniaId = Number(idCamp);
         if (!campaniaId || Number.isNaN(campaniaId)) {
-            alert("ID de campaña inválido.");
+            alert("ID de campaña inválido. Por Favor vuelva a la pestaña anterior");
             return;
         }
 
@@ -63,7 +63,49 @@ const Donar = () => {
         } finally {
             setLoading(false);
         }
-    };    
+    }; 
+    
+    const handleDonar = async () => {
+        let avisoElem = document.getElementById("aviso") as HTMLElement;
+        const montoStr = (document.getElementById("monto") as HTMLInputElement).value;
+        const monto = Number(montoStr);
+        if (!monto || monto <= 0) {
+            avisoElem.innerText = "Ingrese un monto válido";
+            return;
+        }
+
+        const campaniaId = Number(idCamp);
+        if (!campaniaId || Number.isNaN(campaniaId)) {
+            avisoElem.innerText = "No hay campaña seleccionada";
+            return;
+        }
+
+        const payload = {
+            monto, 
+            fecha: new Date().toISOString(), 
+            campaniaId
+        };
+
+        try{
+            const res = await fetch(urlBack+'/donaciones', {
+                method: 'POST',
+                credentials: 'include', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if(res.ok){
+               avisoElem.innerText = "Todo salio correctamente ¡Gracias por tu donación!"; 
+            }else{
+                throw new Error("Respuesta fue no ok " + res.statusText);    
+            }
+        }catch(err){
+            console.log(err);
+        }
+    };
   
     return (
         <div className='donar'> 
@@ -88,9 +130,15 @@ const Donar = () => {
                     <p id="aviso"></p> 
                 </div>
 
-                <button onClick={handleDonar} disabled={loading}>
-                    {loading ? "Procesando..." : "Ir a Pagar con Mercado Pago"}
-                </button>
+                <div id='conteinerBotones'>
+                    <button onClick={handleDonarMercadoPago} disabled={loading}>
+                        {loading ? "Procesando..." : "Ir a Pagar con Mercado Pago"}
+                    </button>
+                    <button onClick={handleDonar} disabled={loading}>
+                        {loading ? "Procesando..." : "Donar Comun"}
+                    </button>
+                </div>
+                
             </div>
         </div>
     );
