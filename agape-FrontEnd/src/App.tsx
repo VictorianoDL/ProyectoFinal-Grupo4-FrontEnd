@@ -9,13 +9,15 @@ import { CampañaProvider } from "./Context/CampañaContext";
 import { useEffect } from "react";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+const urlBack = import.meta.env.VITE_URL_BACKEND;
+
 function AppInner() {
     const { setId , setUserName, setName, setLastName, setEmail, setAccessToken } = useUser();
     
     useEffect(() => {
         const tryRefresh = async () => {
             try {
-                const res = await fetch("/auth/refresh", {
+                const res = await fetch(urlBack+"/auth/refresh", {
                     method: "POST",
                     credentials: "include",
                 });
@@ -25,7 +27,7 @@ function AppInner() {
 
                     try {
                         
-                        const userRes = await fetch("/auth/me", {
+                        const userRes = await fetch(urlBack+"/auth/me", {
                             method: "GET",
                             headers: {
                                 'Authorization': `Bearer ${data.access_token}`,
