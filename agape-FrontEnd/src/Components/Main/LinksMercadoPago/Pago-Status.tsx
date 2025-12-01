@@ -19,8 +19,10 @@ const PagoStatus = () => {
                             <p>Tu número de operación es: <strong>{paymentId}</strong></p>
                         </div>
                         <p>Te hemos enviado un comprobante a tu correo.</p>
-                        <Link to="/">Volver al inicio</Link>
-                        <Link to={"/campanias"}>Volver a Campañas</Link>
+                        <div id='links'>
+                            <Link to="/">Volver al inicio</Link>
+                            <Link to={"/campanias"}>Volver a Campañas</Link>
+                        </div>
                     </div>      
                 </div> 
             )
@@ -34,8 +36,10 @@ const PagoStatus = () => {
                             <p>El estado de tu pago es: <strong>{status}</strong></p>
                             <p>Tu número de operación es: <strong>{paymentId}</strong></p>
                         </div>
-                        <Link to="/">Volver al inicio</Link>
-                        <Link to={"/campanias"}>Volver a Campañas</Link>
+                        <div id='links'>
+                            <Link to="/">Volver al inicio</Link>
+                            <Link to={"/campanias"}>Volver a Campañas</Link>
+                        </div>
                     </div>
                 </div> 
             )
@@ -49,8 +53,10 @@ const PagoStatus = () => {
                             <p>El estado de tu pago es: <strong>{status}</strong></p>
                             <p>Tu número de operación es: <strong>{paymentId}</strong></p>
                         </div>
-                        <Link to="/">Volver al inicio</Link>
-                        <Link to={"/campanias"}>Volver a Campañas</Link>
+                        <div id='links'>
+                            <Link to="/">Volver al inicio</Link>
+                            <Link to={"/campanias"}>Volver a Campañas</Link>
+                        </div>
                     </div>
                 </div>     
             )

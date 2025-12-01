@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+#links{
+    display: flex;
+    gap: 12px;
+}
+
 .container-pago-status{
     gap: 16px;
     padding: 20px;
