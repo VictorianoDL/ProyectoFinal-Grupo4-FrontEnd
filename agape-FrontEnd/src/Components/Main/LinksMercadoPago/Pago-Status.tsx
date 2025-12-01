@@ -47,17 +47,20 @@ const PagoStatus = () => {
         }
         case "in_process":{
             return(
-                <div className="container-pago-status">
+                <div className="pago-staus">
 
-                    <h1>Tu pago esta pendiente</h1>
+                    <div className="container-pago-status">
+                        <h1>Tu pago esta pendiente</h1>
 
-                    <div className="detalles-compra">
-                        <p>El estado de tu pago es: <strong>{status}</strong></p>
-                        <p>Tu número de operación es: <strong>{paymentId}</strong></p>
+                        <div className="detalles-compra">
+                            <p>El estado de tu pago es: <strong>{status}</strong></p>
+                            <p>Tu número de operación es: <strong>{paymentId}</strong></p>
+                        </div>
+
+                        <Link to="/">Volver al inicio</Link>
+                        <Link to={"/campanias"}>Volver a Campañas</Link>
                     </div>
-
-                    <Link to="/">Volver al inicio</Link>
-                    <Link to={"/campanias"}>Volver a Campañas</Link>
+                        
 
                 </div>     
             )

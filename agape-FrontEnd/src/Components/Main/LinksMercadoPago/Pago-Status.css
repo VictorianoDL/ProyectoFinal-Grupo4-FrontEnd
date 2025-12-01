@@ -1,3 +1,9 @@
+.pago-staus{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .container-pago-status{
     gap: 16px;
     padding: 20px;
