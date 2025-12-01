@@ -1,4 +1,5 @@
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import './Pago-Status.css'
 
 const PagoStatus = () => {
     const [searchParams] = useSearchParams();
