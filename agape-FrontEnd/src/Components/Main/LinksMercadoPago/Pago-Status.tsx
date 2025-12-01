@@ -11,57 +11,47 @@ const PagoStatus = () => {
     switch(status){
         case "approved":{
             return(
-                <div className="container-pago-status">
-
-                    <h1>¡Gracias por tu aporte!</h1>
-
-                    <div className="detalles-compra">
-                        <p>El estado de tu pago es: <strong>{status}</strong></p>
-                        <p>Tu número de operación es: <strong>{paymentId}</strong></p>
-                    </div>
-
-                    <p>Te hemos enviado un comprobante a tu correo.</p>
-
-                    <Link to="/">Volver al inicio</Link>
-                    <Link to={"/campanias"}>Volver a Campañas</Link>
-
-                </div>
+                <div className="pago-staus">
+                    <div className="container-pago-status">
+                        <h1>¡Gracias por tu aporte!</h1>
+                        <div className="detalles-compra">
+                            <p>El estado de tu pago es: <strong>{status}</strong></p>
+                            <p>Tu número de operación es: <strong>{paymentId}</strong></p>
+                        </div>
+                        <p>Te hemos enviado un comprobante a tu correo.</p>
+                        <Link to="/">Volver al inicio</Link>
+                        <Link to={"/campanias"}>Volver a Campañas</Link>
+                    </div>      
+                </div> 
             )
         }
         case "rejected":{
             return(
-                <div className="container-pago-status">
-
-                    <h1>Tu pago ha sido rechazado</h1>
-
-                    <div className="detalles-compra">
-                        <p>El estado de tu pago es: <strong>{status}</strong></p>
-                        <p>Tu número de operación es: <strong>{paymentId}</strong></p>
+                <div className="pago-staus">
+                    <div className="container-pago-status">
+                        <h1>Tu pago ha sido rechazado</h1>
+                        <div className="detalles-compra">
+                            <p>El estado de tu pago es: <strong>{status}</strong></p>
+                            <p>Tu número de operación es: <strong>{paymentId}</strong></p>
+                        </div>
+                        <Link to="/">Volver al inicio</Link>
+                        <Link to={"/campanias"}>Volver a Campañas</Link>
                     </div>
-
-                    <Link to="/">Volver al inicio</Link>
-                    <Link to={"/campanias"}>Volver a Campañas</Link>
-
-                </div>
+                </div> 
             )
         }
         case "in_process":{
             return(
                 <div className="pago-staus">
-
                     <div className="container-pago-status">
                         <h1>Tu pago esta pendiente</h1>
-
                         <div className="detalles-compra">
                             <p>El estado de tu pago es: <strong>{status}</strong></p>
                             <p>Tu número de operación es: <strong>{paymentId}</strong></p>
                         </div>
-
                         <Link to="/">Volver al inicio</Link>
                         <Link to={"/campanias"}>Volver a Campañas</Link>
                     </div>
-                        
-
                 </div>     
             )
         }
