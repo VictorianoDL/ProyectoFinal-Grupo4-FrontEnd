@@ -5,6 +5,7 @@ import PerfilUsuario from "./PerfilUsuario/PerfilUsuario";
 import PerfilCampania from "./PerfilCampania/PerfilCampania";
 import Contacto from "./Contacto/Contacto";
 import Donar from "./Donar/Donar";
+import PagoExitoso from "./LinksMercadoPago/Pago-Exitoso";
 
 
 // Wrapper que valida que :id sea number; si no, muestra 404
@@ -31,6 +32,9 @@ const Main = () => {
         <Route path="/perfil-campania/:id" element= {<PerfilCampaniaWrapper />} />
         <Route path="/donar" element= {<Donar />}/>
         <Route path="/contacto" element= {<Contacto />}/>
+        <Route path="/pago-exitoso" element={<PagoExitoso />} />
+        <Route path="/"  />
+        <Route path="/"  />
         <Route path="*" element= {<div> <h1>404 ERROR - No existe pagina</h1> </div>} /> 
       </Routes>
     </div>
