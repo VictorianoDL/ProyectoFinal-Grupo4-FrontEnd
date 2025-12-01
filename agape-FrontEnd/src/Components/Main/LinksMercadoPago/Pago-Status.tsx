@@ -62,7 +62,7 @@ const PagoStatus = () => {
                 </div>     
             )
         }
-        default: navigate(`/campanias`)
+        default: navigate(`/`)
     }
 };
 
