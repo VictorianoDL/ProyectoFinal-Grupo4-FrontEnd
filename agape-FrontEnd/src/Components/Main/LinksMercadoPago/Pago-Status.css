@@ -1,0 +1,8 @@
+.container-pago-status{
+    gap: 16px;
+    padding: 20px;
+    border: solid 2px var(--colorCeleste);
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.15);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
